@@ -37,3 +37,5 @@ class APIConsumer extends Interface(IConsumer) {
 }
 
 module.exports = { APIConsumer: APIConsumer };
+
+//TODO: Remove Magic Strings in configs in constructor
