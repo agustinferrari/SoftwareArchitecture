@@ -1,9 +1,14 @@
-var unirest = require("unirest");
+const unirest = require("unirest");
+const Interface = require("es6-interface");
+const { IConsumer } = require("./IConsumer");
+
 const { HTTPRequestError } = require("../Errors/HTTPRequestError");
 
-class APIConsumer {
-  constructor(webAPIRoute) {
-    this.route = webAPIRoute;
+class APIConsumer extends Interface(IConsumer) {
+  constructor(parameters) {
+    super();
+    let parameterName =  "API_Route";
+    this.route = parameters.find((p) => p.name == parameterName).value;
   }
 
   getElections() {

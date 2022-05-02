@@ -1,7 +1,14 @@
-const { APIConsumer } = require("./ElectoralAPIConsumer/APIConsumer");
-let consumer = new APIConsumer("http://localhost:3000");
+const { APIConsumer } = require("./ElectoralConsumer/APIConsumer");
+const {
+  FacadeElectoralConsumer,
+} = require("./ElectoralConsumer/FacadeElectoralConsumer");
+const {Parameter} = require("../Utilities/InterfaceUtilities/Parameter");
+let consumerParameters = [new Parameter("http://localhost:3000", "API_Route")];
+let specificConsumer = new APIConsumer(consumerParameters);
+let facadeConsumer = new FacadeElectoralConsumer(specificConsumer);
 
-consumer.getElection(3).then(
+
+facadeConsumer.getElection(2).then(
   (elections) => {
     console.log("Funciono:");
     console.log(elections);
