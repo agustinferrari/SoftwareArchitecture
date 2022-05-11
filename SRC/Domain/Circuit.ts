@@ -1,5 +1,10 @@
-export interface Circuit{
-    id: number;
-    state: string;
-    location: string;
+export class Circuit {
+  constructor(inputJSON: any) {
+    this.id = inputJSON.id;
+    this.state = inputJSON.state;
+    this.location = inputJSON.location;
+  }
+  id: number;
+  state: string;
+  location: string;
 }

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc && node ./dist/index",
+    "electoralAPI": "json-server --watch ./../Utilities/APIAutoridadElectoral/SimulatedElectoralAPI.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

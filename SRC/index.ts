@@ -1,14 +1,15 @@
-import {APIConsumer} from './ElectoralConsumer/APIConsumer'
-import {IConsumer} from './ElectoralConsumer/IConsumer';
-let specificConsumer : IConsumer = new APIConsumer([]);
-
+import { Election } from "./Domain/Election";
+import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
+import { IConsumer } from "./ElectoralConsumer/IConsumer";
+let specificConsumer: IConsumer = new APIConsumer([]);
 
 specificConsumer.getElections().then(
-  (elections) => {
-    console.log("Funciono:");
-    console.log(elections);
+  (response: Election[]) => {
+    console.log(response);
   },
   (error) => {
     console.log(error.message);
   }
 );
+
+// console.log(specificConsumer.getElection(1));
