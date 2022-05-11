@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "unirest": "^0.6.0"
+    "axios": "^0.27.2",
+    "typescript": "^4.6.4"
   }
 }
