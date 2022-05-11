@@ -1,5 +1,9 @@
-import {Person} from './Person';
+import { Person } from "./Person";
 
-export interface Candidate extends Person{
-    partyId: number;
+export class Candidate extends Person {
+  constructor(candidateJSON: any) {
+    super(candidateJSON);
+    this.partyId = candidateJSON.partyId;
+  }
+  partyId: number;
 }
