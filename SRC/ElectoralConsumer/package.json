@@ -1,0 +1,15 @@
+{
+  "name": "electoral_api_consumer",
+  "version": "1.0.0",
+  "description": "Consumes Electoral API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "typescript": "^4.6.4"
+  }
+}
