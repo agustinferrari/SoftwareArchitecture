@@ -1,7 +1,7 @@
-import {Election} from './../Domain/Election';
+import {ElectionDTO} from '../Domain/ElectionDTO';
 
 export interface IConsumer {
-  getElections() : Promise<Election[]>;
-  getElection(id: number): Promise<Election>;
+  getElections() : Promise<ElectionDTO[]>;
+  getElection(id: number): Promise<ElectionDTO>;
 }
 

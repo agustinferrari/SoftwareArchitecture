@@ -1,10 +1,12 @@
-// import { Election } from "./Domain/Election";
-// import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
-// import { IConsumer } from "./ElectoralConsumer/IConsumer";
-// let specificConsumer: IConsumer = new APIConsumer([]);
+import { ElectionDTO } from "./Domain/ElectionDTO";
+import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
+import { IConsumer } from "./ElectoralConsumer/IConsumer";
+import config from "config";
+
+let specificConsumer: IConsumer = new APIConsumer([]);
 
 // specificConsumer.getElections().then(
-//   (response: Election[]) => {
+//   (response: ElectionDTO[]) => {
 //     console.log(response);
 //   },
 //   (error) => {
@@ -12,54 +14,95 @@
 //   }
 // );
 
-// console.log(specificConsumer.getElection(1));
-
 import { Sequelize } from "sequelize-typescript";
 
 import {
-  ElectionModel,
-  ElectionPartyModel,
-  PartyModel,
-  PersonModel,
-  CandidateModel,
-} from "./DataAccess/Models";
+  Election,
+  ElectionCandidate,
+  ElectionCircuit,
+  ElectionCircuitVoter,
+  Party,
+  Person,
+  Candidate,
+  Voter,
+  Circuit,
+} from "./DataAccess/Models/export";
+import { PersonDTO } from "./Domain/PersonDTO";
+import { VoterDTO } from "./Domain/VoterDTO";
+import { PartyDTO } from "./Domain/PartyDTO";
+import { CircuitDTO } from "./Domain/CircuitDTO";
+import { create } from "domain";
+import { CandidateDTO } from "./Domain/CandidateDTO";
 
-const sequelize = new Sequelize("mysql://root:password@127.0.0.1:3306/userDb");
+const dbHost = config.get("SQL_DB.host");
+const dbPort = config.get("SQL_DB.port");
+const dbUser = config.get("SQL_DB.user");
+const dbPassword = config.get("SQL_DB.password");
+const dbName = config.get("SQL_DB.name");
+
+const sequelize = new Sequelize(
+  `mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`
+);
 
 sequelize.addModels([
-  ElectionModel,
-  PartyModel,
-  ElectionPartyModel,
-  PersonModel,
-  CandidateModel,
+  Election,
+  ElectionCandidate,
+  // Person,
+  Candidate,
+  Party,
+  Voter,
+  Circuit,
+  ElectionCircuit,
+  ElectionCircuitVoter,
 ]);
 
-// PersonModel.sync({ alter: true }).then(() =>
-//   PersonModel.create({
-//     ci: "700000",
-//     name: "Juan",
-//     lastName: "Perez",
-//     gender: "Flaco",
-//     birthday: new Date(),
-//   })
-// );
+async function syncAll() {
+  await Election.sync({ alter: true });
+  await Party.sync({ alter: true });
+  // await Person.sync({ alter: true });
+  await Candidate.sync({ alter: true });
+  await Voter.sync({ alter: true });
+  await Circuit.sync({ alter: true });
+  await ElectionCandidate.sync({ alter: true });
+  await ElectionCircuit.sync({ alter: true });
+  await ElectionCircuitVoter.sync({ alter: true });
 
-PersonModel.create({
-  ci: "999999",
-  name: "Juan",
-  lastName: "Perez",
-  gender: "Flaco",
-  birthday: new Date(),
-}).then(() => console.log("Termino"));
-console.log("Paso");
+  let foundElection = await specificConsumer.getElection(8);
 
-// const person = new PersonModel({ci: "59993342", name: 'Pepe', lastname: 'Sanchez', gender: 'No binario', date: new Date()});
-// person.save();
-//PersonModel.create({ci: "59993342", name: 'Pepe', lastname: 'Sanchez', gender: 'No binario', date: new Date()});
+  let initialAdditions = async () => {
+    foundElection.parties.map((p: PartyDTO) => {
+      Party.create(p, { ignoreDuplicates: true });
+    });
 
-// const sequelize =  new Sequelize({
-//   models: [__dirname + '/models/**/*.model.ts']
-//   modelMatch: (filename, member) => {
-//     return filename.substring(0, filename.indexOf('.model')) === member.toLowerCase();
-//   },
-// });
+    Election.create(foundElection, {
+      include: [{ model: Candidate, ignoreDuplicates: true }],
+    });
+
+    // foundElection.voters.map((v: VoterDTO) => {
+    //   Voter.create(v, { ignoreDuplicates: true });
+    // });
+
+    foundElection.circuits.map((c: CircuitDTO) => {
+      Circuit.create(c, { ignoreDuplicates: true }).then(() => {
+        ElectionCircuit.create({
+          electionCircuitId: `${foundElection.id}_${c.id}`,
+          electionId: foundElection.id,
+          circuitId: c.id,
+        });
+      });
+    });
+  };
+
+  await initialAdditions();
+
+  foundElection.voters.map((v: VoterDTO) => {
+    Voter.create(v, { ignoreDuplicates: true }).then(() => {
+      ElectionCircuitVoter.create({
+        electionCircuitId: `${foundElection.id}_${v.circuitId}`,
+        voterCI: v.ci,
+      });
+    });
+  });
+}
+
+syncAll();

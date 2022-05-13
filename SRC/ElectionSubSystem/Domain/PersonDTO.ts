@@ -1,4 +1,4 @@
-export abstract class Person {
+export class PersonDTO {
   constructor(personJSON: any) {
     this.ci = personJSON.ci;
     this.name = personJSON.name;

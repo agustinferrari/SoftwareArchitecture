@@ -435,7 +435,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -447,7 +447,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -459,7 +459,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -471,7 +471,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -483,7 +483,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -495,7 +495,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -507,7 +507,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -519,7 +519,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -531,7 +531,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -543,7 +543,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -555,7 +555,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -567,7 +567,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         }
@@ -579,7 +579,7 @@
           "lastName": "Jefferson",
           "gender": "female",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 1
+          "partyId": 1
         },
         {
           "ci": "68232427",
@@ -587,7 +587,7 @@
           "lastName": "Martinez Hernandez",
           "gender": "male",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 3
+          "partyId": 3
         },
         {
           "ci": "56241568",
@@ -595,7 +595,7 @@
           "lastName": "Peterson Hernandez",
           "gender": "male",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 2
+          "partyId": 2
         }
       ],
       "parties": [
@@ -645,7 +645,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -657,7 +657,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -669,7 +669,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -681,7 +681,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -693,7 +693,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -705,7 +705,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -717,7 +717,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -729,7 +729,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -741,7 +741,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -753,7 +753,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -765,7 +765,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -777,7 +777,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         }
@@ -789,7 +789,7 @@
           "lastName": "Jefferson",
           "gender": "female",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 1
+          "partyId": 1
         },
         {
           "ci": "68232427",
@@ -797,7 +797,7 @@
           "lastName": "Martinez Hernandez",
           "gender": "male",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 3
+          "partyId": 3
         },
         {
           "ci": "56241568",
@@ -805,7 +805,7 @@
           "lastName": "Peterson Hernandez",
           "gender": "male",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 2
+          "partyId": 2
         }
       ],
       "parties": [
@@ -855,7 +855,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -867,7 +867,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -879,7 +879,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -891,7 +891,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -903,7 +903,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -915,7 +915,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -927,7 +927,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -939,7 +939,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -951,7 +951,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -963,7 +963,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -975,7 +975,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         },
@@ -987,7 +987,7 @@
           "gender": "male",
           "birthday": "yyyy-MM-dd",
           "residency": "Montevideo",
-          "idCircuit": 1409,
+          "circuitId": 1409,
           "phone": "095487432",
           "email": "JMartinez@gmail.com"
         }
@@ -999,7 +999,7 @@
           "lastName": "Jefferson",
           "gender": "female",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 1
+          "partyId": 1
         },
         {
           "ci": "68232427",
@@ -1007,7 +1007,7 @@
           "lastName": "Martinez Hernandez",
           "gender": "male",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 3
+          "partyId": 3
         },
         {
           "ci": "56241568",
@@ -1015,7 +1015,7 @@
           "lastName": "Peterson Hernandez",
           "gender": "male",
           "birthday": "yyyy-MM-dd",
-          "IdParty": 2
+          "partyId": 2
         }
       ],
       "parties": [
@@ -1049,7 +1049,183 @@
           "location": "centro"
         }
       ]
+    },
+    {
+      "id": 7,
+      "name": "Presidencia",
+      "description": "Elección club",
+      "startDate": "2000-11-05 12:11:10",
+      "endDate": "2000-11-05 20:30:40",
+      "mode": "unique",
+      "voters": [
+        {
+          "ci": "111111111",
+          "credential": "CredencialUno",
+          "name": "Unos",
+          "lastName": "UnosUnos",
+          "gender": "male",
+          "birthday": "2000-11-05",
+          "residency": "Montevideo",
+          "circuitId": 1,
+          "phone": "11111",
+          "email": "unos@gmail.com"
+        },
+        {
+          "ci": "222222222",
+          "credential": "CredencialDos",
+          "name": "Dos",
+          "lastName": "DosDos",
+          "gender": "female",
+          "birthday": "1999-05-06",
+          "residency": "Colonia",
+          "circuitId": 2,
+          "phone": "22222",
+          "email": "dos@hotmail.com"
+        },
+        {
+          "ci": "3333333333",
+          "credential": "CredencialTres",
+          "name": "Tres",
+          "lastName": "TresTres",
+          "gender": "not disclosed",
+          "birthday": "2001-01-02",
+          "residency": "Montevideo",
+          "circuitId": 1,
+          "phone": "333",
+          "email": "tres@yahoo.com"
+        }
+      ],
+      "candidates": [
+        {
+          "ci": "3333333333",
+          "credential": "CredencialTres",
+          "name": "Tres",
+          "lastName": "TresTres",
+          "gender": "not disclosed",
+          "birthday": "2001-01-02",
+          "partyId": 1
+        },
+        {
+          "ci": "222222222",
+          "credential": "CredencialDos",
+          "name": "Dos",
+          "lastName": "DosDos",
+          "gender": "female",
+          "birthday": "1999-05-06",
+          "partyId": 2
+        }
+      ],
+      "parties": [
+        {
+          "id": 1,
+          "name": "Amarillo"
+        },
+        {
+          "id": 2,
+          "name": "Violeta"
+        }
+      ],
+      "circuits": [
+        {
+          "id": 1,
+          "state": "Montevideo",
+          "location": "Centro"
+        },
+        {
+          "id": 2,
+          "state": "Colonia",
+          "location": "Centro"
+        },
+        {
+          "id": 3,
+          "state": "Artigas",
+          "location": "centro"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Intendencia",
+      "description": "Eleccion intendencia",
+      "startDate": "2000-11-05 12:11:10",
+      "endDate": "2000-11-05 20:30:40",
+      "mode": "unique",
+      "voters": [
+        {
+          "ci": "111111111",
+          "credential": "CredencialUno",
+          "name": "Unos",
+          "lastName": "UnosUnos",
+          "gender": "male",
+          "birthday": "2000-11-05",
+          "residency": "Montevideo",
+          "circuitId": 3,
+          "phone": "11111",
+          "email": "unos@gmail.com"
+        },
+        {
+          "ci": "3333333333",
+          "credential": "CredencialTres",
+          "name": "Tres",
+          "lastName": "TresTres",
+          "gender": "not disclosed",
+          "birthday": "2001-01-02",
+          "residency": "Montevideo",
+          "circuitId": 4,
+          "phone": "333",
+          "email": "tres@yahoo.com"
+        },
+        {
+          "ci": "444444444",
+          "credential": "CredencialCuatro",
+          "name": "Cuatros",
+          "lastName": "CuatrosCuatros",
+          "gender": "male",
+          "birthday": "2020-11-05",
+          "residency": "Montevideo",
+          "circuitId": 2,
+          "phone": "4444444",
+          "email": "cuatros@gmail.com"
+        }
+      ],
+      "candidates": [
+        {
+          "ci": "3333333333",
+          "credential": "CredencialTres",
+          "name": "Tres",
+          "lastName": "TresTres",
+          "gender": "not disclosed",
+          "birthday": "2001-01-02",
+          "partyId": 1
+        }
+      ],
+      "parties": [
+        {
+          "id": 3,
+          "name": "Rojo"
+        },
+        {
+          "id": 2,
+          "name": "Violeta"
+        }
+      ],
+      "circuits": [
+        {
+          "id": 4,
+          "state": "Canelones",
+          "location": "Fuera"
+        },
+        {
+          "id": 2,
+          "state": "Colonia",
+          "location": "Centro"
+        },
+        {
+          "id": 3,
+          "state": "Artigas",
+          "location": "centro"
+        }
+      ]
     }
-  ],
-  "voters": []
+  ]
 }
