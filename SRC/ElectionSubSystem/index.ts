@@ -27,12 +27,10 @@ import {
   Voter,
   Circuit,
 } from "./DataAccess/Models/export";
-import { PersonDTO } from "./Domain/PersonDTO";
 import { VoterDTO } from "./Domain/VoterDTO";
 import { PartyDTO } from "./Domain/PartyDTO";
 import { CircuitDTO } from "./Domain/CircuitDTO";
-import { create } from "domain";
-import { CandidateDTO } from "./Domain/CandidateDTO";
+import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
 
 const dbHost = config.get("SQL_DB.host");
 const dbPort = config.get("SQL_DB.port");
@@ -67,42 +65,44 @@ async function syncAll() {
   await ElectionCircuit.sync({ alter: true });
   await ElectionCircuitVoter.sync({ alter: true });
 
-  let foundElection = await specificConsumer.getElection(8);
+  let foundElection1 = await specificConsumer.getElection(7);
+  let foundElection2 = await specificConsumer.getElection(8);
+  let electionCommand = new ElectionCommand();
+  electionCommand.addElections([foundElection1, foundElection2]);
+  // let initialAdditions = async () => {
+  //   foundElection.parties.map((p: PartyDTO) => {
+  //     Party.create(p, { ignoreDuplicates: true });
+  //   });
 
-  let initialAdditions = async () => {
-    foundElection.parties.map((p: PartyDTO) => {
-      Party.create(p, { ignoreDuplicates: true });
-    });
+  //   Election.create(foundElection, {
+  //     include: [{ model: Candidate, ignoreDuplicates: true }],
+  //   });
 
-    Election.create(foundElection, {
-      include: [{ model: Candidate, ignoreDuplicates: true }],
-    });
+  //   // foundElection.voters.map((v: VoterDTO) => {
+  //   //   Voter.create(v, { ignoreDuplicates: true });
+  //   // });
 
-    // foundElection.voters.map((v: VoterDTO) => {
-    //   Voter.create(v, { ignoreDuplicates: true });
-    // });
+  //   foundElection.circuits.map((c: CircuitDTO) => {
+  //     Circuit.create(c, { ignoreDuplicates: true }).then(() => {
+  //       ElectionCircuit.create({
+  //         electionCircuitId: `${foundElection.id}_${c.id}`,
+  //         electionId: foundElection.id,
+  //         circuitId: c.id,
+  //       });
+  //     });
+  //   });
+  // };
 
-    foundElection.circuits.map((c: CircuitDTO) => {
-      Circuit.create(c, { ignoreDuplicates: true }).then(() => {
-        ElectionCircuit.create({
-          electionCircuitId: `${foundElection.id}_${c.id}`,
-          electionId: foundElection.id,
-          circuitId: c.id,
-        });
-      });
-    });
-  };
+  // await initialAdditions();
 
-  await initialAdditions();
-
-  foundElection.voters.map((v: VoterDTO) => {
-    Voter.create(v, { ignoreDuplicates: true }).then(() => {
-      ElectionCircuitVoter.create({
-        electionCircuitId: `${foundElection.id}_${v.circuitId}`,
-        voterCI: v.ci,
-      });
-    });
-  });
+  // foundElection.voters.map((v: VoterDTO) => {
+  //   Voter.create(v, { ignoreDuplicates: true }).then(() => {
+  //     ElectionCircuitVoter.create({
+  //       electionCircuitId: `${foundElection.id}_${v.circuitId}`,
+  //       voterCI: v.ci,
+  //     });
+  //   });
+  // });
 }
 
 syncAll();
