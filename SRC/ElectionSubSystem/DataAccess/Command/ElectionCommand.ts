@@ -1,4 +1,3 @@
-import { rejects } from "assert";
 import { CircuitDTO } from "../../Domain/CircuitDTO";
 import { ElectionDTO } from "../../Domain/ElectionDTO";
 import { PartyDTO } from "../../Domain/PartyDTO";
