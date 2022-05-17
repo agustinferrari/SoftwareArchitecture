@@ -1,17 +1,17 @@
-import axiosPackage from "axios";
+import Axios, { AxiosInstance } from "axios";
 
 import config from "config";
 import { IConsumer } from "./IConsumer";
-import { ElectionDTO } from "../Domain/ElectionDTO";
+import { ElectionDTO } from "../../Common/Domain";
 import { HTTPRequestError } from "./../Errors/HTTPRequestError";
 import { Parameter } from "./Parameter";
-import { AxiosInstance } from "axios";
 
 export class APIConsumer implements IConsumer {
   axios: AxiosInstance;
 
   constructor(parameters: Parameter[]) {
-    this.axios = axiosPackage.create({ baseURL: config.get("API.route") });
+    parameters;
+    this.axios = Axios.create({ baseURL: config.get("API.route") });
   }
 
   getElections(): Promise<ElectionDTO[]> {

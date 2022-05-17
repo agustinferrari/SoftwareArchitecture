@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   Model,
 } from "sequelize-typescript";
-import { VoterDTO } from "../../Domain/VoterDTO";
+import { VoterDTO } from "../Domain";
 import {  ElectionCircuit, ElectionCircuitVoter } from "./Election";
 
 @Table

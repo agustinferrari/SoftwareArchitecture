@@ -4,6 +4,9 @@
   "description": "## Alumnos: - Agustín Ferrari 240503 - Joaquín Meerhoff 247096 - Graziano Pascale 186821",
   "main": "index.js",
   "scripts": {
+    "buildElectionSubSystem":"cd ./SRC/ElectionSubSystem/ && tsc -b && cp package*.json ../dist/ElectionSubSystem/ && cd ../dist/ElectionSubSystem/ && npm ci --production",
+    "buildCommon":"cd ./SRC/Common/ && tsc -b && cp package*.json ../dist/Common/ && cd ../dist/Common/ && npm ci --production",
+    "buildAll": "cd ./SRC && tsc -b && cd .. && npm run buildCommon && npm run buildElectionSubSystem",
     "electoralAPI": "json-server --watch ./Utilities/APIAutoridadElectoral/SimulatedElectoralAPI.json",
     "electionSubSystem": "cd ./SRC/ElectionSubSystem/ && npm run dev",
     "all" : "npm run electoralAPI & npm run electionSubSystem",

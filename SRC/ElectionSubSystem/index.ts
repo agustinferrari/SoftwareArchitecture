@@ -1,20 +1,6 @@
-import { ElectionDTO } from "./Domain/ElectionDTO";
 import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
-import config from "config";
-
 let specificConsumer: IConsumer = new APIConsumer([]);
-
-// specificConsumer.getElections().then(
-//   (response: ElectionDTO[]) => {
-//     console.log(response);
-//   },
-//   (error) => {
-//     console.log(error.message);
-//   }
-// );
-
-import { Sequelize } from "sequelize-typescript";
 
 import {
   Election,
@@ -26,44 +12,34 @@ import {
   Candidate,
   Voter,
   Circuit,
-} from "./DataAccess/Models/export";
-import { VoterDTO } from "./Domain/VoterDTO";
-import { PartyDTO } from "./Domain/PartyDTO";
-import { CircuitDTO } from "./Domain/CircuitDTO";
+} from "../Common/Models";
+
 import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
+import { Sequelize } from "sequelize-typescript";
 
-const dbHost = config.get("SQL_DB.host");
-const dbPort = config.get("SQL_DB.port");
-const dbUser = config.get("SQL_DB.user");
-const dbPassword = config.get("SQL_DB.password");
-const dbName = config.get("SQL_DB.name");
+import { sequelizeContext, syncAllModels } from "../Common/Models";
 
-const sequelize = new Sequelize(
-  `mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`
-);
-
-sequelize.addModels([
+sequelizeContext.addModels([
   Election,
   ElectionCandidate,
-  // Person,
-  Candidate,
+  ElectionCircuitVoter,
+  ElectionCircuit,
+  Circuit,
   Party,
   Voter,
-  Circuit,
-  ElectionCircuit,
-  ElectionCircuitVoter,
+  Candidate,
 ]);
 
-async function syncAll() {
-  await Election.sync({ alter: true });
-  await Party.sync({ alter: true });
-  // await Person.sync({ alter: true });
-  await Candidate.sync({ alter: true });
-  await Voter.sync({ alter: true });
-  await Circuit.sync({ alter: true });
-  await ElectionCandidate.sync({ alter: true });
-  await ElectionCircuit.sync({ alter: true });
-  await ElectionCircuitVoter.sync({ alter: true });
+async function addOneElection() {
+  // await Election.sync({ alter: true });
+  // await Party.sync({ alter: true });
+  // await Candidate.sync({ alter: true });
+  // await Voter.sync({ alter: true });
+  // await Circuit.sync({ alter: true });
+  // await ElectionCandidate.sync({ alter: true });
+  // await ElectionCircuit.sync({ alter: true });
+  // await ElectionCircuitVoter.sync({ alter: true });
+  await syncAllModels();
 
   let foundElection1 = await specificConsumer.getElection(7);
   let foundElection2 = await specificConsumer.getElection(8);
@@ -104,5 +80,4 @@ async function syncAll() {
   //   });
   // });
 }
-
-syncAll();
+addOneElection();

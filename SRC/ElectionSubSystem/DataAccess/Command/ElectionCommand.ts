@@ -1,17 +1,30 @@
-import { rejects } from "assert";
-import { CircuitDTO } from "../../Domain/CircuitDTO";
-import { ElectionDTO } from "../../Domain/ElectionDTO";
-import { PartyDTO } from "../../Domain/PartyDTO";
-import { VoterDTO } from "../../Domain/VoterDTO";
-import { Candidate } from "../Models/Candidate";
-import { Circuit } from "../Models/Circuit";
+// import { CircuitDTO } from "../../../Common/Domain/CircuitDTO";
+// import { ElectionDTO } from "../../../Common/Domain/ElectionDTO";
+// import { PartyDTO } from "../../../Common/Domain/PartyDTO";
+// import { VoterDTO } from "../../../Common/Domain/VoterDTO";
+
+// import { Candidate } from "../../../Common/Models/Candidate";
+// import { Circuit } from "../../../Common/Models/Circuit";
+// import { Election, ElectionCircuit, ElectionCircuitVoter } from "../../../Common/Models/Election";
+// import { Party } from "../../../Common/Models/Party";
+// import { Voter } from "../../../Common/Models/Voter";
 import {
+  CircuitDTO,
+  ElectionDTO,
+  PartyDTO,
+  VoterDTO,
+  CandidateDTO,
+} from "../../../Common/Domain";
+
+import {
+  Candidate,
   Election,
   ElectionCircuit,
   ElectionCircuitVoter,
-} from "../Models/Election";
-import { Party } from "../Models/Party";
-import { Voter } from "../Models/Voter";
+  Party,
+  Voter,
+  Circuit,
+} from "../../../Common/Models";
 
 export class ElectionCommand {
   addElections(elections: ElectionDTO[]): void {

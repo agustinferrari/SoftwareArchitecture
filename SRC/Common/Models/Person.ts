@@ -1,5 +1,5 @@
 import { Table, Column, Model, PrimaryKey } from "sequelize-typescript";
-import { PersonDTO } from "../../Domain/PersonDTO";
+import { PersonDTO } from "../Domain";
 @Table
 export class Person extends Model<PersonDTO,PersonDTO> {
   @Column

@@ -7,7 +7,7 @@ import {
   BelongsToMany,
 } from "sequelize-typescript";
 import { Party } from "./Party";
-import { CandidateDTO } from "../../Domain/CandidateDTO";
+import { CandidateDTO } from "../Domain";
 import { Election, ElectionCandidate } from "./Election";
 
 @Table

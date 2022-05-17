@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   BelongsToMany
 } from "sequelize-typescript";
-import { CircuitDTO } from "../../Domain/CircuitDTO";
+import { CircuitDTO } from "../Domain/CircuitDTO";
 
 import { Election, ElectionCircuit } from "./Election";
 

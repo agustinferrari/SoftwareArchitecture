@@ -2,7 +2,6 @@ import {
   Table,
   Column,
   Model,
-  HasMany,
   PrimaryKey,
   BelongsToMany,
   ForeignKey,
@@ -11,7 +10,7 @@ import {
 import { Party } from "./Party";
 import { Voter } from "./Voter";
 import { Circuit } from "./Circuit";
-import { ElectionDTO } from "../../Domain/ElectionDTO";
+import { ElectionDTO } from "../Domain/ElectionDTO";
 import { Candidate } from "./Candidate";
 
 @Table
