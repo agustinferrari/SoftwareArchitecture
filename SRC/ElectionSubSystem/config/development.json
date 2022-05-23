@@ -1,19 +1,23 @@
-
 {
-    "API": {
-         "route":"http://localhost:3000",
-         "key":""
-    },
-    "SQL_DB":{
-        "name": "appEvDB",
-        "user": "root",
-        "password": "secret",
-        "host": "192.168.0.106",
-        "port": "3306"
-    },
-    "REDIS":{
-        "host": "192.168.0.106",
-        "port": "6379"
-    }
-    
+  "API": {
+    "route": "http://localhost:3000",
+    "key": ""
+  },
+  "EmailSender": {
+    "route": "http://localhost:3000"
+  },
+  "MessageSender": {
+    "route": "http://localhost:3000"
+  },
+  "SQL_DB": {
+    "name": "appEvDB",
+    "user": "root",
+    "password": "password",
+    "host": "127.0.0.1",
+    "port": "3306"
+  },
+  "REDIS":{
+    "host": "192.168.0.106",
+    "port": "6379"
+  }
 }
