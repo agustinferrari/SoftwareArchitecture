@@ -1,5 +1,9 @@
 import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
+import {APIScheduler} from "./EventSchedulers/APIScheduler";
+import {ElectionScheduler} from "./EventSchedulers/ElectionScheduler";
+import { ElectionDTO } from "../Common/Domain";
+
 import { ElectionCache, ElectionModel, RedisContext } from "./../Common/Redis";
 import {INotificationSender} from"../Common/NotificationSender/INotificationSender";
 import {EmailNotificationSender} from "../Common/NotificationSender/EmailNotificationSender";
@@ -36,6 +40,10 @@ sequelizeContext.addModels([
   Voter,
   Candidate,
 ]);
+
+// Se inicia la accion recurrente de get Elections
+const scheduler = new APIScheduler();
+scheduler.startRecurrentGet();
 
 async function addOneElection() {
   await syncAllModels();

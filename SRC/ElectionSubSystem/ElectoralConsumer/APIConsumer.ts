@@ -1,10 +1,10 @@
 import Axios, { AxiosInstance } from "axios";
-
 import config from "config";
 import { IConsumer } from "./IConsumer";
 import { ElectionDTO } from "../../Common/Domain";
 import { HTTPRequestError } from "./../Errors/HTTPRequestError";
 import { Parameter } from "./Parameter";
+
 
 export class APIConsumer implements IConsumer {
   axios: AxiosInstance;
