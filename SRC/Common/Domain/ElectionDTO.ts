@@ -25,6 +25,7 @@ export class ElectionDTO {
     });
   }
 
+
   name: string;
   id: number;
   description: string;

@@ -13,7 +13,7 @@ export class APIScheduler {
         this.rule.minute = config.get("API.fetchDate.minute");;
     }
     
-    public startRecurrentFetch = () => {
+    public startRecurrentGet = () => {
        scheduleJob(this.rule, () => {
         console.log("get");
         this.consumer.getElections().then((elections) => {console.log(elections)})
