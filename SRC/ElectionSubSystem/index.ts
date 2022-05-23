@@ -1,5 +1,12 @@
 import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
+import {INotificationSender} from"../Common/NotificationSender/INotificationSender";
+import {EmailNotificationSender} from "../Common/NotificationSender/EmailNotificationSender";
+import {SMSNotificationSender} from "../Common/NotificationSender/SMSNotificationSender";
+
+let currentESender = new EmailNotificationSender();
+let currentMSender = new SMSNotificationSender();
+
 let specificConsumer: IConsumer = new APIConsumer([]);
 
 import {
@@ -15,7 +22,6 @@ import {
 } from "../Common/Models";
 
 import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
-import { Sequelize } from "sequelize-typescript";
 
 import { sequelizeContext, syncAllModels } from "../Common/Models";
 
@@ -43,6 +49,10 @@ async function addOneElection() {
 
   let foundElection1 = await specificConsumer.getElection(7);
   let foundElection2 = await specificConsumer.getElection(8);
+
+  currentESender.sendNotification(foundElection1.name);
+  currentMSender.sendNotification(foundElection2.name);
+
   let electionCommand = new ElectionCommand();
   electionCommand.addElections([foundElection1, foundElection2]);
   // let initialAdditions = async () => {
