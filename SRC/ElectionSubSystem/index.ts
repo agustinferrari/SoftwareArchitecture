@@ -1,5 +1,6 @@
 import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
+import { ElectionCache, ElectionModel, RedisContext } from "./../Common/Redis";
 import {INotificationSender} from"../Common/NotificationSender/INotificationSender";
 import {EmailNotificationSender} from "../Common/NotificationSender/EmailNotificationSender";
 import {SMSNotificationSender} from "../Common/NotificationSender/SMSNotificationSender";
@@ -37,14 +38,6 @@ sequelizeContext.addModels([
 ]);
 
 async function addOneElection() {
-  // await Election.sync({ alter: true });
-  // await Party.sync({ alter: true });
-  // await Candidate.sync({ alter: true });
-  // await Voter.sync({ alter: true });
-  // await Circuit.sync({ alter: true });
-  // await ElectionCandidate.sync({ alter: true });
-  // await ElectionCircuit.sync({ alter: true });
-  // await ElectionCircuitVoter.sync({ alter: true });
   await syncAllModels();
 
   let foundElection1 = await specificConsumer.getElection(7);
@@ -54,40 +47,17 @@ async function addOneElection() {
   currentMSender.sendNotification(foundElection2.name);
 
   let electionCommand = new ElectionCommand();
-  electionCommand.addElections([foundElection1, foundElection2]);
-  // let initialAdditions = async () => {
-  //   foundElection.parties.map((p: PartyDTO) => {
-  //     Party.create(p, { ignoreDuplicates: true });
-  //   });
+  //electionCommand.addElections([foundElection1, foundElection2]);
 
-  //   Election.create(foundElection, {
-  //     include: [{ model: Candidate, ignoreDuplicates: true }],
-  //   });
+  let electionCache = new ElectionCache(new RedisContext());
+  electionCache.addElection(
+    new ElectionModel(foundElection1.id, foundElection1.name, true)
+  );
+  electionCache.addElection(
+    new ElectionModel(foundElection2.id, foundElection2.name, true)
+  );
 
-  //   // foundElection.voters.map((v: VoterDTO) => {
-  //   //   Voter.create(v, { ignoreDuplicates: true });
-  //   // });
-
-  //   foundElection.circuits.map((c: CircuitDTO) => {
-  //     Circuit.create(c, { ignoreDuplicates: true }).then(() => {
-  //       ElectionCircuit.create({
-  //         electionCircuitId: `${foundElection.id}_${c.id}`,
-  //         electionId: foundElection.id,
-  //         circuitId: c.id,
-  //       });
-  //     });
-  //   });
-  // };
-
-  // await initialAdditions();
-
-  // foundElection.voters.map((v: VoterDTO) => {
-  //   Voter.create(v, { ignoreDuplicates: true }).then(() => {
-  //     ElectionCircuitVoter.create({
-  //       electionCircuitId: `${foundElection.id}_${v.circuitId}`,
-  //       voterCI: v.ci,
-  //     });
-  //   });
-  // });
+  let result: ElectionModel | null = await electionCache.getElection(7);
+  console.log(result);
 }
 addOneElection();
