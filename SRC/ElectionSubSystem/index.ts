@@ -1,5 +1,6 @@
 import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
+import {APIScheduler} from "./EventScheduler/APIScheduler";
 let specificConsumer: IConsumer = new APIConsumer([]);
 
 import {
@@ -30,54 +31,20 @@ sequelizeContext.addModels([
   Candidate,
 ]);
 
-async function addOneElection() {
-  // await Election.sync({ alter: true });
-  // await Party.sync({ alter: true });
-  // await Candidate.sync({ alter: true });
-  // await Voter.sync({ alter: true });
-  // await Circuit.sync({ alter: true });
-  // await ElectionCandidate.sync({ alter: true });
-  // await ElectionCircuit.sync({ alter: true });
-  // await ElectionCircuitVoter.sync({ alter: true });
-  await syncAllModels();
+const scheduler = new APIScheduler();
+scheduler.startRecurrentFetch();
 
-  let foundElection1 = await specificConsumer.getElection(7);
-  let foundElection2 = await specificConsumer.getElection(8);
-  let electionCommand = new ElectionCommand();
-  electionCommand.addElections([foundElection1, foundElection2]);
-  // let initialAdditions = async () => {
-  //   foundElection.parties.map((p: PartyDTO) => {
-  //     Party.create(p, { ignoreDuplicates: true });
-  //   });
 
-  //   Election.create(foundElection, {
-  //     include: [{ model: Candidate, ignoreDuplicates: true }],
-  //   });
 
-  //   // foundElection.voters.map((v: VoterDTO) => {
-  //   //   Voter.create(v, { ignoreDuplicates: true });
-  //   // });
+// async function addOneElection() {
 
-  //   foundElection.circuits.map((c: CircuitDTO) => {
-  //     Circuit.create(c, { ignoreDuplicates: true }).then(() => {
-  //       ElectionCircuit.create({
-  //         electionCircuitId: `${foundElection.id}_${c.id}`,
-  //         electionId: foundElection.id,
-  //         circuitId: c.id,
-  //       });
-  //     });
-  //   });
-  // };
+//   await syncAllModels();
 
-  // await initialAdditions();
+//   let foundElection1 = await specificConsumer.getElection(7);
+//   let foundElection2 = await specificConsumer.getElection(8);
+//   let electionCommand = new ElectionCommand();
+//   electionCommand.addElections([foundElection1, foundElection2]);
 
-  // foundElection.voters.map((v: VoterDTO) => {
-  //   Voter.create(v, { ignoreDuplicates: true }).then(() => {
-  //     ElectionCircuitVoter.create({
-  //       electionCircuitId: `${foundElection.id}_${v.circuitId}`,
-  //       voterCI: v.ci,
-  //     });
-  //   });
-  // });
-}
-addOneElection();
+// }
+// addOneElection();
+

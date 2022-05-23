@@ -1,0 +1,15 @@
+{
+  "name": "pruebascheduler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node-schedule": "^2.1.0",
+    "node-schedule": "^2.1.0"
+  }
+}
