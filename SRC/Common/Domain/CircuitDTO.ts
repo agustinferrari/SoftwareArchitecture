@@ -1,4 +1,4 @@
-export class Circuit {
+export class CircuitDTO {
   constructor(inputJSON: any) {
     this.id = inputJSON.id;
     this.state = inputJSON.state;

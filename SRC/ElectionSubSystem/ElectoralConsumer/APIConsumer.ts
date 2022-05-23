@@ -1,47 +1,47 @@
-import axiosPackage from "axios";
+import Axios, { AxiosInstance } from "axios";
 
 import config from "config";
 import { IConsumer } from "./IConsumer";
-import { Election } from "./../Domain/Election";
+import { ElectionDTO } from "../../Common/Domain";
 import { HTTPRequestError } from "./../Errors/HTTPRequestError";
 import { Parameter } from "./Parameter";
-import { AxiosInstance } from "axios";
 
 export class APIConsumer implements IConsumer {
   axios: AxiosInstance;
 
   constructor(parameters: Parameter[]) {
-    this.axios = axiosPackage.create({ baseURL: config.get("route") });
+    parameters;
+    this.axios = Axios.create({ baseURL: config.get("API.route") });
   }
 
-  getElections(): Promise<Election[]> {
+  getElections(): Promise<ElectionDTO[]> {
     let endpoint = "/elections";
     let errorMessage: string = "Error getting election";
     return this.axios
-      .get<Election[]>(endpoint, {
+      .get<ElectionDTO[]>(endpoint, {
         headers: {
           Accept: "application/json",
         },
       })
       .then(function (response) {
-        return response.data.map((election) => new Election(election));
+        return response.data.map((election) => new ElectionDTO(election));
       })
       .catch(function (error) {
         throw new HTTPRequestError(errorMessage + " " + error.message);
       });
   }
 
-  getElection(id: number): Promise<Election> {
+  getElection(id: number): Promise<ElectionDTO> {
     let endpoint: string = "/elections/" + id;
     let errorMessage: string = "Error getting election";
     return this.axios
-      .get<Election>(endpoint, {
+      .get<ElectionDTO>(endpoint, {
         headers: {
           Accept: "application/json",
         },
       })
       .then(function (response) {
-        return new Election(response.data);
+        return new ElectionDTO(response.data);
       })
       .catch(function (error) {
         throw new HTTPRequestError(errorMessage + " " + error.message);

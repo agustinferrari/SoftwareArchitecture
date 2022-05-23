@@ -1,5 +1,5 @@
-import { Person } from "./Person";
-export class Voter extends Person {
+import { PersonDTO } from "./PersonDTO";
+export class VoterDTO extends PersonDTO {
   constructor(voterJSON: any) {
     super(voterJSON);
     this.residency = voterJSON.residency;
