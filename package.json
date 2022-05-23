@@ -8,7 +8,7 @@
     "buildCommon": "cd ./SRC/Common/ && tsc -b && cp package*.json ../dist/Common/ && cp -R ./config  ../dist/Common/ && cd ../dist/Common/ && npm ci --production",
     "buildAll": "cd ./SRC && tsc -b && cd .. && npm run buildCommon && npm run buildElectionSubSystem",
     "electoralAPI": "json-server --watch ./Utilities/APIAutoridadElectoral/SimulatedElectoralAPI.json",
-    "electionSubSystem": "cd ./SRC/ElectionSubSystem/ && npm run dev",
+    "electionSubSystem": "npm run buildAll && cd ./SRC/ElectionSubSystem/ && npm run dev",
     "all": "npm run electoralAPI & npm run electionSubSystem",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
