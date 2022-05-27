@@ -26,6 +26,9 @@ export class Election extends Model<ElectionDTO, ElectionDTO> {
   description!: string;
 
   @Column
+  voterCount!: number;
+
+  @Column
   startDate!: Date;
 
   @Column

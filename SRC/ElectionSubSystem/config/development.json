@@ -5,10 +5,12 @@
     "fetchDate": {"date": "23", "hour": "16", "minute": "6"}
   },
   "EmailSender": {
-    "route": "http://localhost:3000"
+    "route": "http://localhost:3000",
+    "endpoint":"/emails"
   },
   "MessageSender": {
-    "route": "http://localhost:3000"
+    "route": "http://localhost:3000",
+    "endpoint":"/messages"
   },
   "SQL_DB": {
     "name": "appEvDB",

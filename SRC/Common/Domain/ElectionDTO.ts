@@ -14,6 +14,9 @@ export class ElectionDTO {
     this.voters = inputJson.voters.map((voter: any) => {
       return new VoterDTO(voter);
     });
+
+    this.voterCount = this.voters.length;
+
     this.candidates = inputJson.candidates.map((candidate: any) => {
       return new CandidateDTO(candidate);
     });
@@ -25,7 +28,6 @@ export class ElectionDTO {
     });
   }
 
-
   name: string;
   id: number;
   description: string;
@@ -33,6 +35,7 @@ export class ElectionDTO {
   endDate: string;
   mode: Enumerator;
   voters: VoterDTO[];
+  voterCount: number;
   candidates: CandidateDTO[];
   parties: PartyDTO[];
   circuits: CircuitDTO[];
