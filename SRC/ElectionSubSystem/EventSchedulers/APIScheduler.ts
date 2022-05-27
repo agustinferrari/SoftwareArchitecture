@@ -1,11 +1,13 @@
 import { scheduleJob, RecurrenceRule } from "node-schedule";
 import config from "config";
 import { APIConsumer } from "../ElectoralConsumer/APIConsumer";
+import { ElectionManager } from "../ElectionManager";
 
-export class APIScheduler {
-
+export class APIScheduler  {
+  
     rule = new RecurrenceRule();
     consumer = new APIConsumer([]);
+    manager = new ElectionManager();
     
     constructor() {
         this.rule.date = config.get("API.fetchDate.date");
@@ -14,9 +16,9 @@ export class APIScheduler {
     }
     
     public startRecurrentGet = () => {
+      console.log("api scheduled")
        scheduleJob(this.rule, () => {
-        console.log("get");
-        this.consumer.getElections().then((elections) => {console.log(elections)})
+        this.consumer.getElections().then((elections) => { this.manager.handleElections(elections)})
       })
     }
 
