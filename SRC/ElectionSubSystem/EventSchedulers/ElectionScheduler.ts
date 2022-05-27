@@ -1,17 +1,27 @@
-import { scheduleJob, RecurrenceRule } from "node-schedule";
+import { scheduleJob } from "node-schedule";
+import { ElectionManager } from "../ElectionManager";
 import { ElectionDTO } from "../../Common/Domain";
 
 export class ElectionScheduler{
+   
+    manager:ElectionManager;
 
-   public scheduleStartElection(election: ElectionDTO){            
+    constructor(manager:ElectionManager){
+        this.manager = manager;
+    }
+
+   public async scheduleStartElection(election: ElectionDTO) : Promise<void>{   
+        console.log("scheduled start election" + election.id);                  
         scheduleJob(this.parseDate(election.startDate),()=>{
-            console.log("start election" + election.id);
+            this.manager.startElection(election);
         } )
     }
 
-    public scheduleEndElection(election: ElectionDTO){            
+    public async scheduleEndElection(election: ElectionDTO) : Promise<void>{   
+        console.log("scheduled end election" + election.id);         
         scheduleJob(this.parseDate(election.endDate),()=>{
-            console.log("end election" + election.id);
+            this.manager.endElection(election);
+
         } )
     }
 

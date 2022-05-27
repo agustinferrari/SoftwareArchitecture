@@ -42,30 +42,31 @@ sequelizeContext.addModels([
 ]);
 
 // Se inicia la accion recurrente de get Elections
+//   await syncAllModels();
 const scheduler = new APIScheduler();
 scheduler.startRecurrentGet();
 
-async function addOneElection() {
-  await syncAllModels();
+// async function addOneElection() {
 
-  let foundElection1 = await specificConsumer.getElection(7);
-  let foundElection2 = await specificConsumer.getElection(8);
 
-  currentESender.sendNotification(foundElection1.name);
-  currentMSender.sendNotification(foundElection2.name);
+//   let foundElection1 = await specificConsumer.getElection(7);
+//   let foundElection2 = await specificConsumer.getElection(8);
 
-  let electionCommand = new ElectionCommand();
-  //electionCommand.addElections([foundElection1, foundElection2]);
+//   currentESender.sendNotification(foundElection1.name);
+//   currentMSender.sendNotification(foundElection2.name);
 
-  let electionCache = new ElectionCache(new RedisContext());
-  electionCache.addElection(
-    new ElectionModel(foundElection1.id, foundElection1.name, true)
-  );
-  electionCache.addElection(
-    new ElectionModel(foundElection2.id, foundElection2.name, true)
-  );
+//   let electionCommand = new ElectionCommand();
+//   //electionCommand.addElections([foundElection1, foundElection2]);
 
-  let result: ElectionModel | null = await electionCache.getElection(7);
-  console.log(result);
-}
-addOneElection();
+//   let electionCache = new ElectionCache(new RedisContext());
+//   electionCache.addElection(
+//     new ElectionModel(foundElection1.id, foundElection1.name, true)
+//   );
+//   electionCache.addElection(
+//     new ElectionModel(foundElection2.id, foundElection2.name, true)
+//   );
+
+//   let result: ElectionModel | null = await electionCache.getElection(7);
+//   console.log(result);
+// }
+// addOneElection();

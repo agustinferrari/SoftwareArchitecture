@@ -33,7 +33,7 @@ export class ElectionCommand {
     });
   }
 
-  private addElection(election: ElectionDTO): void {
+  public async addElection(election: ElectionDTO): Promise<void> {
     new Promise<ElectionDTO>((resolve, rejects) => {
       try {
         this.addParties(election.parties);

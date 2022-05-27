@@ -1,1235 +1,259 @@
 {
   "elections": [
     {
-      "id": 1,
-      "description": "Elección presidencial",
-      "startDate": "yyyy-MM-dd-hh-mm",
-      "endDate": "yyyy-MM-dd-hh-mm",
+      "id": 86834,
+      "name": "Election Solutions",
+      "startDate": "2023-03-03 15:2:12",
+      "endDate": "2024-02-27 4:27:46",
       "mode": "unique",
-      "voters": [
+      "circuits": [
+        { "id": 78521, "department": "Keller", "location": "Owensboro" },
         {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
+          "id": 51546,
+          "department": "Riverside",
+          "location": "New Elliottmouth"
         },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Martin Roberto",
-          "lastName": "Peterson",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        }
+        { "id": 82848, "department": "Berkeley", "location": "Gerholdboro" }
+      ],
+      "parties": [
+        { "id": 9763, "name": "olive" },
+        { "id": 88797, "name": "gold" },
+        { "id": 4609, "name": "sky blue" }
       ],
       "candidates": [
         {
-          "ci": "68232427",
-          "name": "Maria",
-          "lastName": "Jefferson",
-          "gender": "female",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 1
+          "ci": "82560888",
+          "name": "Eliane",
+          "lastName": "Marvin",
+          "gender": "Male",
+          "birthday": "1935-11-17",
+          "party": 88797
         },
         {
-          "ci": "68232427",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 3
+          "ci": "76833281",
+          "name": "Randy",
+          "lastName": "Bernier",
+          "gender": "Male",
+          "birthday": "1984-10-03",
+          "party": 70291
         },
         {
-          "ci": "56241568",
-          "name": "Martin Roberto",
-          "lastName": "Peterson Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 2
+          "ci": "89138799",
+          "name": "Jaylon",
+          "lastName": "Franecki",
+          "gender": "Female",
+          "birthday": "1997-05-14",
+          "party": 85602
         }
       ],
-      "parties": [
+      "voters": [
         {
-          "id": 1,
-          "name": "Amarillo"
+          "ci": "61494282",
+          "credential": "ee1e7ef7e6d4741e17bf9b51",
+          "name": "Jocelyn",
+          "lastName": "Kutch",
+          "gender": "Male",
+          "birthday": "1926-06-28",
+          "residency": "Independence",
+          "phone": "+598 09 931061",
+          "email": "Lexi.Rodriguez@yahoo.com",
+          "circuit": 92950
         },
         {
-          "id": 2,
-          "name": "Violeta"
+          "ci": "77476460",
+          "credential": "9fe00dbd33dcf112db9fd5e0",
+          "name": "Nathen",
+          "lastName": "Flatley",
+          "gender": "Female",
+          "birthday": "1949-07-19",
+          "residency": "Duluth",
+          "phone": "+598 25 600417",
+          "email": "Anibal.Lueilwitz@gmail.com",
+          "circuit": 82848
         },
         {
-          "id": 3,
-          "name": "Azul"
-        }
-      ],
-      "circuits": [
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
+          "ci": "47679133",
+          "credential": "0a541a1d729ecbb3ddd530c5",
+          "name": "Faustino",
+          "lastName": "Kertzmann",
+          "gender": "Male",
+          "birthday": "1931-11-15",
+          "residency": "Wilson",
+          "phone": "+598 84 324382",
+          "email": "Magdalena69@gmail.com",
+          "circuit": 36126
         }
       ]
     },
     {
-      "id": 3,
-      "description": "Elección club",
-      "startDate": "yyyy-MM-dd-hh-mm",
-      "endDate": "yyyy-MM-dd-hh-mm",
+      "id": 44247,
+      "name": "Election Accountability",
+      "startDate": "2022-06-05 11:19:23",
+      "endDate": "2023-01-24 19:15:59",
       "mode": "unique",
-      "voters": [
+      "circuits": [
         {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
+          "id": 92950,
+          "department": "Chapel Hill",
+          "location": "West Katharina"
         },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Martin Roberto",
-          "lastName": "Peterson",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        }
+        { "id": 8737, "department": "Jackson", "location": "Gideonbury" },
+        { "id": 36126, "department": "Altadena", "location": "Thompsonland" }
+      ],
+      "parties": [
+        { "id": 85602, "name": "silver" },
+        { "id": 4609, "name": "sky blue" },
+        { "id": 8143, "name": "red" }
       ],
       "candidates": [
         {
-          "ci": "68232427",
-          "name": "Maria",
-          "lastName": "Jefferson",
-          "gender": "female",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 1
+          "ci": "82560888",
+          "name": "Eliane",
+          "lastName": "Marvin",
+          "gender": "Male",
+          "birthday": "1935-11-17",
+          "party": 88797
         },
         {
-          "ci": "68232427",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 3
+          "ci": "37340015",
+          "name": "Dora",
+          "lastName": "Vandervort",
+          "gender": "Male",
+          "birthday": "1984-01-05",
+          "party": 4609
         },
         {
-          "ci": "56241568",
-          "name": "Martin Roberto",
-          "lastName": "Peterson Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 2
+          "ci": "51657391",
+          "name": "Verda",
+          "lastName": "Okuneva",
+          "gender": "Female",
+          "birthday": "1981-04-13",
+          "party": 4609
         }
       ],
-      "parties": [
+      "voters": [
         {
-          "id": 1,
-          "name": "Amarillo"
+          "ci": "61921223",
+          "credential": "bd5f36eac933a9e9701aafa6",
+          "name": "Saige",
+          "lastName": "Rath",
+          "gender": "Male",
+          "birthday": "1956-01-17",
+          "residency": "State College",
+          "phone": "+598 12 011538",
+          "email": "Monica_Stroman@gmail.com",
+          "circuit": 31388
         },
         {
-          "id": 2,
-          "name": "Violeta"
+          "ci": "47679133",
+          "credential": "0a541a1d729ecbb3ddd530c5",
+          "name": "Faustino",
+          "lastName": "Kertzmann",
+          "gender": "Male",
+          "birthday": "1931-11-15",
+          "residency": "Wilson",
+          "phone": "+598 84 324382",
+          "email": "Magdalena69@gmail.com",
+          "circuit": 36126
         },
         {
-          "id": 3,
-          "name": "Azul"
-        }
-      ],
-      "circuits": [
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
+          "ci": "79403130",
+          "credential": "439cd8bc7118bfa50ca0605d",
+          "name": "Cleve",
+          "lastName": "Herman",
+          "gender": "Female",
+          "birthday": "1942-03-11",
+          "residency": "Newark",
+          "phone": "+598 24 016772",
+          "email": "Yoshiko_Casper5@gmail.com",
+          "circuit": 8737
         }
       ]
     },
     {
-      "id": 4,
-      "description": "Elección club",
-      "startDate": "yyyy-MM-dd-hh-mm",
-      "endDate": "yyyy-MM-dd-hh-mm",
-      "mode": "unique",
-      "voters": [
+      "id": 69365,
+      "name": "Election Program",
+      "startDate": "2022-07-30 19:50:35",
+      "endDate": "2023-06-03 23:3:42",
+      "mode": "repeated",
+      "circuits": [
+        { "id": 36126, "department": "Altadena", "location": "Thompsonland" },
+        { "id": 82848, "department": "Berkeley", "location": "Gerholdboro" },
         {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Martin Roberto",
-          "lastName": "Peterson",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        }
-      ],
-      "candidates": [
-        {
-          "ci": "68232427",
-          "name": "Maria",
-          "lastName": "Jefferson",
-          "gender": "female",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 1
-        },
-        {
-          "ci": "68232427",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 3
-        },
-        {
-          "ci": "56241568",
-          "name": "Martin Roberto",
-          "lastName": "Peterson Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 2
+          "id": 31388,
+          "department": "Springfield",
+          "location": "Port Jacynthe"
         }
       ],
       "parties": [
-        {
-          "id": 1,
-          "name": "Amarillo"
-        },
-        {
-          "id": 2,
-          "name": "Violeta"
-        },
-        {
-          "id": 3,
-          "name": "Azul"
-        }
-      ],
-      "circuits": [
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "description": "Elección club",
-      "startDate": "yyyy-MM-dd-hh-mm",
-      "endDate": "yyyy-MM-dd-hh-mm",
-      "mode": "unique",
-      "voters": [
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Martin Roberto",
-          "lastName": "Peterson",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        }
+        { "id": 70291, "name": "orange" },
+        { "id": 22608, "name": "gold" },
+        { "id": 573, "name": "mint green" }
       ],
       "candidates": [
         {
-          "ci": "68232427",
-          "name": "Maria",
-          "lastName": "Jefferson",
-          "gender": "female",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 1
+          "ci": "89138799",
+          "name": "Jaylon",
+          "lastName": "Franecki",
+          "gender": "Female",
+          "birthday": "1997-05-14",
+          "party": 85602
         },
         {
-          "ci": "68232427",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 3
+          "ci": "37340015",
+          "name": "Dora",
+          "lastName": "Vandervort",
+          "gender": "Male",
+          "birthday": "1984-01-05",
+          "party": 4609
         },
         {
-          "ci": "56241568",
-          "name": "Martin Roberto",
-          "lastName": "Peterson Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 2
+          "ci": "15704332",
+          "name": "Cordia",
+          "lastName": "Conn",
+          "gender": "Male",
+          "birthday": "1963-02-01",
+          "party": 32620
         }
       ],
-      "parties": [
-        {
-          "id": 1,
-          "name": "Amarillo"
-        },
-        {
-          "id": 2,
-          "name": "Violeta"
-        },
-        {
-          "id": 3,
-          "name": "Azul"
-        }
-      ],
-      "circuits": [
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "description": "Elección club",
-      "startDate": "yyyy-MM-dd-hh-mm",
-      "endDate": "yyyy-MM-dd-hh-mm",
-      "mode": "unique",
       "voters": [
         {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
+          "ci": "61921223",
+          "credential": "bd5f36eac933a9e9701aafa6",
+          "name": "Saige",
+          "lastName": "Rath",
+          "gender": "Male",
+          "birthday": "1956-01-17",
+          "residency": "State College",
+          "phone": "+598 12 011538",
+          "email": "Monica_Stroman@gmail.com",
+          "circuit": 31388
         },
         {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Martin Roberto",
-          "lastName": "Peterson",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
+          "ci": "79403130",
+          "credential": "439cd8bc7118bfa50ca0605d",
+          "name": "Cleve",
+          "lastName": "Herman",
+          "gender": "Female",
+          "birthday": "1942-03-11",
+          "residency": "Newark",
+          "phone": "+598 24 016772",
+          "email": "Yoshiko_Casper5@gmail.com",
+          "circuit": 8737
         },
         {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        },
-        {
-          "ci": "68232427",
-          "credential": "Otra_cosa",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "residency": "Montevideo",
-          "circuitId": 1409,
-          "phone": "095487432",
-          "email": "JMartinez@gmail.com"
-        }
-      ],
-      "candidates": [
-        {
-          "ci": "68232427",
-          "name": "Maria",
-          "lastName": "Jefferson",
-          "gender": "female",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 1
-        },
-        {
-          "ci": "68232427",
-          "name": "Juan Roberto",
-          "lastName": "Martinez Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 3
-        },
-        {
-          "ci": "56241568",
-          "name": "Martin Roberto",
-          "lastName": "Peterson Hernandez",
-          "gender": "male",
-          "birthday": "yyyy-MM-dd",
-          "partyId": 2
-        }
-      ],
-      "parties": [
-        {
-          "id": 1,
-          "name": "Amarillo"
-        },
-        {
-          "id": 2,
-          "name": "Violeta"
-        },
-        {
-          "id": 3,
-          "name": "Azul"
-        }
-      ],
-      "circuits": [
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        },
-        {
-          "id": 1409,
-          "department": "Montevideo",
-          "location": "centro"
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "name": "Presidencia",
-      "description": "Elección club",
-      "startDate": "2000-11-05 12:11:10",
-      "endDate": "2000-11-05 20:30:40",
-      "mode": "unique",
-      "voters": [
-        {
-          "ci": "111111111",
-          "credential": "CredencialUno",
-          "name": "Unos",
-          "lastName": "UnosUnos",
-          "gender": "male",
-          "birthday": "2000-11-05",
-          "residency": "Montevideo",
-          "circuitId": 1,
-          "phone": "11111",
-          "email": "unos@gmail.com"
-        },
-        {
-          "ci": "222222222",
-          "credential": "CredencialDos",
-          "name": "Dos",
-          "lastName": "DosDos",
-          "gender": "female",
-          "birthday": "1999-05-06",
-          "residency": "Colonia",
-          "circuitId": 2,
-          "phone": "22222",
-          "email": "dos@hotmail.com"
-        },
-        {
-          "ci": "3333333333",
-          "credential": "CredencialTres",
-          "name": "Tres",
-          "lastName": "TresTres",
-          "gender": "not disclosed",
-          "birthday": "2001-01-02",
-          "residency": "Montevideo",
-          "circuitId": 1,
-          "phone": "333",
-          "email": "tres@yahoo.com"
-        }
-      ],
-      "candidates": [
-        {
-          "ci": "3333333333",
-          "credential": "CredencialTres",
-          "name": "Tres",
-          "lastName": "TresTres",
-          "gender": "not disclosed",
-          "birthday": "2001-01-02",
-          "partyId": 1
-        },
-        {
-          "ci": "222222222",
-          "credential": "CredencialDos",
-          "name": "Dos",
-          "lastName": "DosDos",
-          "gender": "female",
-          "birthday": "1999-05-06",
-          "partyId": 2
-        }
-      ],
-      "parties": [
-        {
-          "id": 1,
-          "name": "Amarillo"
-        },
-        {
-          "id": 2,
-          "name": "Violeta"
-        }
-      ],
-      "circuits": [
-        {
-          "id": 1,
-          "state": "Montevideo",
-          "location": "Centro"
-        },
-        {
-          "id": 2,
-          "state": "Colonia",
-          "location": "Centro"
-        },
-        {
-          "id": 3,
-          "state": "Artigas",
-          "location": "centro"
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "name": "Intendencia",
-      "description": "Eleccion intendencia",
-      "startDate": "2000-11-05 12:11:10",
-      "endDate": "2000-11-05 20:30:40",
-      "mode": "unique",
-      "voters": [
-        {
-          "ci": "111111111",
-          "credential": "CredencialUno",
-          "name": "Unos",
-          "lastName": "UnosUnos",
-          "gender": "male",
-          "birthday": "2000-11-05",
-          "residency": "Montevideo",
-          "circuitId": 3,
-          "phone": "11111",
-          "email": "unos@gmail.com"
-        },
-        {
-          "ci": "3333333333",
-          "credential": "CredencialTres",
-          "name": "Tres",
-          "lastName": "TresTres",
-          "gender": "not disclosed",
-          "birthday": "2001-01-02",
-          "residency": "Montevideo",
-          "circuitId": 4,
-          "phone": "333",
-          "email": "tres@yahoo.com"
-        },
-        {
-          "ci": "444444444",
-          "credential": "CredencialCuatro",
-          "name": "Cuatros",
-          "lastName": "CuatrosCuatros",
-          "gender": "male",
-          "birthday": "2020-11-05",
-          "residency": "Montevideo",
-          "circuitId": 2,
-          "phone": "4444444",
-          "email": "cuatros@gmail.com"
-        }
-      ],
-      "candidates": [
-        {
-          "ci": "3333333333",
-          "credential": "CredencialTres",
-          "name": "Tres",
-          "lastName": "TresTres",
-          "gender": "not disclosed",
-          "birthday": "2001-01-02",
-          "partyId": 1
-        }
-      ],
-      "parties": [
-        {
-          "id": 3,
-          "name": "Rojo"
-        },
-        {
-          "id": 2,
-          "name": "Violeta"
-        }
-      ],
-      "circuits": [
-        {
-          "id": 4,
-          "state": "Canelones",
-          "location": "Fuera"
-        },
-        {
-          "id": 2,
-          "state": "Colonia",
-          "location": "Centro"
-        },
-        {
-          "id": 3,
-          "state": "Artigas",
-          "location": "centro"
+          "ci": "22394950",
+          "credential": "8dfc55aa2ab6302fc5d239ca",
+          "name": "Tabitha",
+          "lastName": "Kreiger",
+          "gender": "Female",
+          "birthday": "1933-06-24",
+          "residency": "Florin",
+          "phone": "+598 38 766833",
+          "email": "Angelita_Kuvalis@yahoo.com",
+          "circuit": 32307
         }
       ]
     }
-  ],
-  "emails": [
-  ],
-  "messages": [
   ]
 }
