@@ -86,16 +86,4 @@ class ElectionGenerator {
     }
 }
 
-let electionGenerator = new ElectionGenerator(78,8,25,1000);
-let elections = electionGenerator.generateElections(3);
-//console.log(JSON.stringify(elections));
-
-
-const fs = require('fs');
-try {
-    fs.writeFileSync('../GeneratedElections.json', JSON.stringify({elections : elections})); 
-    console.log("JSON data is saved.");
-} catch (error) {
-    console.error(error);
-}
-
+module.exports = ElectionGenerator;
