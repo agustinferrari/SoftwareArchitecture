@@ -1,13 +1,3 @@
-// import { CircuitDTO } from "../../../Common/Domain/CircuitDTO";
-// import { ElectionDTO } from "../../../Common/Domain/ElectionDTO";
-// import { PartyDTO } from "../../../Common/Domain/PartyDTO";
-// import { VoterDTO } from "../../../Common/Domain/VoterDTO";
-
-// import { Candidate } from "../../../Common/Models/Candidate";
-// import { Circuit } from "../../../Common/Models/Circuit";
-// import { Election, ElectionCircuit, ElectionCircuitVoter } from "../../../Common/Models/Election";
-// import { Party } from "../../../Common/Models/Party";
-// import { Voter } from "../../../Common/Models/Voter";
 import {
   CircuitDTO,
   ElectionDTO,
@@ -27,6 +17,7 @@ import {
 } from "../../../Common/Models";
 
 export class ElectionCommand {
+
   addElections(elections: ElectionDTO[]): void {
     elections.map((election: ElectionDTO) => {
       this.addElection(election);
@@ -46,9 +37,13 @@ export class ElectionCommand {
       } catch (error) {
         rejects("Error adding:" + error);
       }
-    }).then((election) => {
-      this.addVoters(election);
-    });
+    })
+      .then((election) => {
+        this.addVoters(election);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   private addParties(parties: PartyDTO[]): void {

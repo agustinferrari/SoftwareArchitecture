@@ -4,10 +4,12 @@
       "key": ""
     },
     "EmailSender": {
-      "route": "http://localhost:3000"
+      "route": "http://localhost:3000",
+      "endpoint":"/emails"
     },
     "MessageSender": {
-      "route": "http://localhost:3000"
+      "route": "http://localhost:3000",
+      "endpoint":"/messages"
     },
     "SQL_DB": {
       "name": "appEvDB",
