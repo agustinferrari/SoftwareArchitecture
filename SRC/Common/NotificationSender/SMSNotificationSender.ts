@@ -5,9 +5,9 @@ import { INotificationSender } from "./INotificationSender";
 export class SMSNotificationSender implements INotificationSender {
   axios: AxiosInstance;
   endpoint: string;
-  predefinedDestination: [];
+  predefinedDestination: string[];
 
-  constructor(predefinedDestination: []) {
+  constructor(predefinedDestination: string[]) {
     this.predefinedDestination = predefinedDestination;
     this.endpoint = config.get("MessageSender.endpoint");
     this.axios = Axios.create({ baseURL: config.get("MessageSender.route") });

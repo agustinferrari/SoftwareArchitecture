@@ -2,7 +2,7 @@
   "API": {
     "route": "http://localhost:3000",
     "key": "",
-    "fetchDate": {"date": "23", "hour": "16", "minute": "6"}
+    "fetchDate": {"date": "27", "hour": "17", "minute": "38"}
   },
   "EmailSender": {
     "route": "http://localhost:3000",

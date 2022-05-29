@@ -1,0 +1,261 @@
+{
+  "elections": [
+    {
+      "id": 86834,
+      "name": "Election Solutions",
+      "startDate": "2023-03-03 15:2:12",
+      "endDate": "2024-02-27 4:27:46",
+      "mode": "unique",
+      "circuits": [
+        { "id": 78521, "department": "Keller", "location": "Owensboro" },
+        {
+          "id": 51546,
+          "department": "Riverside",
+          "location": "New Elliottmouth"
+        },
+        { "id": 82848, "department": "Berkeley", "location": "Gerholdboro" }
+      ],
+      "parties": [
+        { "id": 9763, "name": "olive" },
+        { "id": 88797, "name": "gold" },
+        { "id": 4609, "name": "sky blue" }
+      ],
+      "candidates": [
+        {
+          "ci": "82560888",
+          "name": "Eliane",
+          "lastName": "Marvin",
+          "gender": "Male",
+          "birthday": "1935-11-17",
+          "party": 88797
+        },
+        {
+          "ci": "76833281",
+          "name": "Randy",
+          "lastName": "Bernier",
+          "gender": "Male",
+          "birthday": "1984-10-03",
+          "party": 70291
+        },
+        {
+          "ci": "89138799",
+          "name": "Jaylon",
+          "lastName": "Franecki",
+          "gender": "Female",
+          "birthday": "1997-05-14",
+          "party": 85602
+        }
+      ],
+      "voters": [
+        {
+          "ci": "61494282",
+          "credential": "ee1e7ef7e6d4741e17bf9b51",
+          "name": "Jocelyn",
+          "lastName": "Kutch",
+          "gender": "Male",
+          "birthday": "1926-06-28",
+          "residency": "Independence",
+          "phone": "+598 09 931061",
+          "email": "Lexi.Rodriguez@yahoo.com",
+          "circuit": 92950
+        },
+        {
+          "ci": "77476460",
+          "credential": "9fe00dbd33dcf112db9fd5e0",
+          "name": "Nathen",
+          "lastName": "Flatley",
+          "gender": "Female",
+          "birthday": "1949-07-19",
+          "residency": "Duluth",
+          "phone": "+598 25 600417",
+          "email": "Anibal.Lueilwitz@gmail.com",
+          "circuit": 82848
+        },
+        {
+          "ci": "47679133",
+          "credential": "0a541a1d729ecbb3ddd530c5",
+          "name": "Faustino",
+          "lastName": "Kertzmann",
+          "gender": "Male",
+          "birthday": "1931-11-15",
+          "residency": "Wilson",
+          "phone": "+598 84 324382",
+          "email": "Magdalena69@gmail.com",
+          "circuit": 36126
+        }
+      ]
+    },
+    {
+      "id": 44247,
+      "name": "Election Accountability",
+      "startDate": "2022-06-05 11:19:23",
+      "endDate": "2023-01-24 19:15:59",
+      "mode": "unique",
+      "circuits": [
+        {
+          "id": 92950,
+          "department": "Chapel Hill",
+          "location": "West Katharina"
+        },
+        { "id": 8737, "department": "Jackson", "location": "Gideonbury" },
+        { "id": 36126, "department": "Altadena", "location": "Thompsonland" }
+      ],
+      "parties": [
+        { "id": 85602, "name": "silver" },
+        { "id": 4609, "name": "sky blue" },
+        { "id": 8143, "name": "red" }
+      ],
+      "candidates": [
+        {
+          "ci": "82560888",
+          "name": "Eliane",
+          "lastName": "Marvin",
+          "gender": "Male",
+          "birthday": "1935-11-17",
+          "party": 88797
+        },
+        {
+          "ci": "37340015",
+          "name": "Dora",
+          "lastName": "Vandervort",
+          "gender": "Male",
+          "birthday": "1984-01-05",
+          "party": 4609
+        },
+        {
+          "ci": "51657391",
+          "name": "Verda",
+          "lastName": "Okuneva",
+          "gender": "Female",
+          "birthday": "1981-04-13",
+          "party": 4609
+        }
+      ],
+      "voters": [
+        {
+          "ci": "61921223",
+          "credential": "bd5f36eac933a9e9701aafa6",
+          "name": "Saige",
+          "lastName": "Rath",
+          "gender": "Male",
+          "birthday": "1956-01-17",
+          "residency": "State College",
+          "phone": "+598 12 011538",
+          "email": "Monica_Stroman@gmail.com",
+          "circuit": 31388
+        },
+        {
+          "ci": "47679133",
+          "credential": "0a541a1d729ecbb3ddd530c5",
+          "name": "Faustino",
+          "lastName": "Kertzmann",
+          "gender": "Male",
+          "birthday": "1931-11-15",
+          "residency": "Wilson",
+          "phone": "+598 84 324382",
+          "email": "Magdalena69@gmail.com",
+          "circuit": 36126
+        },
+        {
+          "ci": "79403130",
+          "credential": "439cd8bc7118bfa50ca0605d",
+          "name": "Cleve",
+          "lastName": "Herman",
+          "gender": "Female",
+          "birthday": "1942-03-11",
+          "residency": "Newark",
+          "phone": "+598 24 016772",
+          "email": "Yoshiko_Casper5@gmail.com",
+          "circuit": 8737
+        }
+      ]
+    },
+    {
+      "id": 69365,
+      "name": "Election Program",
+      "startDate": "2022-07-30 19:50:35",
+      "endDate": "2023-06-03 23:3:42",
+      "mode": "repeated",
+      "circuits": [
+        { "id": 36126, "department": "Altadena", "location": "Thompsonland" },
+        { "id": 82848, "department": "Berkeley", "location": "Gerholdboro" },
+        {
+          "id": 31388,
+          "department": "Springfield",
+          "location": "Port Jacynthe"
+        }
+      ],
+      "parties": [
+        { "id": 70291, "name": "orange" },
+        { "id": 22608, "name": "gold" },
+        { "id": 573, "name": "mint green" }
+      ],
+      "candidates": [
+        {
+          "ci": "89138799",
+          "name": "Jaylon",
+          "lastName": "Franecki",
+          "gender": "Female",
+          "birthday": "1997-05-14",
+          "party": 85602
+        },
+        {
+          "ci": "37340015",
+          "name": "Dora",
+          "lastName": "Vandervort",
+          "gender": "Male",
+          "birthday": "1984-01-05",
+          "party": 4609
+        },
+        {
+          "ci": "15704332",
+          "name": "Cordia",
+          "lastName": "Conn",
+          "gender": "Male",
+          "birthday": "1963-02-01",
+          "party": 32620
+        }
+      ],
+      "voters": [
+        {
+          "ci": "61921223",
+          "credential": "bd5f36eac933a9e9701aafa6",
+          "name": "Saige",
+          "lastName": "Rath",
+          "gender": "Male",
+          "birthday": "1956-01-17",
+          "residency": "State College",
+          "phone": "+598 12 011538",
+          "email": "Monica_Stroman@gmail.com",
+          "circuit": 31388
+        },
+        {
+          "ci": "79403130",
+          "credential": "439cd8bc7118bfa50ca0605d",
+          "name": "Cleve",
+          "lastName": "Herman",
+          "gender": "Female",
+          "birthday": "1942-03-11",
+          "residency": "Newark",
+          "phone": "+598 24 016772",
+          "email": "Yoshiko_Casper5@gmail.com",
+          "circuit": 8737
+        },
+        {
+          "ci": "22394950",
+          "credential": "8dfc55aa2ab6302fc5d239ca",
+          "name": "Tabitha",
+          "lastName": "Kreiger",
+          "gender": "Female",
+          "birthday": "1933-06-24",
+          "residency": "Florin",
+          "phone": "+598 38 766833",
+          "email": "Angelita_Kuvalis@yahoo.com",
+          "circuit": 32307
+        }
+      ]
+    }
+  ],
+  "emails": [],
+  "messages": []
+}
