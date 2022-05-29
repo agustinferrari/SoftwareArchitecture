@@ -51,22 +51,9 @@ export class StartupHelper {
 
   private async ConfigureDBServices(): Promise<void> {
     let context: SequelizeContext = new SequelizeContext();
-    // context.connection.addModels([
-    //   Election,
-    //   ElectionCandidate,
-    //   ElectionCircuitVoter,
-    //   ElectionCircuit,
-    //   Circuit,
-    //   Party,
-    //   Voter,
-    //   Candidate,
-    // ]);
     await context.addModels();
-    await context.syncAllModels().then(() => {
-      this.command = new ElectionCommand();
-    });
-    let command : ElectionCommand = new ElectionCommand();
-    // await command.ConnectDB();
+    await context.syncAllModels();
+    let command: ElectionCommand = new ElectionCommand();
     this.command = command;
   }
 }
