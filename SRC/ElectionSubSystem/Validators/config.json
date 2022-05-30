@@ -1,0 +1,77 @@
+{
+  "startElection": [
+    {
+      "filters": [
+        {
+          "class": "DateFilter",
+          "parameters": {
+            "key1": "startDate",
+            "key2": "endDate",
+            "errorMessage": "",
+            "description": "Filtrar fecha de inicio mayor a fecha de fin"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "ArrayFilter",
+          "parameters": {
+            "key": "parties",
+            "errorMessage": "",
+            "description": "Filtrar array de partidos no vacio"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "ArrayFilter",
+          "parameters": {
+            "key": "candidates",
+            "errorMessage": "",
+            "description": "Filtrar array de candidatos no vacio"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "ArrayFilter",
+          "parameters": {
+            "key": "voters",
+            "errorMessage": "",
+            "description": "Filtrar array de votantes no vacio"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "PartyFilter",
+          "parameters": {
+            "errorMessage": "",
+            "description": "Filtrar que cada partido tenga al menos un candidato"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "ValueCategoryFilter",
+          "parameters": {
+            "key": "mode",
+            "categories": ["unique", "repeated"],
+            "errorMessage": "",
+            "description": "Filtrar modo de votacion"
+          }
+        }
+      ]
+    }
+  ]
+}
