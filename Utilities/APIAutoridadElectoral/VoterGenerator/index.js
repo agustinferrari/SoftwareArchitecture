@@ -20,7 +20,9 @@ const fs = require("fs");
 try {
   let data = fs.readFileSync("../SimulatedElectoralAPI.json");
   let json = JSON.parse(data);
-  json.elections.push(elections);
+  elections.forEach((election) => {
+    json.elections.push(election);
+  });
   fs.writeFileSync("../SimulatedElectoralAPI.json", JSON.stringify(json));
   console.log("JSON data is saved.");
 } catch (error) {
