@@ -9,15 +9,15 @@ import { PartyFilter } from "./PartyFilter";
 import { ValueCategoryFilter } from "./ValueCategoryFilter";
 
 class ValidatorManager<T> {
-  election: ElectionDTO;
-  configObject: any;
-  jsonString: any;
+  election: T;
+  jsonConfig: any;
+  step: any;
   pipeline: IFilter[][];
   constructors: Record<string, any>;
 
-  constructor(election: ElectionDTO) {
-    this.jsonString = require("./config.json");
-    this.configObject = []; // JSON.parse(this.jsonString);
+  constructor(election: T, pipelineName: string) {
+    this.jsonConfig = require("./config.json");
+    this.jsonConfig = this.jsonConfig[pipelineName];
     this.pipeline = [];
     this.constructors = {
       ArrayFilter: ArrayFilter,
@@ -29,14 +29,16 @@ class ValidatorManager<T> {
   }
 
   createPipeline() {
-    for (var filter in this.jsonString) {
-      let re = /^(\d+ )/;
-      let filterName = filter.replace(re, "");
-      let filterObj = new this.constructors[filterName](
-        this.jsonString[filter],
-        this.election
-      );
-      this.pipeline.push([filterObj]);
+    for (let stepKey in this.jsonConfig) {
+      this.step = this.jsonConfig[stepKey];
+      let filters = this.step["filters"];
+      for (let i = 0; i < filters.length; i++) {
+        let filterObj = new this.constructors[filters[i]["class"]](
+          filters[i]["parameters"],
+          this.election
+        );
+        this.pipeline.push([filterObj]);
+      }
     }
   }
 
