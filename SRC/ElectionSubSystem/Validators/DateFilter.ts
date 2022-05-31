@@ -1,5 +1,5 @@
 import { ElectionDTO } from "../../Common/Domain";
-import { IFilter } from "./IFilter";
+import { IFilter } from "../../Common/Validators/IFilter";
 
 class DateFilter implements IFilter /*<[Date, Date]>*/ {
   startDate: Date;

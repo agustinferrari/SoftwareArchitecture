@@ -29,7 +29,7 @@ class ElectionGenerator {
     }
 
     generateElection() {
-        let id = faker.datatype.number()
+        let id = faker.unique(faker.datatype.number);
         let name = "Election "+ faker.name.jobArea();
         let description = faker.lorem.sentence();
         let startDate = this.formatDate(faker.date.future().toString());

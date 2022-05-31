@@ -1,5 +1,5 @@
 import { ElectionDTO } from "../../Common/Domain";
-import { IFilter } from "./IFilter";
+import { IFilter } from "../../Common/Validators/IFilter";
 
 //create class ValueCategoryFilter that validates if a value is in a category array
 class ValueCategoryFilter implements IFilter /*<[string, string[]]>*/ {

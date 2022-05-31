@@ -6,11 +6,11 @@ class CircuitGenerator {
   }
 
   generateCircuit() {
-    let id = faker.datatype.number()
-    let department = faker.address.cityName();
+    let id = faker.unique(faker.datatype.number);
+    let state = faker.address.cityName();
     let location = faker.address.city();
 
-    let circuit = { id, department, location};
+    let circuit = { id, state, location};
     return circuit;
   }
 

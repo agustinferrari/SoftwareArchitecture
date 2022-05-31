@@ -1,5 +1,5 @@
 import { CandidateDTO, ElectionDTO, PartyDTO } from "../../Common/Domain";
-import { IFilter } from "./IFilter";
+import { IFilter } from "../../Common/Validators/IFilter";
 
 class CandidateFilter implements IFilter /*<[PartyDTO[], CandidateDTO[]]>*/ {
   parties: PartyDTO[];
