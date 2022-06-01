@@ -13,7 +13,9 @@ let electionGenerator = new ElectionGenerator(
   candidateNumber,
   voterNumber
 );
-let elections = electionGenerator.generateElections(electionNumber);
+let result = electionGenerator.generateElections(electionNumber);
+let elections = result[0];
+let voters = result[1][0];
 //console.log(JSON.stringify(elections));
 
 const fs = require("fs");
@@ -22,6 +24,10 @@ try {
   let json = JSON.parse(data);
   elections.forEach((election) => {
     json.elections.push(election);
+  });
+  voters.forEach((voter) => {
+    console.log(voter);
+    json.voters.push(voter);
   });
   fs.writeFileSync("../SimulatedElectoralAPI.json", JSON.stringify(json));
   console.log("JSON data is saved.");
