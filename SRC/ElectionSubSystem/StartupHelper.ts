@@ -52,7 +52,6 @@ export class StartupHelper {
 
     let apiParameters: Parameter[] = [];
     this.apiConsumer = new APIConsumer(apiParameters);
-    console.log("Configuring services End");
   }
 
   private async ConfigureDBServices(): Promise<void> {

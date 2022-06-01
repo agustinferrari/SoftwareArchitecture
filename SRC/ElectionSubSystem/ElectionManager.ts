@@ -50,7 +50,7 @@ export class ElectionManager {
       const scheduler = new ElectionScheduler(this);
       console.log("[Valid Election: " + election.id + "]");
 
-      await this.commander.addElectionSeq(election);
+      await this.commander.addElection(election);
       scheduler.scheduleStartElection(election);
       scheduler.scheduleEndElection(election);
     } else {
