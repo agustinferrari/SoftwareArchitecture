@@ -20,7 +20,8 @@ export class APIScheduler {
   public startRecurrentGet = () => {
     console.log("api scheduled");
     scheduleJob(this.rule, () => {
-      this.consumer.getElections().then((elections) => {
+      let includeVoters: boolean = true;
+      this.consumer.getElections(includeVoters).then((elections) => {
         this.manager.handleElections(elections);
       });
     });
