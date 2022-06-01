@@ -1,11 +1,13 @@
 import { ElectionDTO } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 
-class ArrayFilter implements IFilter /*<any[]>*/ {
+class ArrayFilter implements IFilter {
   array: any;
   key: any;
+  error: string;
   constructor(parameters: any, election: ElectionDTO) {
     this.key = parameters["key"];
+    this.error = parameters["errorMessage"];
     const getKeyValue =
       <U extends keyof T, T extends object>(key: U) =>
       (obj: T) =>
@@ -16,12 +18,9 @@ class ArrayFilter implements IFilter /*<any[]>*/ {
   }
 
   validate() {
-    if (this.array.length > 0) {
-      console.log("Array " + this.key + " valido (no vacio)");
-      return true;
+    if (this.array.length == 0) {
+      throw new Error(this.error);
     }
-    console.log("Array " + this.key + " invalido (vacio)");
-    return false;
   }
 }
 
