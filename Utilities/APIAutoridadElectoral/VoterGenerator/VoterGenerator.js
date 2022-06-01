@@ -8,7 +8,7 @@ class VoterGenerator {
     this.currentCi = 0;
   }
 
-  generateVoter() {
+  generateVoter(electionid) {
     let ci = this.random_ci();
     let credential = faker.database.mongodbObjectId();
     let name = faker.name.firstName();
@@ -22,7 +22,7 @@ class VoterGenerator {
     let email = faker.internet.email();
     let circuitId =
       this.circuits[Math.floor(Math.random() * this.circuits.length)].id;
-
+    let electionId = electionid;
     let voter = {
       ci,
       credential,
@@ -34,13 +34,14 @@ class VoterGenerator {
       phone,
       email,
       circuitId,
+      electionId
     };
     return voter;
   }
 
-  generateVoters(numberOfVoters) {
+  generateVoters(numberOfVoters, electionid) {
     for (let i = 0; i < numberOfVoters; i++) {
-      this.voters.push(this.generateVoter());
+      this.voters.push(this.generateVoter(electionid));
       clearLastLine();
       process.stdout.write(
         "\nCurrent voters: " +
