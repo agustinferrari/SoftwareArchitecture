@@ -11,11 +11,12 @@ class ElectionGenerator {
     this.partyNumber = partyNumber;
     this.candidateNumber = candidateNumber;
     this.voterNumber = voterNumber;
-
+    this.voters=[];
+    this.votersElection = [];
     //this.generateAuxData();
   }
 
-    generateAuxData(){
+    generateAuxData(electionId){
         this.circuitGenerator = new CircuitGenerator();
         this.partyGenerator = new PartyGenerator();
         this.circuits = this.circuitGenerator.generateCircuits(this.circuitNumber);
@@ -25,7 +26,7 @@ class ElectionGenerator {
         this.candidates = this.candidateGenerator.generateCandidates(this.candidateNumber);
 
         this.voterGenerator = new VoterGenerator(this.circuits);
-        this.voters = this.voterGenerator.generateVoters(this.voterNumber);
+        this.votersElection = this.voterGenerator.generateVoters(this.voterNumber, electionId);
     }
 
     generateElection() {
@@ -39,21 +40,26 @@ class ElectionGenerator {
         //let parties = this.getRandomSubarray(this.parties, this.circuitNumber/3);
         //let candidates = this.getRandomSubarray(this.candidates, this.circuitNumber/3);
         //let voters =  this.getRandomSubarray(this.voters, this.circuitNumber/3);
-        this.generateAuxData();
+        this.generateAuxData(id);
         let circuits = this.circuits;
         let parties = this.parties;
         let candidates = this.candidates;
-        let voters = this.voters;
 
-        let election = { id, name, description, startDate, endDate, mode, circuits, parties, candidates, voters };
+        // let voters = this.voters;
+
+        // let election = { id, name, description, startDate, endDate, mode, circuits, parties, candidates, voters };
+        let election = { id, name, description, startDate, endDate, mode, circuits, parties, candidates};
+
         return election;
     }
 
     generateElections(numberOfElections) {
         for (let i = 0; i < numberOfElections; i++) {
           this.elections.push(this.generateElection());
+          this.voters.push(this.votersElection);
         }
-        return this.elections;
+        
+        return [this.elections, this.voters];
     }
 
     formatDate(date) {
