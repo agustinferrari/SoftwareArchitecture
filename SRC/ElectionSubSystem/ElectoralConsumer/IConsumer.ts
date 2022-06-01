@@ -1,6 +1,8 @@
-import { ElectionDTO } from "../../Common/Domain";
+import { ElectionDTO, VoterDTO } from "../../Common/Domain";
 
 export interface IConsumer {
-  getElections(): Promise<ElectionDTO[]>;
-  getElection(id: number): Promise<ElectionDTO>;
+  getElections(includeVoters:boolean): Promise<ElectionDTO[]>;
+  getElection(id: number, includeVoters:boolean): Promise<ElectionDTO>;
+  getVoterPaginated(electionId: number, page: number, pageSize: number): Promise<VoterDTO[]>;
 }
+
