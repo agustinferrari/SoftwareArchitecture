@@ -30,7 +30,6 @@ try {
     json.voters.push(voter);
   });
   fs.writeFileSync("../SimulatedElectoralAPI.json", JSON.stringify(json));
-  console.log("JSON data is saved.");
 } catch (error) {
   console.error(error);
 }
