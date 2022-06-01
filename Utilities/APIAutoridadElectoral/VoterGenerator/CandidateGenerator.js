@@ -13,10 +13,10 @@ class CandidateGenerator {
     let lastName = faker.name.lastName();
     let gender = faker.name.gender(true);
     let birthday = this.formatDate(faker.date.birthdate({ min: 18, max: 100, mode: 'age' }));
-    let party = this.parties[Math.floor(Math.random()*this.parties.length)].id;
+    let partyId = this.parties[Math.floor(Math.random()*this.parties.length)].id;
 
-    let voter = { ci, name, lastName, gender, birthday, party };
-    return voter;
+    let candidate = { ci, name, lastName, gender, birthday, partyId };
+    return candidate;
   }
 
   generateCandidates(numberOfVoters) {

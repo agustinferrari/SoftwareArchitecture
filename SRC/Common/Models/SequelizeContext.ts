@@ -23,11 +23,21 @@ export class SequelizeContext {
     const dbName = config.get("SQL_DB.name");
 
     this.connection = new Sequelize(
-      `mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`
+      `mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`,
+      {
+        logging: false,
+        pool: {
+          max: 100,
+          min: 0,
+          idle: 200000,
+          // @note https://github.com/sequelize/sequelize/issues/8133#issuecomment-359993057
+          acquire: 1000000,
+        },
+      }
     );
   }
 
-  public async addModels(){
+  public async addModels() {
     this.connection.addModels([
       Election,
       ElectionCandidate,

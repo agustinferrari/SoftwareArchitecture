@@ -7,7 +7,7 @@ class PartyGenerator {
   }
 
   generateParty() {
-    let id = faker.datatype.number()
+    let id = faker.unique(faker.datatype.number);
     let name = faker.color.human();
 
     let voter = { id, name};

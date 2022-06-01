@@ -1,5 +1,5 @@
 import { CandidateDTO, ElectionDTO, PartyDTO } from "../../Common/Domain";
-import { IFilter } from "./IFilter";
+import { IFilter } from "../../Common/Validators/IFilter";
 
 class PartyFilter implements IFilter /*<[PartyDTO[], CandidateDTO[]]>*/ {
   parties: PartyDTO[];
@@ -14,6 +14,7 @@ class PartyFilter implements IFilter /*<[PartyDTO[], CandidateDTO[]]>*/ {
   validate() {
     for (let party of this.parties) {
       if (this.candidates.filter((c) => c.partyId === party.id).length === 0) {
+        console.log("Cantidad de candidatos para partido " + party.name + ": " +this.candidates.filter((c) => c.partyId === party.id).length)
         console.log(
           "Partidos invalidos (" + party.name + " no tiene candidatos)"
         );

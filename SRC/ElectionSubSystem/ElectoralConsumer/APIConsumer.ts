@@ -5,7 +5,6 @@ import { ElectionDTO } from "../../Common/Domain";
 import { HTTPRequestError } from "./../Errors/HTTPRequestError";
 import { Parameter } from "./Parameter";
 
-
 export class APIConsumer implements IConsumer {
   axios: AxiosInstance;
 
@@ -24,7 +23,10 @@ export class APIConsumer implements IConsumer {
         },
       })
       .then(function (response) {
-        return response.data.map((election) => new ElectionDTO(election));
+        let result: ElectionDTO[] = response.data.map(
+          (election) => new ElectionDTO(election)
+        );
+        return result;
       })
       .catch(function (error) {
         throw new HTTPRequestError(errorMessage + " " + error.message);

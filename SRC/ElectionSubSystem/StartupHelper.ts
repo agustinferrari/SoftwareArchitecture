@@ -4,12 +4,15 @@ import {
   INotificationSender,
   SMSNotificationSender,
 } from "../Common/NotificationSender";
+import { ElectionDTO } from "../Common/Domain";
+import { AbstractValidatorManager } from "../Common/Validators/AbstractValidatorManager";
 import { AbstractAct, EndAct, StartAct } from "./Acts/";
 import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
 import { ElectionManager } from "./ElectionManager";
 import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
 import { Parameter } from "./ElectoralConsumer/Parameter";
+import { ValidatorManager } from "./Validators/ValidatorManager";
 
 export class StartupHelper {
   apiConsumer?: IConsumer;
@@ -34,19 +37,21 @@ export class StartupHelper {
     let startAct: AbstractAct = new StartAct();
     let endAct: AbstractAct = new EndAct();
 
+    let validatorManager: AbstractValidatorManager<ElectionDTO> = new ValidatorManager();
+
     if (this.command) {
       this.electionManager = new ElectionManager(
         this.command,
         electionStartSender,
         electionEndSender,
         startAct,
-        endAct
+        endAct,
+        validatorManager
       );
     }
 
     let apiParameters: Parameter[] = [];
     this.apiConsumer = new APIConsumer(apiParameters);
-    console.log("Configuring services End");
   }
 
   private async ConfigureDBServices(): Promise<void> {

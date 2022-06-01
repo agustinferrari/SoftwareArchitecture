@@ -1,5 +1,5 @@
 import { ElectionDTO } from "../../Common/Domain";
-import { IFilter } from "./IFilter";
+import { IFilter } from "../../Common/Validators/IFilter";
 
 class ArrayFilter implements IFilter /*<any[]>*/ {
   array: any;
