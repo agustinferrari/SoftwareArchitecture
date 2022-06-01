@@ -1,6 +1,131 @@
-
 {
-  "elections": [],
+  "elections": [
+    {
+      "id": 45331,
+      "name": "Election Assurance",
+      "description": "Velit et est libero.",
+      "startDate": "2023-01-05 20:58:47",
+      "endDate": "2023-06-06 14:9:2",
+      "mode": "unique",
+      "circuits": [
+        { "id": 94486, "state": "Norwalk", "location": "Appleton" },
+        { "id": 898, "state": "West Allis", "location": "East Stantoncester" },
+        { "id": 99713, "state": "Lodi", "location": "North Sarahchester" }
+      ],
+      "parties": [
+        { "id": 83169, "name": "orchid" },
+        { "id": 49824, "name": "blue" }
+      ],
+      "candidates": [
+        {
+          "ci": "59924394",
+          "name": "Brigitte",
+          "lastName": "Leffler",
+          "gender": "Male",
+          "birthday": "1973-04-21",
+          "partyId": 83169
+        },
+        {
+          "ci": "32481256",
+          "name": "Jacquelyn",
+          "lastName": "Mueller",
+          "gender": "Male",
+          "birthday": "1997-06-18",
+          "partyId": 83169
+        },
+        {
+          "ci": "37834933",
+          "name": "Myrtice",
+          "lastName": "Conroy",
+          "gender": "Female",
+          "birthday": "2001-01-17",
+          "partyId": 83169
+        },
+        {
+          "ci": "19842257",
+          "name": "Bertrand",
+          "lastName": "Ledner",
+          "gender": "Female",
+          "birthday": "1962-04-10",
+          "partyId": 49824
+        },
+        {
+          "ci": "30852100",
+          "name": "Felton",
+          "lastName": "Welch",
+          "gender": "Male",
+          "birthday": "1987-01-05",
+          "partyId": 49824
+        },
+        {
+          "ci": "61693260",
+          "name": "Trystan",
+          "lastName": "Windler",
+          "gender": "Male",
+          "birthday": "1934-11-17",
+          "partyId": 83169
+        },
+        {
+          "ci": "16921745",
+          "name": "Reginald",
+          "lastName": "Schoen",
+          "gender": "Male",
+          "birthday": "1996-08-09",
+          "partyId": 49824
+        },
+        {
+          "ci": "76418356",
+          "name": "Virginia",
+          "lastName": "Hartmann",
+          "gender": "Female",
+          "birthday": "1982-09-06",
+          "partyId": 49824
+        },
+        {
+          "ci": "83299850",
+          "name": "Sunny",
+          "lastName": "Bergstrom",
+          "gender": "Male",
+          "birthday": "1958-05-28",
+          "partyId": 49824
+        },
+        {
+          "ci": "29344190",
+          "name": "Leta",
+          "lastName": "D'Amore",
+          "gender": "Male",
+          "birthday": "1991-03-02",
+          "partyId": 49824
+        }
+      ],
+      "voters": [
+        {
+          "ci": "10000008",
+          "credential": "e7e44af3ff85d5cbb112aca1",
+          "name": "Vern",
+          "lastName": "Lowe",
+          "gender": "Female",
+          "birthday": "1987-01-13",
+          "residency": "Davenport",
+          "phone": "+598 49 779652",
+          "email": "Hugh_Lueilwitz@gmail.com",
+          "circuitId": 99713
+        },
+        {
+          "ci": "10000014",
+          "credential": "9aff9ffde3b4fb9d32e6a2ca",
+          "name": "Stevie",
+          "lastName": "Hills",
+          "gender": "Male",
+          "birthday": "1974-12-27",
+          "residency": "South Gate",
+          "phone": "+598 24 494290",
+          "email": "Destiny.Koch97@hotmail.com",
+          "circuitId": 94486
+        }
+      ]
+    }
+  ],
   "emails": [],
   "messages": []
 }

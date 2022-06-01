@@ -5,15 +5,17 @@ abstract class AbstractValidatorManager<T> {
   step: any;
   pipeline: IFilter[][];
   constructors: Record<string, any>;
+  errorMessages: string;
 
   constructor() {
     this.jsonConfig = require("./config.json");
     this.pipeline = [];
     this.constructors = {};
+    this.errorMessages = "";
   }
 
   createPipeline(toValidate: T, pipelineName: string) {
-    let pipelineConfig : any= this.jsonConfig[pipelineName];
+    let pipelineConfig: any = this.jsonConfig[pipelineName];
     this.pipeline = [];
     for (let stepKey in pipelineConfig) {
       this.step = pipelineConfig[stepKey];
@@ -31,14 +33,18 @@ abstract class AbstractValidatorManager<T> {
   validate() {
     for (let i = 0; i < this.pipeline.length; i++) {
       for (let j = 0; j < this.pipeline[i].length; j++) {
-        if (!this.pipeline[i][j].validate()) {
-          console.log("false");
-          return false;
+        try {
+          this.pipeline[i][j].validate();
+        } catch (e: any) {
+          this.errorMessages += e.message + "\n";
         }
       }
     }
-    console.log("true");
-    return true;
+    if (this.errorMessages != "") {
+      let actualErrorMessages = this.errorMessages;
+      this.errorMessages = "";
+      throw new Error(actualErrorMessages);
+    }
   }
 }
 

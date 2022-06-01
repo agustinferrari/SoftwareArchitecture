@@ -7,7 +7,7 @@
           "parameters": {
             "key1": "startDate",
             "key2": "endDate",
-            "errorMessage": "",
+            "errorMessage": "La fecha de inicio de la eleccion debe ser menor a la fecha de fin",
             "description": "Filtrar fecha de inicio mayor a fecha de fin"
           }
         }
@@ -19,7 +19,7 @@
           "class": "ArrayFilter",
           "parameters": {
             "key": "parties",
-            "errorMessage": "",
+            "errorMessage": "La lista de partidos politicos no puede estar vacia",
             "description": "Filtrar array de partidos no vacio"
           }
         }
@@ -31,7 +31,7 @@
           "class": "ArrayFilter",
           "parameters": {
             "key": "candidates",
-            "errorMessage": "",
+            "errorMessage": "La lista de partidos candidatos no puede estar vacia",
             "description": "Filtrar array de candidatos no vacio"
           }
         }
@@ -43,7 +43,7 @@
           "class": "ArrayFilter",
           "parameters": {
             "key": "voters",
-            "errorMessage": "",
+            "errorMessage": "La lista de partidos votantes no puede estar vacia",
             "description": "Filtrar array de votantes no vacio"
           }
         }
@@ -54,8 +54,19 @@
         {
           "class": "PartyFilter",
           "parameters": {
-            "errorMessage": "",
+            "errorMessage": "Partidos invalidos, no todos tienen al menos un candidato",
             "description": "Filtrar que cada partido tenga al menos un candidato"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "CandidateFilter",
+          "parameters": {
+            "errorMessage": "Un candidato está asociado a más de un partido político, por favor verifique:",
+            "description": "Filtrar que un candidato no esté asociado a más de un partido político"
           }
         }
       ]

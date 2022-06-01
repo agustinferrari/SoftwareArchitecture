@@ -6,8 +6,9 @@ import { DateFilter } from "./DateFilter";
 import { ArrayFilter } from "./ArrayFilter";
 import { PartyFilter } from "./PartyFilter";
 import { ValueCategoryFilter } from "./ValueCategoryFilter";
-import {AbstractValidatorManager} from "../../Common/Validators/AbstractValidatorManager";
-class ValidatorManager extends AbstractValidatorManager<ElectionDTO>{
+import { AbstractValidatorManager } from "../../Common/Validators/AbstractValidatorManager";
+import { CandidateFilter } from "./CandidateFilter";
+class ValidatorManager extends AbstractValidatorManager<ElectionDTO> {
   constructor() {
     super();
     this.constructors = {
@@ -15,6 +16,7 @@ class ValidatorManager extends AbstractValidatorManager<ElectionDTO>{
       DateFilter: DateFilter,
       PartyFilter: PartyFilter,
       ValueCategoryFilter: ValueCategoryFilter,
+      CandidateFilter: CandidateFilter,
     };
   }
 }

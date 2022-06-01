@@ -46,22 +46,29 @@ export class ElectionManager {
   }
 
   private async handleElection(election: ElectionDTO): Promise<void> {
-    if (this.validateElection(election)) {
-      const scheduler = new ElectionScheduler(this);
-      console.log("[Valid Election: " + election.id + "]");
-
-      await this.commander.addElection(election);
-      scheduler.scheduleStartElection(election);
-      scheduler.scheduleEndElection(election);
-    } else {
+    try {
+      this.validateElection(election);
+    } catch (e: any) {
       //TODO: Enviar mail a asignados
       //TODO: Enviar log de error
-      console.log("Election is not valid, election id: " + election.id);
+      console.log(
+        "Election is not valid, election id: " +
+          election.id +
+          " error: " +
+          e.message
+      );
+      return;
     }
+    const scheduler = new ElectionScheduler(this);
+    console.log("[Valid Election: " + election.id + "]");
+
+    await this.commander.addElection(election);
+    scheduler.scheduleStartElection(election);
+    scheduler.scheduleEndElection(election);
   }
 
-  private validateElection(election: ElectionDTO): boolean {
+  private validateElection(election: ElectionDTO): void {
     this.validatorManager.createPipeline(election, "startElection");
-    return this.validatorManager.validate();
+    this.validatorManager.validate();
   }
 }
