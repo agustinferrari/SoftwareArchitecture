@@ -100,14 +100,23 @@ export class ElectionCommand {
     });
   }
 
-  private addVoters(election: ElectionDTO): void {
-    election.voters.map((v: VoterDTO) => {
-      Voter.create(v, { ignoreDuplicates: true });
-      //TODO: LOG DE CREADO USUARIO
-      ElectionCircuitVoter.create({
-        electionCircuitId: `${election.id}_${v.circuitId}`,
-        voterCI: v.ci,
-      });
+  public addVoters(voters: VoterDTO[], idElection : number): void {
+    let voterPromises: Promise<void>[] = [];
+    for (let i: number = 0; i < voters.length; i++) {
+      let currentVoter: VoterDTO = voters[i];
+      voterPromises.push(
+        Voter.create(currentVoter, { ignoreDuplicates: true })
+      );
+    }
+
+    Promise.all(voterPromises).then(() => {
+        for (let i: number = 0; i < voters.length; i++) {
+          let currentVoter: VoterDTO = voters[i];
+          ElectionCircuitVoter.create({
+            electionCircuitId: `${idElection}_${currentVoter.circuitId}`,
+            voterCI: currentVoter.ci,
+          });
+        }
     });
   }
 }
