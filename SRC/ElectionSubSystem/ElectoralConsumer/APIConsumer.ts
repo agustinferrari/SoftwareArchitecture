@@ -45,28 +45,50 @@ export class APIConsumer implements IConsumer {
       });
   }
 
-  getElections(includeVoters: boolean): Promise<ElectionDTO[]> {
+  async getElections(includeVoters: boolean): Promise<ElectionDTO[]> {
     let endpoint: string = "/elections";
 
     let errorMessage: string = "Error getting election";
+    let voterPageLimit : number = config.get("API.electionsVoterPageLimit");
+    let resultingElections : ElectionDTO[] = [];
 
-    if (includeVoters) endpoint += this.embedVoters;
-
-    return this.axios
+    let found :Promise<void> =  this.axios
       .get<ElectionDTO[]>(endpoint, {
         headers: {
           Accept: "application/json",
         },
       })
-      .then(function (response) {
-        let result: ElectionDTO[] = response.data.map(
-          (election) => new ElectionDTO(election)
+      .then((response) => {
+        response.data.map(
+          async (election) => {
+            let resultingElection = new ElectionDTO(election);
+            if(includeVoters) {
+              let withVoters : ElectionDTO = await this.getElectionsWithVoterHandler(resultingElection, voterPageLimit);
+              resultingElections.push(withVoters);
+            }else{
+              resultingElections.push(resultingElection);
+            }
+          }
         );
-        return result;
       })
       .catch(function (error) {
         throw new HTTPRequestError(errorMessage + " " + error.message);
       });
+    await found;
+    return resultingElections;
+  }
+
+  private async getElectionsWithVoterHandler(election : ElectionDTO, voterPageLimit : number): Promise<ElectionDTO> {
+    let resultingElection = new ElectionDTO(election);
+    return new Promise<ElectionDTO>((resolve, reject) => {
+      this.getVoterPaginated(resultingElection.id, 1, voterPageLimit)
+        .then((voters) => {
+          resultingElection.voters = voters;
+          resolve(resultingElection);
+        }).catch((error)=>{
+          reject(error);
+        });
+    });
   }
 
   getElection(id: number, includeVoters: boolean): Promise<ElectionDTO> {
@@ -90,4 +112,3 @@ export class APIConsumer implements IConsumer {
   }
 }
 
-//TODO: Remove Magic Strings in configs in constructor
