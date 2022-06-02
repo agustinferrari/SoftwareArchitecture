@@ -11,10 +11,12 @@ export class ElectionDTO {
     this.startDate = inputJson.startDate;
     this.endDate = inputJson.endDate;
     this.mode = inputJson.mode;
-    this.voters = inputJson.voters.map((voter: any) => {
-      return new VoterDTO(voter);
-    });
-
+    this.voters = [];
+    if(inputJson.voters) {
+      this.voters = inputJson.voters.map((voter: any) => {
+        return new VoterDTO(voter);
+      });
+    }
     this.voterCount = this.voters.length;
 
     this.candidates = inputJson.candidates.map((candidate: any) => {

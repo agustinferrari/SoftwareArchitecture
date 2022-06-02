@@ -41,6 +41,7 @@ export class ElectionManager {
   public async handleElections(elections: ElectionDTO[]): Promise<void> {
     elections.forEach((election) => {
       if (!this.query.existsElection(election.id)) {
+        console.log("Election: " + election.id + "| VoterCount: " + election.voterCount);
         this.handleElection(election);
       }
     });
@@ -89,7 +90,7 @@ export class ElectionManager {
       .getVoterPaginated(idElection, pageNumber, config.get("votersPageLimit"))
       .then((voters) => {
         if (voters.length > 0) {
-          console.log("page " + pageNumber + "added");
+          console.log("page " + pageNumber + " added");
           pageNumber++;
           this.commander.addVoters(voters, idElection);
           this.addVoters(idElection, pageNumber);
