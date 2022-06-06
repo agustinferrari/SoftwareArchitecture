@@ -4,7 +4,7 @@
     "key": "",
     "fetchDate": {"date": "27", "hour": "17", "minute": "38"},
     "electionsVoterPageLimit":1,
-    "votersPageLimit":500
+    "votersPageLimit":50000
     
   },
   "EmailSender": {

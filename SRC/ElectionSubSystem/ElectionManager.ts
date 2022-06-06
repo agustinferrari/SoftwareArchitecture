@@ -1,4 +1,4 @@
-import { ElectionDTO } from "../Common/Domain";
+import { ElectionDTO, VoterDTO } from "../Common/Domain";
 import { ElectionScheduler } from "./EventSchedulers/ElectionScheduler";
 import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
 import { INotificationSender } from "../Common/NotificationSender/INotificationSender";
@@ -85,7 +85,15 @@ export class ElectionManager {
 
     await this.commander.addElection(election);
     console.log("termino manager election");
-    await this.addVoters(election.id, 1);
+    // await this.addVoters(election.id, 1);
+    let currentPage: number = 1;
+    let continueSearching: boolean = false;
+
+    do {
+      continueSearching = await this.addVoters2(election.id, currentPage);
+      currentPage++;
+    } while (continueSearching);
+
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
   }
@@ -95,19 +103,46 @@ export class ElectionManager {
     this.validatorManager.validate();
   }
 
-  private async addVoters(idElection: number, pageNumber: number): Promise<void> {
-    
-    this.electoralConsumer
-      .getVoterPaginated(
+  private async addVoters(
+    idElection: number,
+    pageNumber: number
+  ): Promise<void> {
+    let voters: VoterDTO[];
+    let continueSearching: boolean = false;
+    let i = 0;
+    do {
+      voters = await this.electoralConsumer.getVoterPaginated(
         idElection,
-        pageNumber,
+        pageNumber + i,
         config.get("API.votersPageLimit")
-      )
-      .then(async (voters) => {
-        if (voters.length > 0) {
-          this.commander.addVoters(voters, idElection);
-          await this.addVoters(idElection, ++pageNumber);
-        }
-      });
+      );
+      continueSearching = false;
+
+      if (voters.length > 0) {
+        await this.commander.addVoters(voters, idElection);
+        voters = [];
+        continueSearching = true;
+      }
+      i++;
+    } while (continueSearching);
+  }
+
+  private async addVoters2(
+    idElection: number,
+    pageNumber: number
+  ): Promise<boolean> {
+    let voters: VoterDTO[];
+    voters = await this.electoralConsumer.getVoterPaginated(
+      idElection,
+      pageNumber,
+      config.get("API.votersPageLimit")
+    );
+
+    if (voters.length > 0) {
+      await this.commander.addVoters(voters, idElection);
+      voters = [];
+      voters.length = 0;
+    }
+    return true;
   }
 }

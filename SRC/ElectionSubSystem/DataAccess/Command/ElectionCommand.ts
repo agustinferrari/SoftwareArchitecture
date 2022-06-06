@@ -22,6 +22,6 @@ export class ElectionCommand {
     voters: VoterDTO[],
     idElection: number
   ): Promise<void> {
-    this.electionCommandSQL.addVoters(voters, idElection);
+    return this.electionCommandSQL.addVoters(voters, idElection);
   }
 }
