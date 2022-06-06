@@ -85,7 +85,7 @@ export class ElectionManager {
 
     await this.commander.addElection(election);
     console.log("termino manager election");
-    this.addVoters(election.id, 1);
+    await this.addVoters(election.id, 1);
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
   }
@@ -96,6 +96,7 @@ export class ElectionManager {
   }
 
   private async addVoters(idElection: number, pageNumber: number): Promise<void> {
+    
     this.electoralConsumer
       .getVoterPaginated(
         idElection,
@@ -105,7 +106,7 @@ export class ElectionManager {
       .then(async (voters) => {
         if (voters.length > 0) {
           this.commander.addVoters(voters, idElection);
-          this.addVoters(idElection, ++pageNumber);
+          await this.addVoters(idElection, ++pageNumber);
         }
       });
   }
