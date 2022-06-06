@@ -39,9 +39,12 @@ export class ElectionManager {
   }
 
   public async handleElections(elections: ElectionDTO[]): Promise<void> {
-    elections.forEach((election) => {
-      if (!this.query.existsElection(election.id)) {
-        console.log("Election: " + election.id + "| VoterCount: " + election.voterCount);
+    elections.forEach(async (election) => {
+      let existsInCache = await this.query.existsElection(election.id);
+      if (!existsInCache) {
+        console.log(
+          "Election: " + election.id + "| VoterCount: " + election.voterCount
+        );
         this.handleElection(election);
       }
     });
@@ -59,7 +62,13 @@ export class ElectionManager {
 
   private async handleElection(election: ElectionDTO): Promise<void> {
     try {
-      this.validateElection(election);
+      await this.validateElection(election);
+      console.log(
+        "Election validated: " +
+          election.id +
+          "| VoterCount: " +
+          election.voterCount
+      );
     } catch (e: any) {
       //TODO: Enviar mail a asignados
       //TODO: Enviar log de error
@@ -75,25 +84,28 @@ export class ElectionManager {
     console.log("[Valid Election: " + election.id + "]");
 
     await this.commander.addElection(election);
+    console.log("termino manager election");
     this.addVoters(election.id, 1);
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
   }
 
-  private validateElection(election: ElectionDTO): void {
+  private async validateElection(election: ElectionDTO): Promise<void> {
     this.validatorManager.createPipeline(election, "startElection");
     this.validatorManager.validate();
   }
 
-  private async addVoters(idElection: number, pageNumber: number) {
+  private async addVoters(idElection: number, pageNumber: number): Promise<void> {
     this.electoralConsumer
-      .getVoterPaginated(idElection, pageNumber, config.get("votersPageLimit"))
-      .then((voters) => {
+      .getVoterPaginated(
+        idElection,
+        pageNumber,
+        config.get("API.votersPageLimit")
+      )
+      .then(async (voters) => {
         if (voters.length > 0) {
-          console.log("page " + pageNumber + " added");
-          pageNumber++;
           this.commander.addVoters(voters, idElection);
-          this.addVoters(idElection, pageNumber);
+          this.addVoters(idElection, ++pageNumber);
         }
       });
   }
