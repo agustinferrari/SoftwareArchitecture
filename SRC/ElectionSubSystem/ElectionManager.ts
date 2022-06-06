@@ -85,14 +85,7 @@ export class ElectionManager {
 
     await this.commander.addElection(election);
     console.log("termino manager election");
-    // await this.addVoters(election.id, 1);
-    let currentPage: number = 1;
-    let continueSearching: boolean = false;
-
-    do {
-      continueSearching = await this.addVoters2(election.id, currentPage);
-      currentPage++;
-    } while (continueSearching);
+    await this.addVoters(election.id, 1);
 
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
@@ -131,18 +124,14 @@ export class ElectionManager {
     idElection: number,
     pageNumber: number
   ): Promise<boolean> {
-    let voters: VoterDTO[];
-    voters = await this.electoralConsumer.getVoterPaginated(
-      idElection,
-      pageNumber,
-      config.get("API.votersPageLimit")
+    await this.commander.addVoters(
+      await this.electoralConsumer.getVoterPaginated(
+        idElection,
+        pageNumber,
+        config.get("API.votersPageLimit")
+      ),
+      idElection
     );
-
-    if (voters.length > 0) {
-      await this.commander.addVoters(voters, idElection);
-      voters = [];
-      voters.length = 0;
-    }
     return true;
   }
 }
