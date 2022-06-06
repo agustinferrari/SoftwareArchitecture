@@ -2,7 +2,10 @@
   "API": {
     "route": "http://localhost:3000",
     "key": "",
-    "fetchDate": {"date": "27", "hour": "17", "minute": "38"}
+    "fetchDate": {"date": "27", "hour": "17", "minute": "38"},
+    "electionsVoterPageLimit":1,
+    "votersPageLimit":50000
+    
   },
   "EmailSender": {
     "route": "http://localhost:3000",
