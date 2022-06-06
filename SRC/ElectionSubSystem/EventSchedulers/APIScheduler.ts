@@ -15,6 +15,11 @@ export class APIScheduler {
     this.rule.date = config.get("API.fetchDate.date");
     this.rule.hour = config.get("API.fetchDate.hour");
     this.rule.minute = config.get("API.fetchDate.minute");
+    
+    let includeVoters: boolean = true;
+    this.consumer.getElections(includeVoters).then((elections) => {
+      this.manager.handleElections(elections);
+    });
   }
 
   public startRecurrentGet = () => {

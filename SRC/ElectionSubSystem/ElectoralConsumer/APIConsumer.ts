@@ -8,7 +8,7 @@ import { Parameter } from "./Parameter";
 export class APIConsumer implements IConsumer {
   axios: AxiosInstance;
   embedVoters: string;
-  
+
   constructor(parameters: Parameter[]) {
     parameters;
     this.axios = Axios.create({ baseURL: config.get("API.route") });
@@ -21,13 +21,14 @@ export class APIConsumer implements IConsumer {
   ): Promise<VoterDTO[]> {
     let endpoint: string = "/voters";
     let specifyElection: string = "?electionId=" + electionId;
-    let specifyPage : string = "&_page=" + page;
-    let specifyLimit : string ="&_limit=" + pageSize;
+    let specifyPage: string = "&_page=" + page;
+    let specifyLimit: string = "&_limit=" + pageSize;
     let errorMessage: string =
       "Error getting voters for election " + electionId;
     electionId;
 
-    let finalEndpoint : string = endpoint + specifyElection + specifyPage + specifyLimit;
+    let finalEndpoint: string =
+      endpoint + specifyElection + specifyPage + specifyLimit;
     return this.axios
       .get<VoterDTO[]>(finalEndpoint, {
         headers: {
@@ -49,27 +50,29 @@ export class APIConsumer implements IConsumer {
     let endpoint: string = "/elections";
 
     let errorMessage: string = "Error getting election";
-    let voterPageLimit : number = config.get("API.electionsVoterPageLimit");
-    let resultingElections : ElectionDTO[] = [];
-
-    let found :Promise<void> =  this.axios
+    let voterPageLimit: number = config.get("API.electionsVoterPageLimit");
+    let resultingElections: ElectionDTO[] = [];
+    let found: Promise<void> = this.axios
       .get<ElectionDTO[]>(endpoint, {
         headers: {
           Accept: "application/json",
         },
       })
-      .then((response) => {
-        response.data.map(
-          async (election) => {
-            let resultingElection = new ElectionDTO(election);
-            if(includeVoters) {
-              let withVoters : ElectionDTO = await this.getElectionsWithVoterHandler(resultingElection, voterPageLimit);
-              resultingElections.push(withVoters);
-            }else{
-              resultingElections.push(resultingElection);
-            }
+      .then(async (response) => {
+
+        for (let election of response.data) {
+          let resultingElection = new ElectionDTO(election);
+          if (includeVoters) {
+            let withVoters: ElectionDTO =
+              await this.getElectionsWithVoterHandler(
+                resultingElection,
+                voterPageLimit
+              );
+            resultingElections.push(withVoters);
+          } else {
+            resultingElections.push(resultingElection);
           }
-        );
+        }
       })
       .catch(function (error) {
         throw new HTTPRequestError(errorMessage + " " + error.message);
@@ -78,14 +81,19 @@ export class APIConsumer implements IConsumer {
     return resultingElections;
   }
 
-  private async getElectionsWithVoterHandler(election : ElectionDTO, voterPageLimit : number): Promise<ElectionDTO> {
+  private async getElectionsWithVoterHandler(
+    election: ElectionDTO,
+    voterPageLimit: number
+  ): Promise<ElectionDTO> {
     let resultingElection = new ElectionDTO(election);
     return new Promise<ElectionDTO>((resolve, reject) => {
       this.getVoterPaginated(resultingElection.id, 1, voterPageLimit)
         .then((voters) => {
           resultingElection.voters = voters;
+          resultingElection.voterCount+= voters.length;
           resolve(resultingElection);
-        }).catch((error)=>{
+        })
+        .catch((error) => {
           reject(error);
         });
     });
@@ -111,4 +119,3 @@ export class APIConsumer implements IConsumer {
       });
   }
 }
-
