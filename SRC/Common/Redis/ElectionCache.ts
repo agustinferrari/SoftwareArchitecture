@@ -1,12 +1,24 @@
 import { json } from "stream/consumers";
 import { ElectionInfo } from "../Domain";
 import { RedisContext } from "./RedisContext";
-
+import config from "config";
 export class ElectionCache {
   constructor(redisContext: RedisContext) {
     this.redisContext = redisContext;
   }
   redisContext: RedisContext;
+
+  async getStatus(): Promise<boolean> {
+    return this.redisContext
+      .get(config.get("REDIS.statusKey"))
+      .then((result) => {
+        return result === "true";
+      });
+  }
+
+  async setStatus(): Promise<void> {
+    return this.redisContext.set(config.get("REDIS.statusKey"), "true");
+  }
 
   async addElection(electionModel: ElectionInfo): Promise<void> {
     this.redisContext.set(

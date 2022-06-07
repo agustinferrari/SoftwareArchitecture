@@ -17,6 +17,7 @@ import { ValidatorManager } from "./Validators/ValidatorManager";
 import { ElectionCommandSQL } from "./DataAccess/Command/ElectionCommandSQL";
 import { ElectionCache } from "../Common/Redis/ElectionCache";
 import { RedisContext } from "../Common/Redis/RedisContext";
+import { ElectionQuerySQL } from "./DataAccess/Query/ElectionQuerySQL";
 
 export class StartupHelper {
   apiConsumer?: IConsumer;
@@ -71,12 +72,14 @@ export class StartupHelper {
     let redisContext : RedisContext = new RedisContext();
 
     let commandSQL: ElectionCommandSQL = new ElectionCommandSQL();
+    let querySQL : ElectionQuerySQL = new ElectionQuerySQL(context.connection);
+
     let electionCache : ElectionCache = new ElectionCache(redisContext);
 
     let command : ElectionCommand = new ElectionCommand(commandSQL, electionCache);
     this.command = command;
 
-    let query: ElectionQuery = new ElectionQuery(electionCache);
+    let query: ElectionQuery = new ElectionQuery(electionCache, querySQL);
     this.query = query;
   }
 }
