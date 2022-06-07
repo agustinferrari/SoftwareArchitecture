@@ -85,7 +85,23 @@ export class ElectionManager {
 
     await this.commander.addElection(election);
     console.log("termino manager election");
-    await this.addVoters(election.id, 1);
+    let currentPage: number = 1;
+    let continueSearching: boolean = false;
+
+    do {
+      continueSearching = await this.addVoters(election.id, currentPage);
+      currentPage++;
+      var memory: number = process.memoryUsage().heapTotal;
+      while (memory > 996286464) {
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        console.log(
+          "Waiting for my friend the Garbage Collector " +
+            this.formatBytes(memory)
+        );
+        memory = process.memoryUsage().heapTotal;
+      }
+    } while (continueSearching);
+
 
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
@@ -99,30 +115,6 @@ export class ElectionManager {
   private async addVoters(
     idElection: number,
     pageNumber: number
-  ): Promise<void> {
-    let voters: VoterDTO[];
-    let continueSearching: boolean = false;
-    let i = 0;
-    do {
-      voters = await this.electoralConsumer.getVoterPaginated(
-        idElection,
-        pageNumber + i,
-        config.get("API.votersPageLimit")
-      );
-      continueSearching = false;
-
-      if (voters.length > 0) {
-        await this.commander.addVoters(voters, idElection);
-        voters = [];
-        continueSearching = true;
-      }
-      i++;
-    } while (continueSearching);
-  }
-
-  private async addVoters2(
-    idElection: number,
-    pageNumber: number
   ): Promise<boolean> {
     await this.commander.addVoters(
       await this.electoralConsumer.getVoterPaginated(
@@ -133,5 +125,17 @@ export class ElectionManager {
       idElection
     );
     return true;
+  }
+
+  private formatBytes(bytes: number, decimals = 2) {
+    if (bytes === 0) return "0 Bytes";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 }

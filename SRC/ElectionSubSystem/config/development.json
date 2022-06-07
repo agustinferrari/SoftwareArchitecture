@@ -2,28 +2,27 @@
   "API": {
     "route": "http://localhost:3000",
     "key": "",
-    "fetchDate": {"date": "27", "hour": "17", "minute": "38"},
-    "electionsVoterPageLimit":1,
-    "votersPageLimit":50000
-    
+    "fetchDate": { "date": "27", "hour": "17", "minute": "38" },
+    "electionsVoterPageLimit": 1,
+    "votersPageLimit": 200000
   },
   "EmailSender": {
     "route": "http://localhost:3000",
-    "endpoint":"/emails"
+    "endpoint": "/emails"
   },
   "MessageSender": {
     "route": "http://localhost:3000",
-    "endpoint":"/messages"
+    "endpoint": "/messages"
   },
   "SQL_DB": {
     "name": "appEvDB",
     "user": "root",
-    "password": "password",
-    "host": "127.0.0.1",
+    "password": "secret",
+    "host": "192.168.0.106",
     "port": "3306"
   },
-  "REDIS":{
-    "host": "127.0.0.1",
+  "REDIS": {
+    "host": "192.168.0.106",
     "port": "6379"
   }
 }
