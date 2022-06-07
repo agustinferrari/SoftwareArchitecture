@@ -7,8 +7,10 @@ class CandidateFilter implements IFilter {
   key1: any;
   key2: any;
   error: string;
+  maxAttempts: number;
 
   constructor(parameters: any, election: Election) {
+    this.maxAttempts = parameters["maxAttempts"];
     this.error = parameters["errorMessage"];
     this.parties = election.parties;
     this.candidates = election.candidates;

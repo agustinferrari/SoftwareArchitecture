@@ -7,11 +7,13 @@ class PartyFilter implements IFilter {
   key1: any;
   key2: any;
   error: string;
+  maxAttempts: number;
 
   constructor(parameters: any, election: Election) {
     this.error = parameters["errorMessage"];
     this.parties = election.parties;
     this.candidates = election.candidates;
+    this.maxAttempts = parameters["maxAttempts"];
   }
 
   validate() {

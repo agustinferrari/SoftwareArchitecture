@@ -6,11 +6,13 @@ class ValueCategoryFilter implements IFilter {
   categories: string[];
   key: any;
   error: string;
+  maxAttempts: number;
 
   constructor(parameters: any, election: Election) {
     this.key = parameters["key"];
     this.categories = parameters["categories"];
     this.error = parameters["errorMessage"];
+    this.maxAttempts = parameters["maxAttempts"];
 
     const getKeyValue =
       <U extends keyof T, T extends object>(key: U) =>

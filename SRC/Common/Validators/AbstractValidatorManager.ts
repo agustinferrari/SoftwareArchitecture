@@ -33,11 +33,19 @@ abstract class AbstractValidatorManager<T> {
   validate() {
     for (let i = 0; i < this.pipeline.length; i++) {
       for (let j = 0; j < this.pipeline[i].length; j++) {
-        try {
-          this.pipeline[i][j].validate();
-        } catch (e: any) {
-          this.errorMessages += e.message + "\n";
+        let passedFilter : boolean = false;
+        let attempts : number = 0;
+        let maxAttempts : number = this.pipeline[i][j].maxAttempts;
+        while(!passedFilter && attempts < maxAttempts){
+          try {
+            this.pipeline[i][j].validate();
+            passedFilter = true;
+          } catch (e: any) {
+            attempts++;
+            this.errorMessages += `Attempt: ${attempts}/${maxAttempts} | ` + e.message + "\n";
+          }
         }
+
       }
     }
     if (this.errorMessages != "") {

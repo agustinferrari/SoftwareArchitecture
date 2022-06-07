@@ -5,9 +5,12 @@ class ArrayFilter implements IFilter {
   array: any;
   key: any;
   error: string;
+  maxAttempts: number;
+
   constructor(parameters: any, election: Election) {
     this.key = parameters["key"];
     this.error = parameters["errorMessage"];
+    this.maxAttempts = parameters["maxAttempts"];
     const getKeyValue =
       <U extends keyof T, T extends object>(key: U) =>
       (obj: T) =>

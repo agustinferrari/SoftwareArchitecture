@@ -67,7 +67,7 @@ export class ElectionManager {
       console.log(
         "Election is not valid, election id: " +
           election.id +
-          " error: " +
+          " error: \n" +
           e.message
       );
       return;

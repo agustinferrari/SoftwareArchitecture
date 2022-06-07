@@ -7,10 +7,13 @@ class DateFilter implements IFilter {
   key1: any;
   key2: any;
   error: string;
+  maxAttempts: number;
+
   constructor(parameters: any, election: Election) {
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.error = parameters["errorMessage"];
+    this.maxAttempts = parameters["maxAttempts"];
 
     const getKeyValue =
       <U extends keyof T, T extends object>(key: U) =>
