@@ -4,7 +4,7 @@ import {
   INotificationSender,
   SMSNotificationSender,
 } from "../Common/NotificationSender";
-import { ElectionDTO } from "../Common/Domain";
+import { Election } from "../Common/Domain";
 import { AbstractValidatorManager } from "../Common/Validators/AbstractValidatorManager";
 import { AbstractAct, EndAct, StartAct } from "./Acts/";
 import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
@@ -17,6 +17,7 @@ import { ValidatorManager } from "./Validators/ValidatorManager";
 import { ElectionCommandSQL } from "./DataAccess/Command/ElectionCommandSQL";
 import { ElectionCache } from "../Common/Redis/ElectionCache";
 import { RedisContext } from "../Common/Redis/RedisContext";
+import { ElectionQuerySQL } from "./DataAccess/Query/ElectionQuerySQL";
 
 export class StartupHelper {
   apiConsumer?: IConsumer;
@@ -42,7 +43,7 @@ export class StartupHelper {
     let startAct: AbstractAct = new StartAct();
     let endAct: AbstractAct = new EndAct();
 
-    let validatorManager: AbstractValidatorManager<ElectionDTO> = new ValidatorManager();
+    let validatorManager: AbstractValidatorManager<Election> = new ValidatorManager();
 
     let apiParameters: Parameter[] = [];
     this.apiConsumer = new APIConsumer(apiParameters);
@@ -71,12 +72,14 @@ export class StartupHelper {
     let redisContext : RedisContext = new RedisContext();
 
     let commandSQL: ElectionCommandSQL = new ElectionCommandSQL();
+    let querySQL : ElectionQuerySQL = new ElectionQuerySQL(context.connection);
+
     let electionCache : ElectionCache = new ElectionCache(redisContext);
 
     let command : ElectionCommand = new ElectionCommand(commandSQL, electionCache);
     this.command = command;
 
-    let query: ElectionQuery = new ElectionQuery(electionCache);
+    let query: ElectionQuery = new ElectionQuery(electionCache, querySQL);
     this.query = query;
   }
 }

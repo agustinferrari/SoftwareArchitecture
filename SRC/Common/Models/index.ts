@@ -1,8 +1,8 @@
-export * from "./Candidate";
-export * from "./Election";
-export * from "./Person";
-export * from "./Party";
-export * from "./Voter";
-export * from "./Circuit";
+export * from "./CandidateSQL";
+export * from "./ElectionSQL";
+export * from "./PersonSQL";
+export * from "./PartySQL";
+export * from "./VotersSQL";
+export * from "./CircuitSQL";
 export * from "./SequelizeContext";
 

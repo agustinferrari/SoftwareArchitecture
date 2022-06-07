@@ -15,7 +15,7 @@ export class RedisContext {
   ip: string;
   port: number;
 
-  set(key: string, value: string) {
+  async set(key: string, value: string): Promise<void> {
     this.redisClient.set(key, value);
   }
 

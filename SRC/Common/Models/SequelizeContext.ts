@@ -2,14 +2,14 @@ import { Sequelize } from "sequelize-typescript";
 import config from "config";
 
 import {
-  Election,
-  ElectionCandidate,
-  ElectionCircuit,
-  ElectionCircuitVoter,
-  Party,
-  Candidate,
-  Voter,
-  Circuit,
+  ElectionSQL,
+  ElectionCandidateSQL,
+  ElectionCircuitSQL,
+  ElectionCircuitVoterSQL,
+  PartySQL,
+  CandidateSQL,
+  VoterSQL,
+  CircuitSQL,
 } from "./";
 
 export class SequelizeContext {
@@ -39,25 +39,25 @@ export class SequelizeContext {
 
   public async addModels() {
     this.connection.addModels([
-      Election,
-      ElectionCandidate,
-      ElectionCircuitVoter,
-      ElectionCircuit,
-      Circuit,
-      Party,
-      Voter,
-      Candidate,
+      ElectionSQL,
+      ElectionCandidateSQL,
+      ElectionCircuitVoterSQL,
+      ElectionCircuitSQL,
+      CircuitSQL,
+      PartySQL,
+      VoterSQL,
+      CandidateSQL,
     ]);
   }
 
   public async syncAllModels() {
-    await Election.sync({ alter: true });
-    await Party.sync({ alter: true });
-    await Candidate.sync({ alter: true });
-    await Voter.sync({ alter: true });
-    await Circuit.sync({ alter: true });
-    await ElectionCandidate.sync({ alter: true });
-    await ElectionCircuit.sync({ alter: true });
-    await ElectionCircuitVoter.sync({ alter: true });
+    await ElectionSQL.sync({ alter: true });
+    await PartySQL.sync({ alter: true });
+    await CandidateSQL.sync({ alter: true });
+    await VoterSQL.sync({ alter: true });
+    await CircuitSQL.sync({ alter: true });
+    await ElectionCandidateSQL.sync({ alter: true });
+    await ElectionCircuitSQL.sync({ alter: true });
+    await ElectionCircuitVoterSQL.sync({ alter: true });
   }
 }

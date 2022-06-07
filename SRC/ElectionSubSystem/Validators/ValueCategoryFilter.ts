@@ -1,4 +1,4 @@
-import { ElectionDTO } from "../../Common/Domain";
+import { Election } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 
 class ValueCategoryFilter implements IFilter {
@@ -6,17 +6,19 @@ class ValueCategoryFilter implements IFilter {
   categories: string[];
   key: any;
   error: string;
+  maxAttempts: number;
 
-  constructor(parameters: any, election: ElectionDTO) {
+  constructor(parameters: any, election: Election) {
     this.key = parameters["key"];
     this.categories = parameters["categories"];
     this.error = parameters["errorMessage"];
+    this.maxAttempts = parameters["maxAttempts"];
 
     const getKeyValue =
       <U extends keyof T, T extends object>(key: U) =>
       (obj: T) =>
         obj[key];
-    let value = getKeyValue<keyof ElectionDTO, ElectionDTO>(this.key)(
+    let value = getKeyValue<keyof Election, Election>(this.key)(
       election
     ).toString();
     this.value = value;
