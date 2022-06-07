@@ -21,7 +21,7 @@ export class ElectionCommand {
   public async addVoters(
     voters: VoterDTO[],
     idElection: number
-  ): Promise<void> {
+  ): Promise<boolean> {
     return this.electionCommandSQL.addVoters(voters, idElection);
   }
 }

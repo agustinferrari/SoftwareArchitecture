@@ -6,7 +6,7 @@
   "scripts": {
     "install": "cd ./SRC && npm install --prefix ./Common && npm install --prefix ./ElectionSubSystem",
     "buildElectionSubSystem": "cd ./SRC/ElectionSubSystem/ && npm install && tsc -b && cp package*.json ../dist/ElectionSubSystem/ && cp -R ./config  ../dist/ElectionSubSystem/ && cd ../dist/ElectionSubSystem/ && npm ci --production",
-    "buildCommon": "cd ./SRC/Common/ && npm install && tsc -b && cp package*.json ../dist/Common/ && cp -R ./config  ../dist/Common/ && cd ../dist/Common/ && npm ci --production",
+    "buildCommon": "cd ./SRC/Common/ && npm install && tsc -b && cp package*.json ../dist/Common/ && cp -R ./config  ../dist/Common/ && cp -R ./Validators/config.json ../dist/Common/Validators && cd ../dist/Common/ && npm ci --production",
     "buildAll": "npm run buildCommon && npm run buildElectionSubSystem && cd ./SRC && tsc -b",
     "electoralAPI": "json-server --watch ./Utilities/APIAutoridadElectoral/SimulatedElectoralAPI.json",
     "electionGenerator": "cd ./Utilities/APIAutoridadElectoral/VoterGenerator && node index.js",
