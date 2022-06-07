@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "install": "cd ./SRC && npm install --prefix ./Common && npm install --prefix ./ElectionSubSystem",
+    "buildQueueConsumer": "cd ./SRC/QueueConsumer/ && npm install && tsc -b && cp package*.json ../dist/QueueConsumer/ && cp -R ./config  ../dist/QueueConsumer/ && cd ../dist/QueueConsumer/ && npm ci --production",
+    "buildVotingSubSystem": "cd ./SRC/VotingSubSystem/ && npm install && tsc -b && cp package*.json ../dist/VotingSubSystem/ && cp -R ./config  ../dist/VotingSubSystem/ && cd ../dist/VotingSubSystem/ && npm ci --production",
+    "buildQuerySubSystem": "cd ./SRC/QuerySubSystem/ && npm install && tsc -b && cp package*.json ../dist/QuerySubSystem/ && cp -R ./config  ../dist/QuerySubSystem/ && cd ../dist/QuerySubSystem/ && npm ci --production",
     "buildElectionSubSystem": "cd ./SRC/ElectionSubSystem/ && npm install && tsc -b && cp package*.json ../dist/ElectionSubSystem/ && cp -R ./config  ../dist/ElectionSubSystem/ && cd ../dist/ElectionSubSystem/ && npm ci --production",
     "buildCommon": "cd ./SRC/Common/ && npm install && tsc -b && cp package*.json ../dist/Common/ && cp -R ./config  ../dist/Common/ && cp -R ./Validators/config.json ../dist/Common/Validators && cd ../dist/Common/ && npm ci --production",
-    "buildAll": "npm run buildCommon && npm run buildElectionSubSystem && cd ./SRC && tsc -b",
+    "buildAll": "npm run buildCommon && npm run buildElectionSubSystem && npm run buildQuerySubSystem && npm run buildVotingSubSystem && npm run buildQueueConsumer && cd ./SRC && tsc -b",
     "electoralAPI": "json-server --watch ./Utilities/APIAutoridadElectoral/SimulatedElectoralAPI.json",
     "electionGenerator": "cd ./Utilities/APIAutoridadElectoral/VoterGenerator && node index.js",
     "electionSubSystem": "cd ./SRC/ElectionSubSystem/ && npm run dev",

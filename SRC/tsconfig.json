@@ -7,5 +7,14 @@
     {
       "path": "./ElectionSubSystem"
     },
+    {
+      "path": "./VotingSubSystem"
+    },
+    {
+      "path": "./QuerySubSystem"
+    },
+    {
+      "path": "./QueueConsumer"
+    },
   ]
 }
