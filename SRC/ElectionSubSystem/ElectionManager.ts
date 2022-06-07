@@ -102,6 +102,7 @@ export class ElectionManager {
       }
     } while (continueSearching);
 
+
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
   }
