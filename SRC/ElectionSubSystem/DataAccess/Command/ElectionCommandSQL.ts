@@ -101,9 +101,12 @@ export class ElectionCommandSQL {
       );
     }
 
-    Promise.all(voterPromises).then(() => {
+    await Promise.all(voterPromises).then(() => {
       for (let i: number = 0; i < voters.length; i++) {
         let currentVoter: VoterDTO = voters[i];
+        console.log(
+          `${idElection}_${currentVoter.circuitId} ___` + currentVoter.ci
+        );
         ElectionCircuitVoter.create({
           electionCircuitId: `${idElection}_${currentVoter.circuitId}`,
           voterCI: currentVoter.ci,

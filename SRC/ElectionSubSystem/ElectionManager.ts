@@ -115,17 +115,14 @@ export class ElectionManager {
     idElection: number,
     pageNumber: number
   ): Promise<boolean> {
-    let voters = await this.electoralConsumer.getVoterPaginated(
-      idElection,
-      pageNumber,
-      config.get("API.votersPageLimit")
+    await this.commander.addVoters(
+      await this.electoralConsumer.getVoterPaginated(
+        idElection,
+        pageNumber,
+        config.get("API.votersPageLimit")
+      ),
+      idElection
     );
-
-    if (voters.length > 0) {
-      await this.commander.addVoters(voters, idElection);
-      voters.length = 0;
-      voters = [];
-    }
     return true;
   }
 
