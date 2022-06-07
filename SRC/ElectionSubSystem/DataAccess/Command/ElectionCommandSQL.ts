@@ -92,7 +92,7 @@ export class ElectionCommandSQL {
   public async addVoters(
     voters: VoterDTO[],
     idElection: number
-  ): Promise<void> {
+  ): Promise<boolean> {
     let voterPromises: Promise<void>[] = [];
     for (let i: number = 0; i < voters.length; i++) {
       let currentVoter: VoterDTO = voters[i];
@@ -104,14 +104,13 @@ export class ElectionCommandSQL {
     await Promise.all(voterPromises).then(() => {
       for (let i: number = 0; i < voters.length; i++) {
         let currentVoter: VoterDTO = voters[i];
-        console.log(
-          `${idElection}_${currentVoter.circuitId} ___` + currentVoter.ci
-        );
         ElectionCircuitVoter.create({
           electionCircuitId: `${idElection}_${currentVoter.circuitId}`,
           voterCI: currentVoter.ci,
         });
       }
     });
+
+    return voters.length > 0;
   }
 }

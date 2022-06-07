@@ -102,7 +102,6 @@ export class ElectionManager {
       }
     } while (continueSearching);
 
-
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
   }
@@ -116,7 +115,7 @@ export class ElectionManager {
     idElection: number,
     pageNumber: number
   ): Promise<boolean> {
-    await this.commander.addVoters(
+    return await this.commander.addVoters(
       await this.electoralConsumer.getVoterPaginated(
         idElection,
         pageNumber,
@@ -124,7 +123,6 @@ export class ElectionManager {
       ),
       idElection
     );
-    return true;
   }
 
   private formatBytes(bytes: number, decimals = 2) {
