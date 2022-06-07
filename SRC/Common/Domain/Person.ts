@@ -1,4 +1,4 @@
-export class PersonDTO {
+export class Person {
   constructor(personJSON: any) {
     this.ci = personJSON.ci;
     this.name = personJSON.name;

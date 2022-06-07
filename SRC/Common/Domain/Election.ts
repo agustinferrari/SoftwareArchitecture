@@ -1,9 +1,9 @@
-import { VoterDTO } from "./VoterDTO";
-import { CandidateDTO } from "./CandidateDTO";
-import { PartyDTO } from "./PartyDTO";
-import { CircuitDTO } from "./CircuitDTO";
+import { Voter } from "./Voter";
+import { Candidate } from "./Candidate";
+import { Party } from "./Party";
+import { Circuit } from "./Circuit";
 
-export class ElectionDTO {
+export class Election {
   constructor(inputJson: any) {
     this.name = inputJson.name;
     this.id = inputJson.id;
@@ -14,19 +14,19 @@ export class ElectionDTO {
     this.voters = [];
     if(inputJson.voters) {
       this.voters = inputJson.voters.map((voter: any) => {
-        return new VoterDTO(voter);
+        return new Voter(voter);
       });
     }
     this.voterCount = this.voters.length;
 
     this.candidates = inputJson.candidates.map((candidate: any) => {
-      return new CandidateDTO(candidate);
+      return new Candidate(candidate);
     });
     this.parties = inputJson.parties.map((party: any) => {
-      return new PartyDTO(party);
+      return new Party(party);
     });
     this.circuits = inputJson.circuits.map((circuit: any) => {
-      return new CircuitDTO(circuit);
+      return new Circuit(circuit);
     });
   }
 
@@ -36,9 +36,9 @@ export class ElectionDTO {
   startDate: string;
   endDate: string;
   mode: Enumerator;
-  voters: VoterDTO[];
+  voters: Voter[];
   voterCount: number;
-  candidates: CandidateDTO[];
-  parties: PartyDTO[];
-  circuits: CircuitDTO[];
+  candidates: Candidate[];
+  parties: Party[];
+  circuits: Circuit[];
 }

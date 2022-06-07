@@ -9,7 +9,6 @@ export class ElectionQuery {
 
   public async existsElection(electionId: number): Promise<boolean> {
     let result = (await this.electionCache.getElection(electionId));
-    console.log("Found: " + (result != null));
     return result != null;
   }
 }

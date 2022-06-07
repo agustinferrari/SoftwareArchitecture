@@ -1,4 +1,4 @@
-import { ElectionDTO } from "../../Common/Domain";
+import { Election } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 
 class DateFilter implements IFilter {
@@ -7,7 +7,7 @@ class DateFilter implements IFilter {
   key1: any;
   key2: any;
   error: string;
-  constructor(parameters: any, election: ElectionDTO) {
+  constructor(parameters: any, election: Election) {
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.error = parameters["errorMessage"];
@@ -16,10 +16,10 @@ class DateFilter implements IFilter {
       <U extends keyof T, T extends object>(key: U) =>
       (obj: T) =>
         obj[key];
-    let startDate = getKeyValue<keyof ElectionDTO, ElectionDTO>(this.key1)(
+    let startDate = getKeyValue<keyof Election, Election>(this.key1)(
       election
     ).toString();
-    let endDate = getKeyValue<keyof ElectionDTO, ElectionDTO>(this.key2)(
+    let endDate = getKeyValue<keyof Election, Election>(this.key2)(
       election
     ).toString();
 

@@ -1,6 +1,6 @@
 import { scheduleJob } from "node-schedule";
 import { ElectionManager } from "../ElectionManager";
-import { ElectionDTO } from "../../Common/Domain";
+import { Election } from "../../Common/Domain";
 
 export class ElectionScheduler {
   manager: ElectionManager;
@@ -9,14 +9,14 @@ export class ElectionScheduler {
     this.manager = manager;
   }
 
-  public async scheduleStartElection(election: ElectionDTO): Promise<void> {
+  public async scheduleStartElection(election: Election): Promise<void> {
     console.log("scheduled start election " + election.id);
     scheduleJob(this.parseDate(election.startDate), () => {
       this.manager.startElection(election);
     });
   }
 
-  public async scheduleEndElection(election: ElectionDTO): Promise<void> {
+  public async scheduleEndElection(election: Election): Promise<void> {
     console.log("scheduled end election " + election.id);
     scheduleJob(this.parseDate(election.endDate), () => {
       this.manager.endElection(election);

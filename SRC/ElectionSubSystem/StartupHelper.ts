@@ -4,7 +4,7 @@ import {
   INotificationSender,
   SMSNotificationSender,
 } from "../Common/NotificationSender";
-import { ElectionDTO } from "../Common/Domain";
+import { Election } from "../Common/Domain";
 import { AbstractValidatorManager } from "../Common/Validators/AbstractValidatorManager";
 import { AbstractAct, EndAct, StartAct } from "./Acts/";
 import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
@@ -42,7 +42,7 @@ export class StartupHelper {
     let startAct: AbstractAct = new StartAct();
     let endAct: AbstractAct = new EndAct();
 
-    let validatorManager: AbstractValidatorManager<ElectionDTO> = new ValidatorManager();
+    let validatorManager: AbstractValidatorManager<Election> = new ValidatorManager();
 
     let apiParameters: Parameter[] = [];
     this.apiConsumer = new APIConsumer(apiParameters);

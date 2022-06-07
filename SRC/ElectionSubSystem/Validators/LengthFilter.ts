@@ -1,10 +1,10 @@
-import { ElectionDTO } from "../../Common/Domain";
+import { Election } from "../../Common/Domain";
 
 class LengthFilter {
   max: number;
   min: number;
-  election: ElectionDTO;
-  constructor(min: number, max: number, election: ElectionDTO) {
+  election: Election;
+  constructor(min: number, max: number, election: Election) {
     this.min = min;
     this.max = max;
     this.election = election;

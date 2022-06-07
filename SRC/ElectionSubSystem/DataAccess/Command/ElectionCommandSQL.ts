@@ -1,54 +1,54 @@
 import {
-  CircuitDTO,
-  ElectionDTO,
-  PartyDTO,
-  VoterDTO,
-  CandidateDTO,
+  Circuit,
+  Election,
+  Party,
+  Voter,
+  Candidate,
 } from "../../../Common/Domain";
 
 import {
-  Candidate,
-  Election,
-  ElectionCircuit,
-  ElectionCircuitVoter,
-  Party,
-  Voter,
-  Circuit,
-  ElectionCandidate,
+  CandidateSQL,
+  ElectionSQL,
+  ElectionCircuitSQL,
+  ElectionCircuitVoterSQL,
+  PartySQL,
+  VoterSQL,
+  CircuitSQL,
+  ElectionCandidateSQL,
 } from "../../../Common/Models";
 
 export class ElectionCommandSQL {
-  addElections(elections: ElectionDTO[]): void {
-    elections.map((election: ElectionDTO) => {
+  addElections(elections: Election[]): void {
+    elections.map((election: Election) => {
       this.addElection(election);
     });
   }
 
-  public async addElection(election: ElectionDTO): Promise<void> {
+  public async addElection(election: Election): Promise<void> {
     let circuitPromises: Promise<void>[] = [];
-    election.circuits.map(async (c: CircuitDTO) => {
-      circuitPromises.push(Circuit.create(c, { ignoreDuplicates: true }));
+    election.circuits.map(async (c: Circuit) => {
+      circuitPromises.push(CircuitSQL.create(c, { ignoreDuplicates: true }));
     });
 
     let partyPromises: Promise<void>[] = [];
-    election.parties.map((p: PartyDTO) => {
-      partyPromises.push(Party.create(p, { ignoreDuplicates: true }));
+    election.parties.map((p: Party) => {
+      partyPromises.push(PartySQL.create(p, { ignoreDuplicates: true }));
     });
 
     let candidatePromises: Promise<void>[] = [];
 
     await Promise.all(partyPromises).then(async () => {
-      await Election.create(election);
-      election.candidates.map((c: CandidateDTO) => {
-        candidatePromises.push(Candidate.create(c, { ignoreDuplicates: true }));
+      await ElectionSQL.create(election);
+      election.candidates.map((c: Candidate) => {
+        candidatePromises.push(CandidateSQL.create(c, { ignoreDuplicates: true }));
       });
     });
 
     let resolvePromises: Promise<any>[] = [];
     await Promise.all(candidatePromises).then(() => {
-      election.candidates.map((c: CandidateDTO) => {
+      election.candidates.map((c: Candidate) => {
         resolvePromises.push(
-          ElectionCandidate.create({
+          ElectionCandidateSQL.create({
             candidateCI: c.ci,
             electionId: election.id,
           })
@@ -57,9 +57,9 @@ export class ElectionCommandSQL {
     });
 
     await Promise.all(circuitPromises).then(() => {
-      election.circuits.map(async (c: CircuitDTO) => {
+      election.circuits.map(async (c: Circuit) => {
         resolvePromises.push(
-          ElectionCircuit.create({
+          ElectionCircuitSQL.create({
             electionCircuitId: `${election.id}_${c.id}`,
             electionId: election.id,
             circuitId: c.id,
@@ -69,19 +69,18 @@ export class ElectionCommandSQL {
     });
 
     await Promise.all(resolvePromises);
-    console.log("termino SQL");
   }
 
-  private addParties(parties: PartyDTO[]): void {
-    parties.map((p: PartyDTO) => {
-      Party.create(p, { ignoreDuplicates: true });
+  private addParties(parties: Party[]): void {
+    parties.map((p: Party) => {
+      PartySQL.create(p, { ignoreDuplicates: true });
     });
   }
 
-  private addCircuits(election: ElectionDTO): void {
-    election.circuits.map((c: CircuitDTO) => {
-      Circuit.create(c, { ignoreDuplicates: true });
-      ElectionCircuit.create({
+  private addCircuits(election: Election): void {
+    election.circuits.map((c: Circuit) => {
+      CircuitSQL.create(c, { ignoreDuplicates: true });
+      ElectionCircuitSQL.create({
         electionCircuitId: `${election.id}_${c.id}`,
         electionId: election.id,
         circuitId: c.id,
@@ -90,21 +89,21 @@ export class ElectionCommandSQL {
   }
 
   public async addVoters(
-    voters: VoterDTO[],
+    voters: Voter[],
     idElection: number
   ): Promise<boolean> {
     let voterPromises: Promise<void>[] = [];
     for (let i: number = 0; i < voters.length; i++) {
-      let currentVoter: VoterDTO = voters[i];
+      let currentVoter: Voter = voters[i];
       voterPromises.push(
-        Voter.create(currentVoter, { ignoreDuplicates: true })
+        VoterSQL.create(currentVoter, { ignoreDuplicates: true })
       );
     }
 
     await Promise.all(voterPromises).then(() => {
       for (let i: number = 0; i < voters.length; i++) {
-        let currentVoter: VoterDTO = voters[i];
-        ElectionCircuitVoter.create({
+        let currentVoter: Voter = voters[i];
+        ElectionCircuitVoterSQL.create({
           electionCircuitId: `${idElection}_${currentVoter.circuitId}`,
           voterCI: currentVoter.ci,
         });

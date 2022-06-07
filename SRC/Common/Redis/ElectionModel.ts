@@ -1,13 +1,13 @@
-import { CandidateDTO, ElectionDTO, PartyDTO } from "../Domain";
-import { Election } from "../Models";
+import { Candidate, Election, Party } from "../Domain";
+import { ElectionSQL } from "../Models";
 import { CandidateModel } from "./CandidateModel";
 import { PartyModel } from "./PartyModel";
 
 export class ElectionModel {
   constructor(jsonobject: any);
-  constructor(jsonobject: ElectionDTO);
+  constructor(jsonobject: Election);
 
-  constructor(jsonObject: any | ElectionDTO) {
+  constructor(jsonObject: any | Election) {
     this.id = jsonObject.id;
     this.name = jsonObject.name;
     this.inProgress = jsonObject.inProgress;
@@ -17,7 +17,7 @@ export class ElectionModel {
     this.voterCount = jsonObject.votercount;
     this.mode = jsonObject.mode;
 
-    if (jsonObject instanceof ElectionDTO) {
+    if (jsonObject instanceof Election) {
 
       let currentDate = new Date();
       let started: boolean = new Date(jsonObject.startDate) < currentDate;
@@ -26,8 +26,8 @@ export class ElectionModel {
 
       this.startDate = new Date(jsonObject.startDate);
       this.endDate = new Date(jsonObject.startDate);
-      this.parties = jsonObject.parties.map((party: PartyDTO) => {
-        let candidateList = jsonObject.candidates.filter((c: CandidateDTO) => {
+      this.parties = jsonObject.parties.map((party: Party) => {
+        let candidateList = jsonObject.candidates.filter((c: Candidate) => {
           return c.partyId == party.id;
         });
         return new PartyModel(party.id, party.name, candidateList);
@@ -44,7 +44,7 @@ export class ElectionModel {
   parties: PartyModel[];
   mode: Enumerator;
 
-  toModel(election: Election, inProgress: boolean) {
+  toModel(election: ElectionSQL, inProgress: boolean) {
     this.id = election.id;
     this.name = election.name;
     this.inProgress = inProgress;

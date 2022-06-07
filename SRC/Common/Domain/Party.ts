@@ -1,4 +1,4 @@
-export class PartyDTO {
+export class Party {
   constructor(inputJSON: any) {
     this.id = inputJSON.id;
     this.name = inputJSON.name;

@@ -1,6 +1,6 @@
 import { ElectionCommandSQL } from "./ElectionCommandSQL";
 import { ElectionCache } from "./../../../Common/Redis/ElectionCache";
-import { ElectionDTO, VoterDTO } from "../../../Common/Domain";
+import { Election, Voter } from "../../../Common/Domain";
 
 export class ElectionCommand {
   electionCommandSQL: ElectionCommandSQL;
@@ -14,12 +14,12 @@ export class ElectionCommand {
     this.electionCache = electionCache;
   }
 
-  public async addElection(election: ElectionDTO): Promise<void> {
+  public async addElection(election: Election): Promise<void> {
     return this.electionCommandSQL.addElection(election);
   }
 
   public async addVoters(
-    voters: VoterDTO[],
+    voters: Voter[],
     idElection: number
   ): Promise<boolean> {
     return this.electionCommandSQL.addVoters(voters, idElection);

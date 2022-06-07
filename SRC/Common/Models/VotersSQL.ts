@@ -5,11 +5,11 @@ import {
   PrimaryKey,
   Model,
 } from "sequelize-typescript";
-import { VoterDTO } from "../Domain";
-import {  ElectionCircuit, ElectionCircuitVoter } from "./Election";
+import { Voter } from "../Domain";
+import {  ElectionCircuitSQL, ElectionCircuitVoterSQL } from "./ElectionSQL";
 
 @Table
-export class Voter extends Model<VoterDTO,VoterDTO> {
+export class VoterSQL extends Model<Voter,Voter> {
   @Column
   name!: string;
 
@@ -38,7 +38,7 @@ export class Voter extends Model<VoterDTO,VoterDTO> {
   @Column
   credential!: string;
 
-  @BelongsToMany(() => ElectionCircuit, () => ElectionCircuitVoter)
+  @BelongsToMany(() => ElectionCircuitSQL, () => ElectionCircuitVoterSQL)
   electionCircuitId!: number;
 
 }

@@ -1,9 +1,9 @@
-import { CandidateDTO, ElectionDTO, PartyDTO } from "../../Common/Domain";
+import { Candidate, Election, Party } from "../../Common/Domain";
 import { AbstractAct } from "./AbstractAct";
 
 export class StartAct extends AbstractAct {
 
-  getActInformation(election: ElectionDTO): string {
+  getActInformation(election: Election): string {
     let electionId : string= `[Elección ${election.id}: ${election.name}] \n `;
     let startDate : string= `[Fecha de inicio: ${election.startDate.toString()}] \n `;
     let parties : string = this.getPartyInformation(election);
@@ -12,14 +12,14 @@ export class StartAct extends AbstractAct {
     return electionId + startDate + parties + currentVoters + votingMode;
   }
 
-  private getPartyInformation(election: ElectionDTO): string {
-    let partyDTOs : PartyDTO[] = election.parties;
+  private getPartyInformation(election: Election): string {
+    let partyDTOs : Party[] = election.parties;
 
     let parties : string = `[Partidos:] \n `;
     for (let party of partyDTOs) {
         let currentCandidates : string = "";
         for (let i:number = 0; i < election.candidates.length; i++) {
-            let candidate : CandidateDTO = election.candidates[i];
+            let candidate : Candidate = election.candidates[i];
             if(candidate.partyId == party.id) {
               currentCandidates += ", ";
               currentCandidates += `${candidate.name}`;

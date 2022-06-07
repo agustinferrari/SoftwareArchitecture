@@ -1,8 +1,8 @@
-import { CandidateDTO } from "../Domain";
+import { Candidate } from "../Domain";
 import { CandidateModel } from "./CandidateModel";
 
 export class PartyModel {
-  constructor(id: number, name: string, candidates: CandidateDTO[]) {
+  constructor(id: number, name: string, candidates: Candidate[]) {
     this.id = id;
     this.name = name;
     this.candidates = candidates.map((candidate: any) => {

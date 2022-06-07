@@ -1,4 +1,4 @@
-import { ElectionDTO, VoterDTO } from "../Common/Domain";
+import { Election, Voter } from "../Common/Domain";
 import { ElectionScheduler } from "./EventSchedulers/ElectionScheduler";
 import { ElectionCommand } from "./DataAccess/Command/ElectionCommand";
 import { INotificationSender } from "../Common/NotificationSender/INotificationSender";
@@ -15,7 +15,7 @@ export class ElectionManager {
   endAct: AbstractAct;
   commander: ElectionCommand;
   query: ElectionQuery;
-  validatorManager: AbstractValidatorManager<ElectionDTO>;
+  validatorManager: AbstractValidatorManager<Election>;
   electoralConsumer: IConsumer;
 
   public constructor(
@@ -25,7 +25,7 @@ export class ElectionManager {
     electionEndSender: INotificationSender,
     startAct: AbstractAct,
     endAct: AbstractAct,
-    validatorManager: AbstractValidatorManager<ElectionDTO>,
+    validatorManager: AbstractValidatorManager<Election>,
     electoralConsumer: IConsumer
   ) {
     this.commander = electionCommand;
@@ -38,29 +38,27 @@ export class ElectionManager {
     this.electoralConsumer = electoralConsumer;
   }
 
-  public async handleElections(elections: ElectionDTO[]): Promise<void> {
-    elections.forEach(async (election) => {
+  public async handleElections(elections: Election[]): Promise<void> {
+    for(let i : number = 0 ; i < elections.length ; i++){
+      let election :Election = elections[i];
       let existsInCache = await this.query.existsElection(election.id);
       if (!existsInCache) {
-        console.log(
-          "Election: " + election.id + "| VoterCount: " + election.voterCount
-        );
-        this.handleElection(election);
+        await this.handleElection(election);
       }
-    });
+    }
   }
 
-  public startElection(election: ElectionDTO): void {
+  public startElection(election: Election): void {
     let act: string = this.startAct.getActInformation(election);
     this.electionStartSender.sendNotification(act);
   }
 
-  public endElection(election: ElectionDTO): void {
+  public endElection(election: Election): void {
     let act: string = this.endAct.getActInformation(election);
     this.electionEndSender.sendNotification(act);
   }
 
-  private async handleElection(election: ElectionDTO): Promise<void> {
+  private async handleElection(election: Election): Promise<void> {
     try {
       await this.validateElection(election);
       console.log(
@@ -81,10 +79,8 @@ export class ElectionManager {
       return;
     }
     const scheduler = new ElectionScheduler(this);
-    console.log("[Valid Election: " + election.id + "]");
 
     await this.commander.addElection(election);
-    console.log("termino manager election");
     let currentPage: number = 1;
     let continueSearching: boolean = false;
 
@@ -104,9 +100,10 @@ export class ElectionManager {
 
     scheduler.scheduleStartElection(election);
     scheduler.scheduleEndElection(election);
+    return;
   }
 
-  private async validateElection(election: ElectionDTO): Promise<void> {
+  private async validateElection(election: Election): Promise<void> {
     this.validatorManager.createPipeline(election, "startElection");
     this.validatorManager.validate();
   }
