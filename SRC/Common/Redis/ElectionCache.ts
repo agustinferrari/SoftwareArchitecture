@@ -1,5 +1,5 @@
 import { json } from "stream/consumers";
-import { ElectionModel } from "./ElectionModel";
+import { ElectionInfo } from "../Domain";
 import { RedisContext } from "./RedisContext";
 
 export class ElectionCache {
@@ -8,18 +8,18 @@ export class ElectionCache {
   }
   redisContext: RedisContext;
 
-  addElection(electionModel: ElectionModel) {
+  async addElection(electionModel: ElectionInfo): Promise<void> {
     this.redisContext.set(
       electionModel.id.toString(),
       JSON.stringify(electionModel)
     );
   }
 
-  getElection(id: number): Promise<ElectionModel | null> {
+  getElection(id: number): Promise<ElectionInfo | null> {
     return this.redisContext.get(id.toString()).then((result) => {
       if (result) {
         const jsonObject = JSON.parse(result);
-        let electionModel: ElectionModel = new ElectionModel(jsonObject);
+        let electionModel: ElectionInfo = new ElectionInfo(jsonObject);
         return electionModel;
       }
       return null;

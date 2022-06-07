@@ -12,12 +12,12 @@ export class Election {
     this.endDate = inputJson.endDate;
     this.mode = inputJson.mode;
     this.voters = [];
+    
     if(inputJson.voters) {
       this.voters = inputJson.voters.map((voter: any) => {
         return new Voter(voter);
       });
     }
-    this.voterCount = this.voters.length;
 
     this.candidates = inputJson.candidates.map((candidate: any) => {
       return new Candidate(candidate);
@@ -37,7 +37,6 @@ export class Election {
   endDate: string;
   mode: Enumerator;
   voters: Voter[];
-  voterCount: number;
   candidates: Candidate[];
   parties: Party[];
   circuits: Circuit[];

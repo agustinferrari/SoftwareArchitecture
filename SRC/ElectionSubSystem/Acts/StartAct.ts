@@ -3,11 +3,11 @@ import { AbstractAct } from "./AbstractAct";
 
 export class StartAct extends AbstractAct {
 
-  getActInformation(election: Election): string {
+  getActInformation(election: Election, voterCount : number): string {
     let electionId : string= `[Elección ${election.id}: ${election.name}] \n `;
     let startDate : string= `[Fecha de inicio: ${election.startDate.toString()}] \n `;
     let parties : string = this.getPartyInformation(election);
-    let currentVoters : string = `[Cantidad de habilitados a votar ${election.voterCount}] \n `;
+    let currentVoters : string = `[Cantidad de habilitados a votar ${voterCount}] \n `;
     let votingMode : string =`[Modalidad de votación: ${election.mode}] \n `;
     return electionId + startDate + parties + currentVoters + votingMode;
   }

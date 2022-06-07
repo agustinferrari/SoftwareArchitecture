@@ -90,7 +90,6 @@ export class APIConsumer implements IConsumer {
       this.getVoterPaginated(resultingElection.id, 1, voterPageLimit)
         .then((voters) => {
           resultingElection.voters = voters;
-          resultingElection.voterCount+= voters.length;
           resolve(resultingElection);
         })
         .catch((error) => {

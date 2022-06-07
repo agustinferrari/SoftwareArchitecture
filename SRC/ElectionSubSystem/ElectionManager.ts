@@ -39,34 +39,28 @@ export class ElectionManager {
   }
 
   public async handleElections(elections: Election[]): Promise<void> {
-    for(let i : number = 0 ; i < elections.length ; i++){
-      let election :Election = elections[i];
+    for (let i: number = 0; i < elections.length; i++) {
+      let election: Election = elections[i];
       let existsInCache = await this.query.existsElection(election.id);
+      console.log("Election id: " + election.id + " exists in cache: " + existsInCache);
       if (!existsInCache) {
         await this.handleElection(election);
       }
     }
   }
 
-  public startElection(election: Election): void {
-    let act: string = this.startAct.getActInformation(election);
-    this.electionStartSender.sendNotification(act);
+  public startElection(election: Election, voterCount:number): void {
+    this.startAct.generateAndSendAct(election, voterCount, this.electionStartSender);
   }
 
-  public endElection(election: Election): void {
-    let act: string = this.endAct.getActInformation(election);
-    this.electionEndSender.sendNotification(act);
+  public endElection(election: Election, voterCount : number): void {
+    this.endAct.generateAndSendAct(election, voterCount, this.electionEndSender);
   }
 
   private async handleElection(election: Election): Promise<void> {
     try {
       await this.validateElection(election);
-      console.log(
-        "Election validated: " +
-          election.id +
-          "| VoterCount: " +
-          election.voterCount
-      );
+      console.log("Election validated: " + election.id);
     } catch (e: any) {
       //TODO: Enviar mail a asignados
       //TODO: Enviar log de error
@@ -82,12 +76,14 @@ export class ElectionManager {
 
     await this.commander.addElection(election);
     let currentPage: number = 1;
-    let continueSearching: boolean = false;
-
+    let totalAdded: number = 0;
+    let lastAdded: number = 0;
     do {
-      continueSearching = await this.addVoters(election.id, currentPage);
+      lastAdded = await this.addVoters(election.id, currentPage);
+      totalAdded += lastAdded;
       currentPage++;
       var memory: number = process.memoryUsage().heapTotal;
+
       while (memory > 996286464) {
         await new Promise((resolve) => setTimeout(resolve, 5000));
         console.log(
@@ -96,10 +92,10 @@ export class ElectionManager {
         );
         memory = process.memoryUsage().heapTotal;
       }
-    } while (continueSearching);
+    } while (lastAdded > 0);
 
-    scheduler.scheduleStartElection(election);
-    scheduler.scheduleEndElection(election);
+    scheduler.scheduleStartElection(election, totalAdded);
+    scheduler.scheduleEndElection(election, totalAdded);
     return;
   }
 
@@ -111,7 +107,7 @@ export class ElectionManager {
   private async addVoters(
     idElection: number,
     pageNumber: number
-  ): Promise<boolean> {
+  ): Promise<number> {
     return await this.commander.addVoters(
       await this.electoralConsumer.getVoterPaginated(
         idElection,

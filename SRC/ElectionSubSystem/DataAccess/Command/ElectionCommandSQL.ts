@@ -91,7 +91,7 @@ export class ElectionCommandSQL {
   public async addVoters(
     voters: Voter[],
     idElection: number
-  ): Promise<boolean> {
+  ): Promise<number> {
     let voterPromises: Promise<void>[] = [];
     for (let i: number = 0; i < voters.length; i++) {
       let currentVoter: Voter = voters[i];
@@ -110,6 +110,6 @@ export class ElectionCommandSQL {
       }
     });
 
-    return voters.length > 0;
+    return voters.length;
   }
 }
