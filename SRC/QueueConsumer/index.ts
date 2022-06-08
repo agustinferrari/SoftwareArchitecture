@@ -13,8 +13,6 @@ async function consumer() {
   });
 }
 
-
-
 async function producer() {
   console.log("Producer started");
   let job = await queue.add(14);
@@ -23,6 +21,6 @@ async function producer() {
 }
 
 (async () => {
-    // consumer();
-  producer();
+  consumer();
+  //producer();
 })();

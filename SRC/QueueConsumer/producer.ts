@@ -1,12 +1,7 @@
 import Queue from "bull";
 import config from "config";
 import { Election } from "../Common/Domain";
-import {
-  QueueJob,
-  QueueJobPriority,
-  QueueJobType,
-  QueueResponse,
-} from "../Common/Queues";
+import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../Common/Queues";
 
 const queue = new Queue<QueueJob>("sqlqueue", {
   redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
@@ -49,6 +44,18 @@ async function producer() {
   console.log("result:", result.result, " error:", result.error);
 }
 
+async function validateUserElectionParty() {
+  console.log("Producer started");
+
+  let queueJob = new QueueJob();
+  queueJob.input = { voterCI: "10000246", electionId: 19014, circuitId: 14276 };
+  queueJob.priority = QueueJobPriority.ValidateVoterElectionCircuit;
+  queueJob.type = QueueJobType.ValidateVoterElectionCircuit;
+  let job = await queue.add(queueJob);
+  let result: QueueResponse = await job.finished();
+  console.log("result:", result.result, " error:", result.error);
+}
+
 (async () => {
-  producer();
+  validateUserElectionParty();
 })();
