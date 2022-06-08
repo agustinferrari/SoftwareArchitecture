@@ -27,7 +27,7 @@ export class ElectionQuerySQL {
     this.sequelize = sequelize;
   }
 
-  public async getElectionInfos(): Promise<ElectionInfo[]> {
+  public async getElectionsInfo(): Promise<ElectionInfo[]> {
     let found = await this.sequelize.query("SELECT id FROM appEvDB.ElectionSQLs;", { type: QueryTypes.SELECT });
     let result : ElectionInfo[] = [];
     if(found){

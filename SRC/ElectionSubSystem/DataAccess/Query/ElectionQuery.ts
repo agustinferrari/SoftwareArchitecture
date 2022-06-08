@@ -15,7 +15,7 @@ export class ElectionQuery {
     let status: boolean = await this.electionCache.getStatus();
     if (!status) {
       let electionInfos: ElectionInfo[] =
-        await this.electionQuerySQL.getElectionInfos();
+        await this.electionQuerySQL.getElectionsInfo();
       for (let i = 0; i < electionInfos.length; i++) {
         this.electionCache.addElection(electionInfos[i]);
       }
