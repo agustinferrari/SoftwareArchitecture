@@ -1,5 +1,5 @@
 import { Application, Request, Response, NextFunction } from "express";
-import {VoteIntent} from "../Models/VoteIntent";
+import {VoteIntentEncrypted} from "../Models/VoteIntentEncrypted";
 import { VotingService } from '../VotingService';
 const express = require("express");
 import config from "config";
@@ -31,9 +31,9 @@ class Server {
       "/votes",
       (req: Request, res: Response) => {
         try{
-            let voteIntent: VoteIntent = req.body as VoteIntent; 
+            let voteIntent: VoteIntentEncrypted = req.body as VoteIntentEncrypted; 
             this.service.handleVote(voteIntent);
-            res.status(200).send("Voto a candidato:  " + voteIntent.candidateCI + " procesado")
+            res.status(200).send("Voto procesado")
         }catch(e : any){
             res.status(400).send(e.message)
         }

@@ -23,6 +23,6 @@
     "statusKey": "status"
   },
   "VOTING_API":{
-    "port": 3002
+    "port": 3008
   }
 }
