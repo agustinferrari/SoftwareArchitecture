@@ -1,7 +1,7 @@
-import { QueueJobType } from "./QueueJobTypes";
+import { QueueJobType } from "./QueueJobType";
 
 export class QueueJob {
   type!: QueueJobType;
-  timestamp!: Date;
   priority!: number;
+  input: any;
 }
