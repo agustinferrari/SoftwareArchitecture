@@ -1,16 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import config from "config";
 
-import {
-  ElectionSQL,
-  ElectionCandidateSQL,
-  ElectionCircuitSQL,
-  ElectionCircuitVoterSQL,
-  PartySQL,
-  CandidateSQL,
-  VoterSQL,
-  CircuitSQL,
-} from "./";
+import { ElectionSQL, ElectionCandidateSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, CandidateSQL, VoterSQL, CircuitSQL, VoteSQL } from "./";
 
 export class SequelizeContext {
   connection: Sequelize;
@@ -22,32 +13,20 @@ export class SequelizeContext {
     const dbPassword = config.get("SQL_DB.password");
     const dbName = config.get("SQL_DB.name");
 
-    this.connection = new Sequelize(
-      `mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`,
-      {
-        logging: false,
-        pool: {
-          max: 100,
-          min: 0,
-          idle: 200000,
-          // @note https://github.com/sequelize/sequelize/issues/8133#issuecomment-359993057
-          acquire: 1000000,
-        },
-      }
-    );
+    this.connection = new Sequelize(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`, {
+      logging: false,
+      pool: {
+        max: 100,
+        min: 0,
+        idle: 200000,
+        // @note https://github.com/sequelize/sequelize/issues/8133#issuecomment-359993057
+        acquire: 1000000,
+      },
+    });
   }
 
   public async addModels() {
-    this.connection.addModels([
-      ElectionSQL,
-      ElectionCandidateSQL,
-      ElectionCircuitVoterSQL,
-      ElectionCircuitSQL,
-      CircuitSQL,
-      PartySQL,
-      VoterSQL,
-      CandidateSQL,
-    ]);
+    this.connection.addModels([ElectionSQL, ElectionCandidateSQL, ElectionCircuitVoterSQL, ElectionCircuitSQL, CircuitSQL, PartySQL, VoterSQL, CandidateSQL, VoteSQL]);
   }
 
   public async syncAllModels() {
@@ -59,5 +38,6 @@ export class SequelizeContext {
     await ElectionCandidateSQL.sync({ alter: true });
     await ElectionCircuitSQL.sync({ alter: true });
     await ElectionCircuitVoterSQL.sync({ alter: true });
+    await VoteSQL.sync({ alter: true });
   }
 }

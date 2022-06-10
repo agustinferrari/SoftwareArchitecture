@@ -1,4 +1,3 @@
-import { SequelizeContext } from "../Common/Models";
 import { EmailNotificationSender, INotificationSender, SMSNotificationSender } from "../Common/NotificationSender";
 import { Election } from "../Common/Domain";
 import { AbstractValidatorManager } from "../Common/Validators/AbstractValidatorManager";
