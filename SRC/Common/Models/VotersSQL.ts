@@ -38,6 +38,9 @@ export class VoterSQL extends Model<Voter,Voter> {
   @Column
   credential!: string;
 
+  @Column
+  publicKey!: string;
+
   @BelongsToMany(() => ElectionCircuitSQL, () => ElectionCircuitVoterSQL)
   electionCircuitId!: number;
 

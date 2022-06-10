@@ -1,11 +1,43 @@
 const { faker } = require("@faker-js/faker");
+const { generateKeyPairSync } = require("crypto");
+const fs = require("fs");
+const readlines = require("n-readlines");
+let fileName = "../private-public-keys.txt";
+const liner = new readlines(fileName);
 
 class VoterGenerator {
-  constructor(circuits) {
+  constructor() {
     this.voters = [];
     this.registeredCIs = [];
-    this.circuits = circuits;
     this.currentCi = 0;
+  }
+
+  generateKeys() {
+    let keyPair = generateKeyPairSync("rsa", {
+      modulusLength: 512,
+      publicKeyEncoding: {
+        type: "spki",
+        format: "pem",
+      },
+      privateKeyEncoding: {
+        type: "pkcs8",
+        format: "pem",
+      },
+    });
+
+    let publicKey = keyPair.publicKey;
+    let privateKey = keyPair.privateKey;
+    let keys = { publicKey, privateKey };
+    return keys;
+  }
+
+
+  getKeys() {
+    let next = liner.next()
+    if(!next){
+      throw new Error("Run out of keys");
+    }
+    return JSON.parse(next.toString());
   }
 
   generateVoter(electionid) {
@@ -20,9 +52,13 @@ class VoterGenerator {
     let residency = faker.address.cityName();
     let phone = faker.phone.phoneNumber("+598 ## ######");
     let email = faker.internet.email();
-    let circuitId =
-      this.circuits[Math.floor(Math.random() * this.circuits.length)].id;
+    // let circuitId =
+    //   this.circuits[Math.floor(Math.random() * this.circuits.length)].id;
+    let circuitId = -1;
     let electionId = electionid;
+    let keys = this.getKeys();
+    let publicKey = keys.publicKey;
+    let privateKey = keys.privateKey;
     let voter = {
       ci,
       credential,
@@ -34,14 +70,17 @@ class VoterGenerator {
       phone,
       email,
       circuitId,
-      electionId
+      electionId,
+      publicKey,
+      privateKey,
     };
     return voter;
   }
 
-  generateVoters(numberOfVoters, electionid) {
+  generateVoters(numberOfVoters) {
+    let defaultId = -1;
     for (let i = 0; i < numberOfVoters; i++) {
-      this.voters.push(this.generateVoter(electionid));
+      this.voters.push(this.generateVoter(defaultId));
       clearLastLine();
       process.stdout.write(
         "\nCurrent voters: " +

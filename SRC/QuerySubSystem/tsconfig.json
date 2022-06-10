@@ -9,7 +9,7 @@
     "emitDecoratorMetadata": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "../dist/ElectionSubSystem",
+    "outDir": "../dist/QuerySubSystem",
     "noEmitOnError": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
