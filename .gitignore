@@ -2,6 +2,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,visualstudiocode,visualstudio,node,rider
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,visualstudiocode,visualstudio,node,rider
 
+## Archivos de prueba
+Utilities/APIAutoridadelectoral/private-public-keys.txt
+Utilities/APIAutoridadelectoral/private-public-keys.txt.zip
+
 ### macOS ###
 # General
 .DS_Store

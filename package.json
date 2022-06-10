@@ -13,6 +13,7 @@
     "buildAll": "npm run buildCommon && npm run buildElectionSubSystem && npm run buildQuerySubSystem && npm run buildVotingSubSystem && npm run buildQueueConsumer && cd ./SRC && tsc -b",
     "electoralAPI": "json-server --watch ./Utilities/APIAutoridadElectoral/SimulatedElectoralAPI.json",
     "electionGenerator": "cd ./Utilities/APIAutoridadElectoral/VoterGenerator && node index.js",
+    "keyGenerator": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && node index.js",
     "electionSubSystem": "cd ./SRC/ElectionSubSystem/ && npm run dev",
     "all": "npm run electoralAPI & npm run electionSubSystem",
     "test": "echo \"Error: no test specified\" && exit 1"
