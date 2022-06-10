@@ -1,7 +1,7 @@
 {
   "include": ["./","./node_modules/*"],
   "extends": "../tsconfig-base.json",
-  "references": [{ "path": "../Common" }],
+  "references": [{ "path": "../Common" }, { "path": "../Encryption" }],
   "compilerOptions": {
     "target": "es2016",
     "strict": true,
