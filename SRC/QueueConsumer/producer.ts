@@ -57,5 +57,5 @@ async function validateUserElectionParty() {
 }
 
 (async () => {
-  validateUserElectionParty();
+  producer();
 })();

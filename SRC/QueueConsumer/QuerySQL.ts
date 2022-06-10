@@ -1,7 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import { Circuit, Election, Party, Voter, Candidate, ElectionInfo } from "../Common/Domain";
+import { ElectionInfo } from "../Common/Domain";
 
-import { CandidateSQL, ElectionSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, VoterSQL, CircuitSQL, ElectionCandidateSQL } from "../Common/Models";
 const { QueryTypes } = require("sequelize");
 
 export class QuerySQL {

@@ -1,23 +1,22 @@
 import { ElectionInfo } from "../../../Common/Domain";
 import { ElectionCache } from "./../../../Common/Redis/ElectionCache";
-import { ElectionQuerySQL } from "./ElectionQuerySQL";
+import { ElectionQueryQueue } from "./ElectionQueryQueue";
 
 export class ElectionQuery {
   electionCache: ElectionCache;
-  electionQuerySQL: ElectionQuerySQL;
-  constructor( electionCache: ElectionCache, electionQuerySQL: ElectionQuerySQL) {
+  electionQueryQueue: ElectionQueryQueue;
+  constructor(electionCache: ElectionCache, electionQuerySQL: ElectionQueryQueue) {
     this.electionCache = electionCache;
-    this.electionQuerySQL = electionQuerySQL;
-    this.startupRedis();
+    this.electionQueryQueue = electionQuerySQL;
+    //this.startupRedis();
   }
 
   private async startupRedis() {
     let status: boolean = await this.electionCache.getStatus();
     if (!status) {
-      let electionInfos: ElectionInfo[] =
-        await this.electionQuerySQL.getElectionsInfo();
+      let electionInfos: ElectionInfo[] = await this.electionQueryQueue.getElectionsInfo();
       for (let i = 0; i < electionInfos.length; i++) {
-        this.electionCache.addElection(electionInfos[i]);
+        await this.electionCache.addElection(electionInfos[i]);
       }
       this.electionCache.setStatus();
     }

@@ -1,29 +1,8 @@
-import {
-  Circuit,
-  Election,
-  Party,
-  Voter,
-  Candidate,
-} from "../../../Common/Domain";
+import { Circuit, Election, Party, Voter, Candidate } from "../Common/Domain";
 
-import {
-  CandidateSQL,
-  ElectionSQL,
-  ElectionCircuitSQL,
-  ElectionCircuitVoterSQL,
-  PartySQL,
-  VoterSQL,
-  CircuitSQL,
-  ElectionCandidateSQL,
-} from "../../../Common/Models";
+import { CandidateSQL, ElectionSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, VoterSQL, CircuitSQL, ElectionCandidateSQL } from "./Models";
 
-export class ElectionCommandSQL {
-  addElections(elections: Election[]): void {
-    elections.map((election: Election) => {
-      this.addElection(election);
-    });
-  }
-
+export class CommandSQL {
   public async addElection(election: Election): Promise<void> {
     let circuitPromises: Promise<void>[] = [];
     election.circuits.map(async (c: Circuit) => {
@@ -71,33 +50,11 @@ export class ElectionCommandSQL {
     await Promise.all(resolvePromises);
   }
 
-  private addParties(parties: Party[]): void {
-    parties.map((p: Party) => {
-      PartySQL.create(p, { ignoreDuplicates: true });
-    });
-  }
-
-  private addCircuits(election: Election): void {
-    election.circuits.map((c: Circuit) => {
-      CircuitSQL.create(c, { ignoreDuplicates: true });
-      ElectionCircuitSQL.create({
-        electionCircuitId: `${election.id}_${c.id}`,
-        electionId: election.id,
-        circuitId: c.id,
-      });
-    });
-  }
-
-  public async addVoters(
-    voters: Voter[],
-    idElection: number
-  ): Promise<number> {
+  public async addVoters(voters: Voter[], idElection: number): Promise<number> {
     let voterPromises: Promise<void>[] = [];
     for (let i: number = 0; i < voters.length; i++) {
       let currentVoter: Voter = voters[i];
-      voterPromises.push(
-        VoterSQL.create(currentVoter, { ignoreDuplicates: true })
-      );
+      voterPromises.push(VoterSQL.create(currentVoter, { ignoreDuplicates: true }));
     }
 
     await Promise.all(voterPromises).then(() => {

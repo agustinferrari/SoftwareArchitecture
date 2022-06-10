@@ -1,25 +1,22 @@
-import { ElectionCommandSQL } from "./ElectionCommandSQL";
 import { ElectionCache } from "./../../../Common/Redis/ElectionCache";
 import { Election, ElectionInfo, Voter } from "../../../Common/Domain";
+import { ElectionCommandQueue } from "./ElectionCommandQueue";
 
 export class ElectionCommand {
-  electionCommandSQL: ElectionCommandSQL;
+  electionQueueManager: ElectionCommandQueue;
   electionCache: ElectionCache;
 
-  constructor(
-    electionCommandSQL: ElectionCommandSQL,
-    electionCache: ElectionCache
-  ) {
-    this.electionCommandSQL = electionCommandSQL;
+  constructor(electionQueueManager: ElectionCommandQueue, electionCache: ElectionCache) {
+    this.electionQueueManager = electionQueueManager;
     this.electionCache = electionCache;
   }
 
   public async addElection(election: Election): Promise<void> {
     await this.electionCache.addElection(new ElectionInfo(election));
-    return this.electionCommandSQL.addElection(election);
+    return this.electionQueueManager.addElection(election);
   }
 
-  public async addVoters(voters: Voter[], idElection: number): Promise<number> {
-    return this.electionCommandSQL.addVoters(voters, idElection);
+  public async addVoters(voters: Voter[], electionId: number): Promise<number> {
+    return this.electionQueueManager.addVoters(voters, electionId);
   }
 }
