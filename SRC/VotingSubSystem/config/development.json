@@ -1,7 +1,4 @@
 {
-  "API": {
-    "port": 3001
-  },
   "EmailSender": {
     "route": "http://localhost:3000",
     "endpoint": "/emails"
@@ -10,19 +7,14 @@
     "route": "http://localhost:3000",
     "endpoint": "/messages"
   },
-  "SQL_DB": {
-    "name": "appEvDB",
-    "user": "root",
-    "password": "password",
-    "host": "127.0.0.1",
-    "port": "3306"
-  },
   "REDIS": {
     "host": "127.0.0.1",
     "port": "6379",
     "statusKey": "status"
   },
-  "VOTING_API":{
+  "VOTING_API": {
     "port": 3008
-  }
+  },
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANC2zusiXjaiYnt8QEFx2i8tX3lRPjNL\nMDI20GUMo4ms2YBnNVGvp3Ntuwf5IevNwRmuLaeKc9XxBwZHSl691DUCAwEAAQ==\n-----END PUBLIC KEY-----\n",
+  "privateKey": "-----BEGIN PRIVATE KEY-----\nMIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA0LbO6yJeNqJie3xA\nQXHaLy1feVE+M0swMjbQZQyjiazZgGc1Ua+nc227B/kh683BGa4tp4pz1fEHBkdK\nXr3UNQIDAQABAkAf6RNR1/tXlxQ/lQut9d5KAEHspoNADGreAotyJ7CJR+FUBed0\nqgh96IuttCsCZtj13T8SQ3ggPU7kqt+M0fCxAiEA9rgqDVQ4YJ7CvChwd9Qa91cw\n8UirXOVzCjkbXWX2ZOcCIQDYkKoCAomkcYL/H07NsXSROjTBVu/+NyzDn6Y/jb3+\ngwIhANil3Z94vkzx/JSXejNvWQKrWPn30yqu/bcTcJkyaQwvAiEAvorZ6hbNgBAX\nj9y9+yDNTRIHZKzXT7a//gazwWs25X0CIA+qdTJDeeWY9VpZZtA0unwHCPVxp+nF\nbMYNPAyWV/yP\n-----END PRIVATE KEY-----\n"
 }

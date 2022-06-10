@@ -57,7 +57,6 @@ function KeyFileLoad(keyPairCount) {
       filePathKeys = filePathKeys + pm2id;
     }
   } catch (e) {}
-  console.log("pm2id: ", pm2id);
   filePathKeys = filePathKeys + ".txt";
   fs.writeFileSync(filePathKeys, "");
   try {

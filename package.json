@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/ORTArqSoft/240503-247096-186821/issues"
   },
-  "homepage": "https://github.com/ORTArqSoft/240503-247096-186821#readme"
+  "homepage": "https://github.com/ORTArqSoft/240503-247096-186821#readme",
+  "dependencies": {
+    "@types/bull": "^3.15.8"
+  }
 }

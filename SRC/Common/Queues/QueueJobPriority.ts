@@ -3,4 +3,5 @@ export enum QueueJobPriority {
   AddVoters = 1,
   GetElectionsInfo = 3,
   ValidateVoterElectionCircuit = 4,
+  GetVoter = 5
 }
