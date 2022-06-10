@@ -3,7 +3,7 @@ import Queue from "bull";
 import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../../../Common/Queues";
 import config from "config";
 
-export class ElectionQueueManager {
+export class ElectionCommandQueue {
   electionQueue: any;
 
   constructor() {

@@ -10,11 +10,10 @@ import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
 import { Parameter } from "./ElectoralConsumer/Parameter";
 import { ValidatorManager } from "./Validators/ValidatorManager";
-import { ElectionCommandSQL } from "./DataAccess/Command/ElectionCommandSQL";
 import { ElectionCache } from "../Common/Redis/ElectionCache";
 import { RedisContext } from "../Common/Redis/RedisContext";
-import { ElectionQuerySQL } from "./DataAccess/Query/ElectionQuerySQL";
-import { ElectionQueueManager } from "./DataAccess/Command/ElectionQueueManager";
+import { ElectionQueryQueue } from "./DataAccess/Query/ElectionQueryQueue";
+import { ElectionCommandQueue } from "./DataAccess/Command/ElectionCommandQueue";
 
 export class StartupHelper {
   apiConsumer?: IConsumer;
@@ -47,21 +46,17 @@ export class StartupHelper {
   }
 
   private async ConfigureDBServices(): Promise<void> {
-    let context: SequelizeContext = new SequelizeContext();
-    await context.addModels();
-    await context.syncAllModels();
-
     let redisContext: RedisContext = new RedisContext();
 
-    let electionQueueManager: ElectionQueueManager = new ElectionQueueManager();
-    let querySQL: ElectionQuerySQL = new ElectionQuerySQL(context.connection);
+    let electionQueueManager: ElectionCommandQueue = new ElectionCommandQueue();
+    let queryQueue: ElectionQueryQueue = new ElectionQueryQueue();
 
     let electionCache: ElectionCache = new ElectionCache(redisContext);
 
     let command: ElectionCommand = new ElectionCommand(electionQueueManager, electionCache);
     this.command = command;
 
-    let query: ElectionQuery = new ElectionQuery(electionCache, querySQL);
+    let query: ElectionQuery = new ElectionQuery(electionCache, queryQueue);
     this.query = query;
   }
 }
