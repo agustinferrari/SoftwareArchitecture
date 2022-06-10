@@ -7,10 +7,13 @@ export class Voter extends Person {
     this.phone = voterJSON.phone;
     this.email = voterJSON.email;
     this.credential = voterJSON.credential;
+    this.publicKey = voterJSON.publicKey
   }
   residency: string;
   circuitId: number;
   phone: string;
   email: string;
   credential: string;
+  publicKey: string;
 }
+

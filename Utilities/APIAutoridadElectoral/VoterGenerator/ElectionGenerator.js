@@ -27,7 +27,7 @@ class ElectionGenerator {
       this.candidateNumber
     );
 
-    this.voterGenerator = new VoterGenerator(this.circuits);
+    // this.voterGenerator = new VoterGenerator(this.circuits);
     // this.votersElection = this.voterGenerator.generateVoters(this.voterNumber, electionId);
   }
 
@@ -69,16 +69,16 @@ class ElectionGenerator {
     for (let i = 0; i < numberOfElections; i++) {
       let election = this.generateElection();
       this.elections.push(election);
-      let voters = this.voterGenerator.generateVoters(
-        this.voterNumber,
-        election.id
-      );
-      voters.forEach(v =>{
-          this.voters.push(v);
-      })
+      // let voters = this.voterGenerator.generateVoters(
+      //   this.voterNumber,
+      //   election.id
+      // );
+      // voters.forEach((v) => {
+      //   this.voters.push(v);
+      // });
     }
 
-    return [this.elections, this.voters];
+    return this.elections;
   }
 
   formatDate(date) {
