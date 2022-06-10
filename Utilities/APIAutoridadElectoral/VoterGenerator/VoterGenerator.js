@@ -54,6 +54,7 @@ class VoterGenerator {
     let email = faker.internet.email();
     // let circuitId =
     //   this.circuits[Math.floor(Math.random() * this.circuits.length)].id;
+    let circuitId = -1;
     let electionId = electionid;
     let keys = this.getKeys();
     let publicKey = keys.publicKey;

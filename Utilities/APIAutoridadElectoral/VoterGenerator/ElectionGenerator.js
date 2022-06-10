@@ -73,9 +73,9 @@ class ElectionGenerator {
       //   this.voterNumber,
       //   election.id
       // );
-      voters.forEach((v) => {
-        this.voters.push(v);
-      });
+      // voters.forEach((v) => {
+      //   this.voters.push(v);
+      // });
     }
 
     return this.elections;
