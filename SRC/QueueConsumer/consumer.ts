@@ -1,19 +1,21 @@
 import {} from "../Common/Domain";
-import { SequelizeContext } from "../Common/Models";
+import { SequelizeContext } from "./Models";
 import Queue from "bull";
 import config from "config";
 import { QueueJob, QueueResponse } from "../Common/Queues";
 import { QuerySQL } from "./QuerySQL";
 import { QueueTypeHandler } from "./QueueTypeHandler";
+import { CommandSQL } from "./CommandSQL";
 
 let context: SequelizeContext = new SequelizeContext();
 (async () => {
-  context.addModels();
-  context.syncAllModels();
+  await context.addModels();
+  await context.syncAllModels();
 })();
 
 const query = new QuerySQL(context.connection);
-const queueTypeHandler = new QueueTypeHandler(query);
+const command = new CommandSQL();
+const queueTypeHandler = new QueueTypeHandler(query, command);
 
 //Consumidor
 
@@ -28,6 +30,7 @@ async function consumer() {
     let input = job.data.input;
     console.log("Received job:", type);
     console.log("Job input:", input);
+    console.log("-------------------------------------------------------------------------");
     let response: QueueResponse = new QueueResponse();
     let result = null;
     try {
