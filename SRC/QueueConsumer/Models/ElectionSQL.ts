@@ -1,11 +1,4 @@
-import {
-  Table,
-  Column,
-  Model,
-  PrimaryKey,
-  BelongsToMany,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Table, Column, Model, PrimaryKey, BelongsToMany, ForeignKey } from "sequelize-typescript";
 
 import { PartySQL } from "./PartySQL";
 import { VoterSQL } from "./VotersSQL";
@@ -35,9 +28,7 @@ export class ElectionSQL extends Model<Election, Election> {
   mode!: string;
 
   @BelongsToMany(() => CandidateSQL, () => ElectionCandidateSQL)
-  candidates!: Array<
-    CandidateSQL & { ElectionCandidate: ElectionCandidateSQL }
-  >;
+  candidates!: Array<CandidateSQL & { ElectionCandidate: ElectionCandidateSQL }>;
 
   @BelongsToMany(() => CircuitSQL, () => ElectionCircuitSQL)
   circuits!: Array<PartySQL & { ElectionCircuit: ElectionCircuitSQL }>;
@@ -72,9 +63,7 @@ export class ElectionCircuitSQL extends Model {
   circuitId!: number;
 
   @BelongsToMany(() => VoterSQL, () => ElectionCircuitVoterSQL)
-  circuits!: Array<
-    PartySQL & { ElectionCircuitVoter: ElectionCircuitVoterSQL }
-  >;
+  circuits!: Array<PartySQL & { ElectionCircuitVoter: ElectionCircuitVoterSQL }>;
 }
 
 @Table
@@ -85,7 +74,7 @@ export class ElectionCircuitVoterSQL extends Model {
 
   @ForeignKey(() => VoterSQL)
   @Column
-  voterCI!: number;
+  voterCI!: string;
 
   @Column
   voteCount!: number;
