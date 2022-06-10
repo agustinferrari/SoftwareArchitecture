@@ -26,8 +26,9 @@ export class QueueTypeHandler {
     return "Added sucessfully";
   }
 
-  public async addVoters(input: any): Promise<void> {
+  public async addVoters(input: any): Promise<string> {
     //TODO ver si validar que no esten vacios
-    return;
+    await this.command.addVoters(input.voters, input.electionId);
+    return "Added sucessfully";
   }
 }

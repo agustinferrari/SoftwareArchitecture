@@ -4,7 +4,6 @@ import { CandidateSQL, ElectionSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL,
 
 export class CommandSQL {
   public async addElection(election: Election): Promise<void> {
-    console.log(election);
     let circuitPromises: Promise<void>[] = [];
     election.circuits.map(async (c: Circuit) => {
       circuitPromises.push(CircuitSQL.create(c, { ignoreDuplicates: true }));
