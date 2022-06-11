@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { Circuit, Election, Party, Voter, Candidate, Vote } from "../Common/Domain";
 
 import { CandidateSQL, ElectionSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, VoterSQL, CircuitSQL, ElectionCandidateSQL, VoteSQL, ElectionCandidateVoterSQL } from "./Models";
@@ -84,11 +85,12 @@ export class CommandSQL {
   }
 
   private async addVoteRepeated(vote: Vote): Promise<void> {
-    let previousVote: ElectionCandidateVoterSQL | null = await ElectionCandidateVoterSQL.findOne({ where: { electionId: vote.electionId, candidateCI: vote.candidateCI, voterCI: vote.voterCI } });
-    if (previousVote) {
-      ElectionCandidateSQL.decrement({ voteCount: 1 }, { where: { electionId: vote.electionId, candidateCI: previousVote.candidateCI } });
-      previousVote.update({ candidateCI: vote.candidateCI }, { where: { id: previousVote.id } });
+    let previousVote: ElectionCandidateVoterSQL | null = await ElectionCandidateVoterSQL.findOne({ where: { electionId: vote.electionId, voterCI: vote.voterCI } });
+    if (previousVote != null) {
+      ElectionCandidateSQL.decrement({ voteCount: 1 }, { where: { electionId: previousVote.electionId, candidateCI: previousVote.candidateCI } });
+      ElectionCandidateVoterSQL.update({ candidateCI: vote.candidateCI }, { where: { id: previousVote.id } });
     } else {
+      console.log("No decrement ni update");
       ElectionCandidateVoterSQL.create({
         electionId: vote.electionId,
         candidateCI: vote.candidateCI,

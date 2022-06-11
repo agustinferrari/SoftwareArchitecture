@@ -1,4 +1,4 @@
-import { Table, Column, PrimaryKey, ForeignKey, Model } from "sequelize-typescript";
+import { Table, Column, PrimaryKey, ForeignKey, Model, AutoIncrement } from "sequelize-typescript";
 import { Vote } from "../../Common/Domain/Vote";
 import { ElectionSQL } from "./ElectionSQL";
 import { VoterSQL } from "./VotersSQL";
@@ -6,8 +6,9 @@ import { VoterSQL } from "./VotersSQL";
 @Table
 export class VoteSQL extends Model<Vote, Vote> {
   @PrimaryKey
+  @AutoIncrement
   @Column
-  id!: string;
+  id!: number;
 
   @ForeignKey(() => VoterSQL)
   @Column

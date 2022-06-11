@@ -1,5 +1,5 @@
 import { ElectionInfo } from "../../../Common/Domain";
-import { QueryCache } from "./../../../Common/Redis/CacheQuery";
+import { QueryCache } from "../../../Common/Redis/QueryCache";
 import { ElectionQueryQueue } from "./ElectionQueryQueue";
 
 export class ElectionQuery {
