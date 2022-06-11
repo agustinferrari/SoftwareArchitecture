@@ -1,25 +1,10 @@
 {
-  "API": {
-    "port": 3001
+  "MONGO": {
+    "port": "27017",
+    "dbName": "appEv"
   },
-  "EmailSender": {
-    "route": "http://localhost:3000",
-    "endpoint": "/emails"
-  },
-  "MessageSender": {
-    "route": "http://localhost:3000",
-    "endpoint": "/messages"
-  },
-  "SQL_DB": {
-    "name": "appEvDB",
-    "user": "root",
-    "password": "password",
-    "host": "127.0.0.1",
-    "port": "3306"
-  },
-  "REDIS": {
-    "host": "127.0.0.1",
-    "port": "6379",
-    "statusKey": "status"
+  "QUERY_API":{
+    "port": 3003,
+    "jwtSecret": "n03sC@nn0n"
   }
 }
