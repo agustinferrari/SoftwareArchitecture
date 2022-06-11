@@ -1,5 +1,4 @@
-import { ElectionInfo, Voter } from "../../../Common/Domain";
-import { ElectionCache } from "./../../../Common/Redis/ElectionCache";
+import { Voter } from "../../../Common/Domain";
 import { VoterQueryQueue } from "./VoterQueryQueue";
 
 export class VoterQuery {
