@@ -1,6 +1,6 @@
-import { Circuit, Election, Party, Voter, Candidate } from "../Common/Domain";
+import { Circuit, Election, Party, Voter, Candidate, Vote } from "../Common/Domain";
 
-import { CandidateSQL, ElectionSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, VoterSQL, CircuitSQL, ElectionCandidateSQL } from "./Models";
+import { CandidateSQL, ElectionSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, VoterSQL, CircuitSQL, ElectionCandidateSQL, VoteSQL, ElectionCandidateVoterSQL } from "./Models";
 
 export class CommandSQL {
   public async addElection(election: Election): Promise<void> {
@@ -68,5 +68,32 @@ export class CommandSQL {
     });
 
     return voters.length;
+  }
+
+  public async addVote(vote: Vote, mode: string): Promise<void> {
+    await this.addVoteUnique(vote);
+    if (mode === "repeated") {
+      this.addVoteRepeated(vote);
+    }
+  }
+
+  private async addVoteUnique(vote: Vote): Promise<void> {
+    VoteSQL.create(vote);
+    ElectionCandidateSQL.increment({ voteCount: 1 }, { where: { electionId: vote.electionId, candidateCI: vote.candidateCI } });
+    return;
+  }
+
+  private async addVoteRepeated(vote: Vote): Promise<void> {
+    let previousVote: ElectionCandidateVoterSQL | null = await ElectionCandidateVoterSQL.findOne({ where: { electionId: vote.electionId, candidateCI: vote.candidateCI, voterCI: vote.voterCI } });
+    if (previousVote) {
+      ElectionCandidateSQL.decrement({ voteCount: 1 }, { where: { electionId: vote.electionId, candidateCI: previousVote.candidateCI } });
+      previousVote.update({ candidateCI: vote.candidateCI }, { where: { id: previousVote.id } });
+    } else {
+      ElectionCandidateVoterSQL.create({
+        electionId: vote.electionId,
+        candidateCI: vote.candidateCI,
+        voterCI: vote.voterCI,
+      });
+    }
   }
 }
