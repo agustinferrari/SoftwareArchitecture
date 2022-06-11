@@ -12,8 +12,8 @@ export class Election {
     this.endDate = inputJson.endDate;
     this.mode = inputJson.mode;
     this.voters = [];
-    
-    if(inputJson.voters) {
+
+    if (inputJson.voters) {
       this.voters = inputJson.voters.map((voter: any) => {
         return new Voter(voter);
       });

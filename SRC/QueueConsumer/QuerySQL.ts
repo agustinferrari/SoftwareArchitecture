@@ -31,4 +31,25 @@ export class QuerySQL {
     }
     return false;
   }
+
+  public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
+    let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND electionId = '${electionId}';`;
+    let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    if (found[0]) {
+      return found[0]["Exists"] == 1;
+    }
+    return false;
+  }
+
+  public async checkRepeatedVote(voterCI: string, electionId: number): Promise<number> {
+    let queryString: string = `SELECT Count(*) as 'VoteCount' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND electionId = '${electionId}';`;
+    let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    if (found[0]) {
+      return found[0]["VoteCount"];
+    }
+    //TODO ver como manejar esto
+    throw new Error(`Error checking vote count for voter`);
+  }
 }

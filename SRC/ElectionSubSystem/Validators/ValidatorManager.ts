@@ -18,6 +18,7 @@ class ValidatorManager extends AbstractValidatorManager<Election> {
       ValueCategoryFilter: ValueCategoryFilter,
       CandidateFilter: CandidateFilter,
     };
+    this.jsonConfig = require("./config.json");
   }
 }
 
