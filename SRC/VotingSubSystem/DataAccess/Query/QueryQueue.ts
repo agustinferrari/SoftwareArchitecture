@@ -1,15 +1,10 @@
 import { Voter } from "../../../Common/Domain";
 
 import Queue from "bull";
-import {
-  QueueJob,
-  QueueJobPriority,
-  QueueJobType,
-  QueueResponse,
-} from "../../../Common/Queues";
+import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../../../Common/Queues";
 import config from "config";
 
-export class VoterQueryQueue {
+export class QueryQueue {
   electionQueue: any;
 
   constructor() {
@@ -25,10 +20,10 @@ export class VoterQueryQueue {
     queueJob.type = QueueJobType.GetVoter;
     let job = await this.electionQueue.add(queueJob);
     let result: QueueResponse = await job.finished();
-    if(!result.result){
+    if (!result.result) {
       throw new Error("Voter not found");
     }
-    let voter : Voter = new Voter(result.result) ;
+    let voter: Voter = new Voter(result.result);
     return voter;
   }
 }

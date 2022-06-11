@@ -3,7 +3,7 @@ import { ElectionInfo } from "../Domain";
 import { RedisContext } from "./RedisContext";
 import config from "config";
 
-export class CacheQuery {
+export class QueryCache {
   constructor() {
     this.redisContext = RedisContext.getInstance();
   }

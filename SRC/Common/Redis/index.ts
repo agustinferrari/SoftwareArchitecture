@@ -1,3 +1,3 @@
-export * from "./CacheCommand";
-export * from "./CacheQuery";
+export * from "./CommandCache";
+export * from "./QueryCache";
 export * from "./RedisContext";

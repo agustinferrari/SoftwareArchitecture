@@ -15,7 +15,7 @@ export class QueueTypeHandler {
     return await this.query.voterElectionCircuit(input.voterCI, input.electionId, input.circuitId);
   }
 
-  public async getVoter(input :any){
+  public async getVoter(input: any) {
     //TODO ver si validar que sea ci
     return await this.query.getVoter(input.ci);
   }
@@ -34,6 +34,12 @@ export class QueueTypeHandler {
   public async addVoters(input: any): Promise<string> {
     //TODO ver si validar que no esten vacios
     await this.command.addVoters(input.voters, input.electionId);
+    return "Added sucessfully";
+  }
+
+  public async addVote(input: any): Promise<string> {
+    //TODO ver si validar que no esten vacios
+    await this.command.addVote(input.vote, input.mode);
     return "Added sucessfully";
   }
 }
