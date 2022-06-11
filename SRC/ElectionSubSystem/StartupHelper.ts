@@ -9,7 +9,8 @@ import { APIConsumer } from "./ElectoralConsumer/APIConsumer";
 import { IConsumer } from "./ElectoralConsumer/IConsumer";
 import { Parameter } from "./ElectoralConsumer/Parameter";
 import { ValidatorManager } from "./Validators/ValidatorManager";
-import { ElectionCache } from "../Common/Redis/ElectionCache";
+import { CacheCommand } from "../Common/Redis/CacheCommand";
+import { CacheQuery } from "../Common/Redis/CacheQuery";
 import { RedisContext } from "../Common/Redis/RedisContext";
 import { ElectionQueryQueue } from "./DataAccess/Query/ElectionQueryQueue";
 import { ElectionCommandQueue } from "./DataAccess/Command/ElectionCommandQueue";
@@ -50,12 +51,13 @@ export class StartupHelper {
     let electionQueueManager: ElectionCommandQueue = new ElectionCommandQueue();
     let queryQueue: ElectionQueryQueue = new ElectionQueryQueue();
 
-    let electionCache: ElectionCache = new ElectionCache(redisContext);
+    let cacheCommand: CacheCommand = new CacheCommand();
+    let cacheQuery: CacheQuery = new CacheQuery();
 
-    let command: ElectionCommand = new ElectionCommand(electionQueueManager, electionCache);
+    let command: ElectionCommand = new ElectionCommand(electionQueueManager, cacheCommand);
     this.command = command;
 
-    let query: ElectionQuery = new ElectionQuery(electionCache, queryQueue);
+    let query: ElectionQuery = new ElectionQuery(cacheQuery, queryQueue);
     this.query = query;
   }
 }

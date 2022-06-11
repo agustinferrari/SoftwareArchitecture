@@ -3,7 +3,12 @@ import config from "config";
 const Redis = require("redis");
 
 export class RedisContext {
-  
+
+  redisClient: RedisClientType;
+  ip: string;
+  port: number;
+  static instance: RedisContext;
+
   constructor() {
     this.ip = config.get("REDIS.host");
     this.port = config.get("REDIS.port");
@@ -12,9 +17,13 @@ export class RedisContext {
     });
     this.redisClient.connect();
   }
-  redisClient: RedisClientType;
-  ip: string;
-  port: number;
+
+  public static getInstance(): RedisContext {
+    if (!RedisContext.instance) {
+      RedisContext.instance = new RedisContext();
+    }
+    return RedisContext.instance;
+  }
 
   async set(key: string, value: string): Promise<void> {
     this.redisClient.set(key, value);
