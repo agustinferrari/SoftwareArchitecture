@@ -8,13 +8,13 @@
     "endpoint": "/messages"
   },
   "REDIS": {
-    "host": "127.0.0.1",
+    "host": "192.168.0.106",
     "port": "6379",
     "statusKey": "status"
   },
   "VOTING_API": {
     "port": 3008
   },
-  "publicKey": "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANC2zusiXjaiYnt8QEFx2i8tX3lRPjNL\nMDI20GUMo4ms2YBnNVGvp3Ntuwf5IevNwRmuLaeKc9XxBwZHSl691DUCAwEAAQ==\n-----END PUBLIC KEY-----\n",
-  "privateKey": "-----BEGIN PRIVATE KEY-----\nMIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA0LbO6yJeNqJie3xA\nQXHaLy1feVE+M0swMjbQZQyjiazZgGc1Ua+nc227B/kh683BGa4tp4pz1fEHBkdK\nXr3UNQIDAQABAkAf6RNR1/tXlxQ/lQut9d5KAEHspoNADGreAotyJ7CJR+FUBed0\nqgh96IuttCsCZtj13T8SQ3ggPU7kqt+M0fCxAiEA9rgqDVQ4YJ7CvChwd9Qa91cw\n8UirXOVzCjkbXWX2ZOcCIQDYkKoCAomkcYL/H07NsXSROjTBVu/+NyzDn6Y/jb3+\ngwIhANil3Z94vkzx/JSXejNvWQKrWPn30yqu/bcTcJkyaQwvAiEAvorZ6hbNgBAX\nj9y9+yDNTRIHZKzXT7a//gazwWs25X0CIA+qdTJDeeWY9VpZZtA0unwHCPVxp+nF\nbMYNPAyWV/yP\n-----END PRIVATE KEY-----\n"
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ92F9HzigT7e9HfTU/qkT1iOeb+R78i\npfLpVOl+zeqSS1efhXk16rwWazlCgdtkPTX027nKUyo57eMgPZ31YpsCAwEAAQ==\n-----END PUBLIC KEY-----\n",
+  "privateKey": "-----BEGIN PRIVATE KEY-----\nMIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAn3YX0fOKBPt70d9N\nT+qRPWI55v5HvyKl8ulU6X7N6pJLV5+FeTXqvBZrOUKB22Q9NfTbucpTKjnt4yA9\nnfVimwIDAQABAkBe3vS3Da0M385ABBnMNSNqINmQK7Ll7ahLyDSjorTCHI1Gjr5I\n3n+Kpp13BG6ZSg80ksluIW9CAIeE3LGZp/gxAiEAzz4OY7TYoeQ0Wg6UhFKKO3e4\nWukiXMcYyTwPvmzkNukCIQDE+j4DILseHq3ZlakWn6ZP/OzG4Jd8nKHuUB8CqMfi\n4wIgYxqd7vhQkDp8/oPyacS+7ek2c+MA17UuGS1rqfiQueECIQCgCShk5izg1dAt\nnbiZVvCKwFWnZ0Xsyl2N/66SPIraPQIgZcuyv1BKQT68pvZHnX9s/+IYxDQol+ch\nTeMWbqsOBrU=\n-----END PRIVATE KEY-----\n"
 }

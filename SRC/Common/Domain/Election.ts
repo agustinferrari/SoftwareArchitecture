@@ -2,6 +2,7 @@ import { Voter } from "./Voter";
 import { Candidate } from "./Candidate";
 import { Party } from "./Party";
 import { Circuit } from "./Circuit";
+import { ElectionMode } from "./ElectionMode";
 
 export class Election {
   constructor(inputJson: any) {
@@ -35,7 +36,7 @@ export class Election {
   description: string;
   startDate: string;
   endDate: string;
-  mode: Enumerator;
+  mode: ElectionMode;
   voters: Voter[];
   candidates: Candidate[];
   parties: Party[];

@@ -1,12 +1,12 @@
-import { ElectionCache } from "./../../../Common/Redis/ElectionCache";
+import { CommandCache } from "./../../../Common/Redis/CommandCache";
 import { Election, ElectionInfo, Voter } from "../../../Common/Domain";
 import { ElectionCommandQueue } from "./ElectionCommandQueue";
 
 export class ElectionCommand {
   electionQueueManager: ElectionCommandQueue;
-  electionCache: ElectionCache;
+  electionCache: CommandCache;
 
-  constructor(electionQueueManager: ElectionCommandQueue, electionCache: ElectionCache) {
+  constructor(electionQueueManager: ElectionCommandQueue, electionCache: CommandCache) {
     this.electionQueueManager = electionQueueManager;
     this.electionCache = electionCache;
   }

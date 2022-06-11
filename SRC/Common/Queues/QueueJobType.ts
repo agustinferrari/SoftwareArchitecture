@@ -1,9 +1,10 @@
 export enum QueueJobType {
   AddVoters = "addVoters",
   AddElection = "addElection",
+  ValidateOneVote = "checkUniqueVote",
+  ValidateRepeatedVote = "checkRepeatedVote",
+  AddVote = "addVote",
   GetElectionsInfo = "getElectionsInfo",
   ValidateVoterElectionCircuit = "voterElectionCircuit",
-  ValidateOneVote = "checkUniqueVote",
   GetVoter = "getVoter",
-  ValidateRepeatedVote = "checkRepeatedVote",
 }

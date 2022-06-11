@@ -1,4 +1,10 @@
-import Server from './VotingAPI/Server';
+import Server from "./VotingAPI/Server";
+import { StartupHelper } from "./StartupHelper";
+let startupHelper: StartupHelper = new StartupHelper();
 
-const server = new Server();
-server.start();
+startupHelper.startUp().then(() => {
+  if (startupHelper.server) {
+    const server: Server = startupHelper.server;
+    //server.start();
+  }
+});

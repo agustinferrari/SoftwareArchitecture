@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import { ElectionInfo } from "../Common/Domain";
+import { ElectionInfo, Voter } from "../Common/Domain";
+import { VoterSQL } from "./Models";
 
 const { QueryTypes } = require("sequelize");
 
@@ -7,6 +8,15 @@ export class QuerySQL {
   sequelize: Sequelize;
   public constructor(sequelize: Sequelize) {
     this.sequelize = sequelize;
+  }
+
+  public async getVoter(ci: string): Promise<Voter> {
+    let found = await VoterSQL.findByPk(ci);
+    if (!found) {
+      throw new Error("Voter not found");
+    }
+    let voter : Voter = new Voter(found);
+    return voter;
   }
 
   public async getElectionsInfo(): Promise<ElectionInfo[]> {

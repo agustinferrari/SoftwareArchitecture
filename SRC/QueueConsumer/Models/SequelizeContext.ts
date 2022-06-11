@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import config from "config";
 
-import { ElectionSQL, ElectionCandidateSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, CandidateSQL, VoterSQL, CircuitSQL, VoteSQL } from "./";
+import { ElectionSQL, ElectionCandidateSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, CandidateSQL, VoterSQL, CircuitSQL, VoteSQL, ElectionCandidateVoterSQL } from "./";
 
 export class SequelizeContext {
   connection: Sequelize;
@@ -26,7 +26,7 @@ export class SequelizeContext {
   }
 
   public async addModels() {
-    this.connection.addModels([ElectionSQL, ElectionCandidateSQL, ElectionCircuitVoterSQL, ElectionCircuitSQL, CircuitSQL, PartySQL, VoterSQL, CandidateSQL, VoteSQL]);
+    this.connection.addModels([ElectionSQL, ElectionCandidateSQL, ElectionCircuitVoterSQL, ElectionCircuitSQL, CircuitSQL, PartySQL, VoterSQL, CandidateSQL, VoteSQL, ElectionCandidateVoterSQL]);
   }
 
   public async syncAllModels() {
@@ -39,5 +39,6 @@ export class SequelizeContext {
     await ElectionCircuitSQL.sync({ alter: true });
     await ElectionCircuitVoterSQL.sync({ alter: true });
     await VoteSQL.sync({ alter: true });
+    await ElectionCandidateVoterSQL.sync({ alter: true });
   }
 }

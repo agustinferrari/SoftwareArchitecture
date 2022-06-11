@@ -4,6 +4,6 @@ export * from "./Person";
 export * from "./Party";
 export * from "./Voter";
 export * from "./Circuit";
-export * from "./ElectionInfo"
-export * from "./Vote"
-export * from "./VoteInfo"
+export * from "./ElectionInfo";
+export * from "./Vote";
+export * from "./ElectionMode";

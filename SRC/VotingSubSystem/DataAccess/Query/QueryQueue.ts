@@ -4,7 +4,7 @@ import Queue from "bull";
 import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../../../Common/Queues";
 import config from "config";
 
-export class VoterQueryQueue {
+export class QueryQueue {
   electionQueue: any;
 
   constructor() {
@@ -25,7 +25,7 @@ export class VoterQueryQueue {
     }
     console.log("result:", response.result, " error:", response.error);
     let voter: Voter = new Voter(response);
-    return response.result;
+    return voter;
   }
 
   public async voterElectionCircuit(voterCI: string, electionId: number, circuitId: number): Promise<boolean> {

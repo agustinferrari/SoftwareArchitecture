@@ -1,3 +1,5 @@
+import { ElectionMode } from "./ElectionMode";
+
 export class ElectionInfo {
   constructor(obj: any) {
     this.id = obj.id;
@@ -21,7 +23,7 @@ export class ElectionInfo {
   }
 
   id: number;
-  mode: string;
+  mode: ElectionMode;
   maxVotesPerVoter: number;
   maxVoteRecordRequestsPerVoter: number;
   emails: string[];
