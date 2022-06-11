@@ -3,6 +3,7 @@ import config from "config";
 const Redis = require("redis");
 
 export class RedisContext {
+  
   constructor() {
     this.ip = config.get("REDIS.host");
     this.port = config.get("REDIS.port");

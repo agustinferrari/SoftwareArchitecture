@@ -31,8 +31,14 @@ export class AuthController {
     const userDTO = new UserDTO(user.email, user.role)
 
     if (user.password != password) {
-      logger.logUnauthorizedAccess("Incorrect password", req.originalUrl,userDTO);
-      res.status(401).send("Incorrect password");
+      logger.logUnauthorizedAccess("Access Denied: Incorrect password", req.originalUrl,userDTO);
+      res.status(401).send("Access Denied: Incorrect password");
+      return;
+    }
+
+    if(user.role != "Consultant"){
+      logger.logUnauthorizedAccess("Access Denied: User is not a consultant", req.originalUrl,userDTO);
+      res.status(401).send("Access Denied: User is not a consultant");
       return;
     }
 

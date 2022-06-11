@@ -5,7 +5,7 @@
     "dbName": "appEv"
   },
   "QUERY_API":{
-    "port": 3003,
+    "port": 3004,
     "jwtSecret": "n03sC@nn0n"
   }
 }

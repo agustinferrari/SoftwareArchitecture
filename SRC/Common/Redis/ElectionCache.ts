@@ -27,6 +27,11 @@ export class ElectionCache {
     );
   }
 
+  existsElection(id: number): boolean {
+    let exists =  this.getElection(id) != null;
+    return exists;
+  }
+
   getElection(id: number): Promise<ElectionInfo | null> {
     return this.redisContext.get(id.toString()).then((result) => {
       if (result) {

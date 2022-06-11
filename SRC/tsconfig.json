@@ -22,5 +22,8 @@
     {
       "path": "./Encryption"
     },
+    {
+      "path": "./ConfigSubSystem"
+    }
   ]
 }

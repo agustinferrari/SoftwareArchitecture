@@ -1,5 +1,7 @@
 {
+  "include": ["./","./node_modules/*"],
   "extends": "../tsconfig-base.json",
+  "references": [{ "path": "../Common" }],
   "compilerOptions": {
     "target": "es2016",
     "strict": true,
@@ -7,12 +9,10 @@
     "emitDecoratorMetadata": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "rootDir": ".",
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "../dist/Logger",
+    "outDir": "../dist/ConfigSubSystem",
+    "noEmitOnError": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   }
 }
