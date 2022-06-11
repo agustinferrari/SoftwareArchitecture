@@ -29,7 +29,6 @@ async function consumer() {
     let type = job.data.type;
     let input = job.data.input;
     console.log("Received job:", type);
-    console.log("IDDDDDDDDDDDDDDDDDDDDDDDDDDDD:", input.electionId);
     //console.log("Job input:", input);
     console.log("-------------------------------------------------------------------------");
     let response: QueueResponse = new QueueResponse();

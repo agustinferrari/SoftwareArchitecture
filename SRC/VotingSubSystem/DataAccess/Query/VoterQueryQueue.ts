@@ -28,8 +28,7 @@ export class VoterQueryQueue {
     if(!result.result){
       throw new Error("Voter not found");
     }
-    console.log("result:", result.result, " error:", result.error);
-    let voter : Voter = new Voter(result) ;
-    return result.result;
+    let voter : Voter = new Voter(result.result) ;
+    return voter;
   }
 }

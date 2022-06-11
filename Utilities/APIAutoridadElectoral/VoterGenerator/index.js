@@ -61,7 +61,7 @@ try {
 }
 
 function VoterInfoLoad(voters) {
-  let filePathAPI = "../VoterVotingInformation.json";
+  let filePathAPI = "../../VoteSimulator/VoterVotingInformation.json";
   try {
     let data = fs.readFileSync(filePathAPI);
     let json = JSON.parse(data);
