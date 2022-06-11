@@ -6,6 +6,17 @@ export interface IUser extends Document {
     role: string;
 }
 
+
+export class UserDTO {
+    email: string;
+    role?: string;
+
+    constructor(email: string, role?: string) {
+        this.email = email;
+        this.role = role;
+    }
+}
+
 export const userSchema = new Schema<IUser>({
     email: { type: String, required: true },
     password: { type: String, required: true },

@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import config from "config";
+import { LoggerFacade } from "../../Logger/LoggerFacade";
+
 
 export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   //Get the jwt token from the head
@@ -13,18 +15,9 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
     res.locals.jwtPayload = jwtPayload;
   } catch (error) {
     //If token is not valid, respond with 401 (unauthorized)
+    LoggerFacade.getLogger().logUnauthorizedAccess("Token not valid", req.originalUrl);
     res.status(401).send("Token is not valid");
     return;
   }
-
-  //The token is valid for 1 hour
-  //We want to send a new token on every request
-  const { userId, username } = jwtPayload;
-  const newToken = jwt.sign({ userId, username },config.get("QUERY_API.jwtSecret"), {
-    expiresIn: "1h"
-  });
-  res.setHeader("token", newToken);
-
-  //Call the next middleware or controller
   next();
 };

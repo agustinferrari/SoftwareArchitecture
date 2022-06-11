@@ -1,10 +1,21 @@
 import mongoose from "mongoose";
-import { Schema, model } from "mongoose";
-import { IUser, userSchema } from "../QueryAPI/Models/IUser";
+import {model } from "mongoose";
+import { IUser, userSchema } from "../QueryAPI/Models/User";
 import config from "config";
 
 export class UserRepository {
-  static async addUser(
+
+  static _instance : UserRepository;
+
+  static getUserRepository(): UserRepository{
+    if(!UserRepository._instance){
+      UserRepository._instance = new UserRepository();
+    }
+      return UserRepository._instance;
+    
+  }
+
+   async addUser(
     email: string,
     password: string,
     role: string
@@ -30,11 +41,9 @@ export class UserRepository {
   }
 
   //find user by email
-  static async findByEmailOrFail(email: string): Promise<IUser> {
-    console.log("entra");
+   async findByEmailOrFail(email: string): Promise<IUser> {
 
     const User = model<IUser>("User", userSchema);
-    console.log(mongoose.connection.readyState);
     await mongoose.connect(
       `mongodb://localhost:${config.get("MONGO.port")}/${config.get(
         "MONGO.dbName"
@@ -42,7 +51,6 @@ export class UserRepository {
     );
     const user = await User.findOne({ email: email }).exec();
 
-    console.log(user)
     if (user) {
       return user;
     } else {
