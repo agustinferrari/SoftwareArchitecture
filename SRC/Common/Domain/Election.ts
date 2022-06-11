@@ -2,6 +2,7 @@ import { Voter } from "./Voter";
 import { Candidate } from "./Candidate";
 import { Party } from "./Party";
 import { Circuit } from "./Circuit";
+import { ElectionMode } from "./ElectionMode";
 
 export class Election {
   constructor(inputJson: any) {
@@ -12,8 +13,8 @@ export class Election {
     this.endDate = inputJson.endDate;
     this.mode = inputJson.mode;
     this.voters = [];
-    
-    if(inputJson.voters) {
+
+    if (inputJson.voters) {
       this.voters = inputJson.voters.map((voter: any) => {
         return new Voter(voter);
       });
@@ -35,7 +36,7 @@ export class Election {
   description: string;
   startDate: string;
   endDate: string;
-  mode: Enumerator;
+  mode: ElectionMode;
   voters: Voter[];
   candidates: Candidate[];
   parties: Party[];
