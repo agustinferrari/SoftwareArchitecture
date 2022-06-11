@@ -1,5 +1,5 @@
 import { Voter } from "../Common/Domain";
-import { Query } from "./DataAccess/Query/VoteQuery";
+import { Query } from "./DataAccess/Query/Query";
 import config from "config";
 import crypto from "crypto";
 import { VoteIntent } from "./Models/VoteIntent";

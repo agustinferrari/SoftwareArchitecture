@@ -18,11 +18,11 @@ export class StartupHelper {
 
   private async ConfigureServices(): Promise<void> {
     if (this.query && this.command) {
-      let encryption = new VoteEncryption(this.query);
-      let votingService: VotingService = new VotingService(encryption, this.command, this.query);
+      //let encryption = new VoteEncryption(this.query);
+      let votingService: VotingService = new VotingService(/*encryption,*/ this.command, this.query);
       this.server = new Server(votingService);
 
-      let voteIntent: VoteIntent = new VoteIntent("16667052", 10387, 26630, "16808400");
+      let voteIntent: VoteIntent = new VoteIntent("10000202", 12045, 34182, "10068967");
       await votingService.handleVote(voteIntent);
       console.log("Termino handle vote");
     }

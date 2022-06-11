@@ -6,12 +6,12 @@ import { VoteCommand } from "./DataAccess/Command/VoteCommand";
 import { Query } from "./DataAccess/Query/Query";
 
 export class VotingService {
-  voteEncryption: VoteEncryption;
+  //voteEncryption: VoteEncryption;
   voteCommand: VoteCommand;
   voteQuery: Query;
 
-  constructor(voteEncryption: VoteEncryption, voteCommand: VoteCommand, voteQuery: Query) {
-    this.voteEncryption = voteEncryption;
+  constructor(/*voteEncryption: VoteEncryption,*/ voteCommand: VoteCommand, voteQuery: Query) {
+    //this.voteEncryption = voteEncryption;
     this.voteCommand = voteCommand;
     this.voteQuery = voteQuery;
   }
@@ -45,9 +45,10 @@ export class VotingService {
     vote.endTimestamp = endTimestamp;
     vote.candidateCI = voteIntent.candidateCI;
     vote.voterCI = voteIntent.ci;
+    vote.electionId = voteIntent.electionId;
     vote.responseTime = endTimestamp.getTime() - startTimestamp.getTime();
     let election: ElectionInfo = await this.voteQuery.getElection(vote.electionId);
     this.voteCommand.addVote(vote, election.mode);
-    console.log("Entre a ");
+    console.log("Termino addVote");
   }
 }
