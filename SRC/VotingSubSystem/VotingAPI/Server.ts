@@ -3,14 +3,15 @@ import {VoteIntentEncrypted} from "../Models/VoteIntentEncrypted";
 import { VotingService } from '../VotingService';
 const express = require("express");
 import config from "config";
+import { VoteEncryption } from "../VoteEncryption";
 
 class Server {
   public app: Application;
   private service: VotingService;
 
-  constructor() {
+  constructor(voteEncryption: VoteEncryption) {
     this.app = express();
-    this.service = new VotingService();
+    this.service = new VotingService(voteEncryption);
     this.config();
     this.routes();
   }

@@ -14,4 +14,4 @@ function readFiles(dirname) {
     });
   });
 }
-readFiles("../Keys");
+readFiles("../Keys/");

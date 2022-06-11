@@ -1,11 +1,11 @@
 export class VoteIntentEncrypted {
-  ci: string;
+  voterCI: string;
   data: string;
   constructor(
     ci: string,
     data: string
   ) {
-    this.ci = ci;
+    this.voterCI = ci;
     this.data = data;
   }
 }
