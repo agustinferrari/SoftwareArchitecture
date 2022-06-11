@@ -7,7 +7,7 @@ import { VoteIntentEncrypted } from "./Models/VoteIntentEncrypted";
 export class VoteEncryption {
   voterQuery: VoterQuery;
 
-  public constructor( voterQuery: VoterQuery) {
+  public constructor(voterQuery: VoterQuery) {
     this.voterQuery = voterQuery;
   }
   public async decryptVote(voteEncrypted: VoteIntentEncrypted): Promise<VoteIntent> {
@@ -15,7 +15,7 @@ export class VoteEncryption {
     let ci: string = voteEncrypted.voterCI;
     let voter: Voter = await this.voterQuery.getVoter(ci);
     let appEvPrivateKey: string = config.get("privateKey");
-    let decryptedVote = crypto.privateDecrypt( appEvPrivateKey, Buffer.from(vote, "utf8"));
+    let decryptedVote = crypto.privateDecrypt(appEvPrivateKey, Buffer.from(vote, "utf8"));
 
     let finalObj = crypto.publicDecrypt(voter.publicKey, decryptedVote).toString();
     let jsonObj=JSON.parse(finalObj);
