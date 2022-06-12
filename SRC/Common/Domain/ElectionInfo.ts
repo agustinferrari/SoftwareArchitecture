@@ -1,3 +1,4 @@
+import { Candidate } from "./Candidate";
 import { ElectionMode } from "./ElectionMode";
 
 export class ElectionInfo {
@@ -7,7 +8,7 @@ export class ElectionInfo {
     this.maxVotesPerVoter = 1;
     this.maxVoteRecordRequestsPerVoter = 1;
     this.emails = [];
-    this.candidateCIs = [];
+    this.candidateCIs = obj.candidates.map((candidate: Candidate) => candidate.ci);
   }
 
   setMaxVotes(maxVotesPerVoter: number) {
@@ -29,4 +30,3 @@ export class ElectionInfo {
   emails: string[];
   candidateCIs: string[];
 }
-
