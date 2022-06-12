@@ -31,55 +31,6 @@ let vote = {
   candidateCI,
 };
 let stringifiedVote = JSON.stringify(vote);
-// console.log(stringifiedVote);
-// // let vote = "ci";
-
-// let voterEncryptedVote = crypto
-//   .privateEncrypt(voter.privateKey, Buffer.from(stringifiedVote, "utf8"))
-//   .toString();
-// console.log("Public");
-
-// console.log(voterEncryptedVote);
-// let serverEncryptedVote = crypto
-//   .publicEncrypt(
-//     serverKeys.publicKey,
-//     Buffer.from(voterEncryptedVote, "base64")
-//   )
-//   .toString("base64");
-
-// fs.writeFileSync(
-//   "./voteExamples.txt",
-//   JSON.stringify({ voterCI: voter.ci, data: serverEncryptedVote })
-// );
-
-// let decryptedVote = crypto.privateDecrypt( serverKeys.privateKey, Buffer.from(serverEncryptedVote, "base64"));
-// console.log()
-// console.log()
-// console.log()
-
-// console.log(decryptedVote)
-// console.log("Server Decrypted")
-// console.log()
-// console.log()
-// console.log()
-
-// let finalObj = crypto.publicDecrypt(voter.publicKey, Buffer.from(decryptedVote,"utf")).toString();
-// console.log("Result: ", finalObj)
-
-// let message = "HOLA";
-// console.log("Message: ", message);
-
-// let a =crypto.privateEncrypt(voter.privateKey, Buffer.from(message, "utf8")).toString();
-// console.log("A: ", a)
-// let b = crypto.publicEncrypt(serverKeys.privateKey, Buffer.from(a,"utf8")).toString("base64");
-// console.log("B: ", b)
-// let c = crypto.privateDecrypt(serverKeys.privateKey, Buffer.from(b, "base64")).toString();
-// console.log("C: ", c)
-// let d = crypto.publicDecrypt(voter.publicKey, c).toString();
-// console.log("D: ", d)
-
-// Calling two getDiffieHellman method
-// with its parameter, groupName
 
 const voterDiffie = crypto.getDiffieHellman("modp14");
 const serverDiffie = crypto.getDiffieHellman("modp14");

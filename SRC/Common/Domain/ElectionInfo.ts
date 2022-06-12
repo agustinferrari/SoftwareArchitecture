@@ -8,7 +8,20 @@ export class ElectionInfo {
     this.maxVotesPerVoter = 1;
     this.maxVoteRecordRequestsPerVoter = 1;
     this.emails = [];
-    this.candidateCIs = obj.candidates.map((candidate: Candidate) => candidate.ci);
+    if(obj.candidates){
+      this.candidateCIs = obj.candidates.map(
+        (candidate: Candidate) => candidate.ci
+      );  
+    }else if(obj.candidateCIs){
+      this.candidateCIs = [];
+      for(let i =0; i<obj.candidateCIs.length; i++){
+        let element = obj.candidateCIs[i];
+        this.candidateCIs.push(element.toString());
+      }
+    }else{
+      this.candidateCIs = [];
+    }
+
     this.startDate = obj.startDate;
     this.endDate = obj.endDate;
   }
