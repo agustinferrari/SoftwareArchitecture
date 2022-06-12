@@ -4,10 +4,11 @@ import { UniqueVoteFilter } from "./UniqueVoteFilter";
 import { AbstractValidatorManager } from "../../Common/Validators/AbstractValidatorManager";
 import { CandidateFilter } from "./CandidateFilter";
 import { Query } from "../DataAccess/Query/Query";
-import { VoteIntent } from "../Models/VoteIntent";
 import { RepeatedVoteFilter } from "./RepeatedVoteFilter";
+import { Vote } from "../../Common/Domain";
+import { InProgressValidator } from "./InProgressValidator";
 
-export class ValidatorManager extends AbstractValidatorManager<VoteIntent> {
+export class ValidatorManager extends AbstractValidatorManager<Vote> {
   query: Query;
   constructor(voterQuery: Query) {
     super();
@@ -22,9 +23,11 @@ export class ValidatorManager extends AbstractValidatorManager<VoteIntent> {
     this.query = voterQuery;
   }
 
-  createPipeline(toValidate: VoteIntent, pipelineName: string) {
+  createPipeline(toValidate: Vote, pipelineName: string) {
+    let inProgressValidator = new InProgressValidator(this.jsonConfig.InProgressValidator, toValidate, this.query);
     let pipelineConfig: any = this.jsonConfig[pipelineName];
     this.pipeline = [];
+    this.pipeline.push([inProgressValidator]);
     for (let stepKey in pipelineConfig) {
       this.step = pipelineConfig[stepKey];
       let filters = this.step["filters"];
