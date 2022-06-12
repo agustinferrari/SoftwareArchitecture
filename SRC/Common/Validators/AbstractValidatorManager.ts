@@ -8,7 +8,6 @@ abstract class AbstractValidatorManager<T> {
   errorMessages: string;
 
   constructor() {
-    this.jsonConfig = require("./config.json");
     this.pipeline = [];
     this.constructors = {};
     this.errorMessages = "";
@@ -21,31 +20,27 @@ abstract class AbstractValidatorManager<T> {
       this.step = pipelineConfig[stepKey];
       let filters = this.step["filters"];
       for (let i = 0; i < filters.length; i++) {
-        let filterObj = new this.constructors[filters[i]["class"]](
-          filters[i]["parameters"],
-          toValidate
-        );
+        let filterObj = new this.constructors[filters[i]["class"]](filters[i]["parameters"], toValidate);
         this.pipeline.push([filterObj]);
       }
     }
   }
 
-  validate() {
+  async validate() {
     for (let i = 0; i < this.pipeline.length; i++) {
       for (let j = 0; j < this.pipeline[i].length; j++) {
-        let passedFilter : boolean = false;
-        let attempts : number = 0;
-        let maxAttempts : number = this.pipeline[i][j].maxAttempts;
-        while(!passedFilter && attempts < maxAttempts){
+        let passedFilter: boolean = false;
+        let attempts: number = 0;
+        let maxAttempts: number = this.pipeline[i][j].maxAttempts;
+        while (!passedFilter && attempts < maxAttempts) {
           try {
-            this.pipeline[i][j].validate();
+            await this.pipeline[i][j].validate();
             passedFilter = true;
           } catch (e: any) {
             attempts++;
             this.errorMessages += `Attempt: ${attempts}/${maxAttempts} | ` + e.message + "\n";
           }
         }
-
       }
     }
     if (this.errorMessages != "") {

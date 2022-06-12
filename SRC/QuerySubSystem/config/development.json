@@ -1,4 +1,5 @@
 {
+  "SYS_NAME": "ConfigSubSystem",
   "MONGO": {
     "port": "27017",
     "dbName": "appEv"

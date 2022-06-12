@@ -1,15 +1,10 @@
 export class VoteIntent {
-  ci: string;
+  voterCI: string;
   circuitId: number;
   electionId: number;
   candidateCI: string;
-  constructor(
-    ci: string,
-    circuitId: number,
-    electionId: number,
-    candidateCI: string
-  ) {
-    this.ci = ci;
+  constructor(ci: string, circuitId: number, electionId: number, candidateCI: string) {
+    this.voterCI = ci;
     this.circuitId = circuitId;
     this.electionId = electionId;
     this.candidateCI = candidateCI;

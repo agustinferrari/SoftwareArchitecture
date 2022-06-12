@@ -6,4 +6,4 @@ export * from "./Voter";
 export * from "./Circuit";
 export * from "./ElectionInfo";
 export * from "./Vote";
-export * from "./ElectionMode";
+export * from "./INotificationSettings";

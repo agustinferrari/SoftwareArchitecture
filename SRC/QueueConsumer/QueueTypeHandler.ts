@@ -1,10 +1,12 @@
 import { ElectionInfo } from "../Common/Domain";
 import { CommandSQL } from "./CommandSQL";
 import { QuerySQL } from "./QuerySQL";
+import { QueryCache } from "./../Common/Redis/";
 
 export class QueueTypeHandler {
   query: QuerySQL;
   command: CommandSQL;
+
   constructor(query: QuerySQL, command: CommandSQL) {
     this.query = query;
     this.command = command;
@@ -41,5 +43,15 @@ export class QueueTypeHandler {
     //TODO ver si validar que no esten vacios
     await this.command.addVote(input.vote, input.mode);
     return "Added sucessfully";
+  }
+
+  public async checkUniqueVote(input: any): Promise<boolean> {
+    //TODO ver si validar que no esten vacios
+    return await this.query.checkUniqueVote(input.voterCI, input.electionId);
+  }
+
+  public async checkRepeatedVote(input: any): Promise<boolean> {
+    //TODO ver si validar que no esten vacios
+    return input.maxVotesPerVoter > (await this.query.checkRepeatedVote(input.voterCI, input.electionId));
   }
 }

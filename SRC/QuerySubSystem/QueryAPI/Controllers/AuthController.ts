@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { IUser, UserDTO } from "../Models/User";
 import config from "config";
-import { UserRepository } from "../../DataAccess/UserRepository";
+import { UserRepository } from "../../DataAccess/Repositories/UserRepository";
 import { LoggerFacade } from "../../Logger/LoggerFacade";
 
 export class AuthController {

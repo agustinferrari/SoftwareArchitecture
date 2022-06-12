@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import {UserRepository} from "../../DataAccess/UserRepository";
+import {UserRepository} from "../../DataAccess/Repositories/UserRepository";
 import { IUser, UserDTO } from "../Models/User";
 import { LoggerFacade } from "../../Logger/LoggerFacade";
 
