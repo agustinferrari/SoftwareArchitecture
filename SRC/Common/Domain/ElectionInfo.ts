@@ -9,6 +9,8 @@ export class ElectionInfo {
     this.maxVoteRecordRequestsPerVoter = 1;
     this.emails = [];
     this.candidateCIs = obj.candidates.map((candidate: Candidate) => candidate.ci);
+    this.startDate = obj.startDate;
+    this.endDate = obj.endDate;
   }
 
   setMaxVotes(maxVotesPerVoter: number) {
@@ -29,4 +31,6 @@ export class ElectionInfo {
   maxVoteRecordRequestsPerVoter: number;
   emails: string[];
   candidateCIs: string[];
+  startDate: string;
+  endDate: string;
 }

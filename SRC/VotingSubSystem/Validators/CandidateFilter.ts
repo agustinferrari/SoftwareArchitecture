@@ -1,4 +1,4 @@
-import { Election } from "../../Common/Domain";
+import { Election, Vote } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
 import { VoteIntent } from "../Models/VoteIntent";
@@ -12,7 +12,7 @@ export class CandidateFilter implements IFilter {
   maxAttempts: number;
   voteQuery: Query;
 
-  constructor(parameters: any, vote: VoteIntent, voteQuery: Query) {
+  constructor(parameters: any, vote: Vote, voteQuery: Query) {
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.error = parameters["errorMessage"];
@@ -23,8 +23,8 @@ export class CandidateFilter implements IFilter {
       (obj: T) =>
         obj[key];
 
-    this.candidateCI = getKeyValue<keyof VoteIntent, VoteIntent>(this.key1)(vote);
-    this.electionId = getKeyValue<keyof VoteIntent, VoteIntent>(this.key2)(vote);
+    this.candidateCI = getKeyValue<keyof Vote, Vote>(this.key1)(vote);
+    this.electionId = getKeyValue<keyof Vote, Vote>(this.key2)(vote);
   }
 
   async validate() {
