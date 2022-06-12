@@ -49,7 +49,7 @@ export class VotingService {
     vote.startTimestamp = startTimestamp;
     vote.endTimestamp = endTimestamp;
     vote.candidateCI = voteIntent.candidateCI;
-    vote.voterCI = voteIntent.ci;
+    vote.voterCI = voteIntent.voterCI;
     vote.electionId = voteIntent.electionId;
     vote.responseTime = endTimestamp.getTime() - startTimestamp.getTime();
     let election: ElectionInfo = await this.voteQuery.getElection(vote.electionId);
