@@ -17,6 +17,7 @@ export class VotingService {
   }
 
   async handleVote(voteIntentEncrypted: VoteIntent): Promise<void> {
+    // console.log("Incoming vote: " + JSON.stringify(voteIntentEncrypted));
     let startTimestamp = new Date();
     // console.log("Vote Encrypted: ", voteIntentEncrypted);
     // let voteIntent: VoteIntent = await this.voteEncryption.decryptVote(
@@ -38,7 +39,6 @@ export class VotingService {
   }
 
   private async addVote(voteIntent: VoteIntent, startTimestamp: Date) {
-    console.log("Entre a addVote");
     let endTimestamp = new Date();
     let vote = new Vote();
     vote.startTimestamp = startTimestamp;
