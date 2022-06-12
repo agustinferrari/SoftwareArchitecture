@@ -1,7 +1,11 @@
 import { createLogger, format, transports, Logger } from "winston"; 
 const { combine, timestamp, label, prettyPrint } = format;
+import {UserDTO} from "../../ConfigAPI/Models/User";
+import config from "config";
 
-export class UnauthorizedAccessLogger{
+
+
+export class AuthorizedAccessLogger{
 
     logger: Logger;
 
@@ -9,23 +13,25 @@ export class UnauthorizedAccessLogger{
         this.logger = createLogger({
             level: 'info',
             format: combine(
-                label({ label: 'Unauthorized Access' }),
+                label({ label: 'Authorized Access' }),
                 timestamp(),
                 prettyPrint()
             ),
             transports: [
-                new transports.File({ filename: 'Logs/Access/unauthorized.log', level: 'info' }),
+                new transports.File({ filename: 'Logs/Access/authorized.log', level: 'info' }),
                 new transports.File({ filename: 'Logs/Access/combined.log', level: 'info'  }),
             ],
         });
     }
 
-    public log(message: string, credentials: any){
+    public log(message: string, route:string, user?: UserDTO ){
         this.logger.log({
             level: 'info',
-            message: message,
-            credentials: credentials
+            system: config.get('SYS_NAME'),
+            user: {email: user?.email, role: user?.role},
+            route: route,
+            message: message
+
         });
     }
-
 }

@@ -15,6 +15,11 @@ export class QueryCache {
     });
   }
 
+  async existsElection(id: number): Promise<boolean> {
+    let exists = (await this.getElection(id)) != null;
+    return exists;
+  }
+
   getElection(id: number): Promise<ElectionInfo | null> {
     return this.redisContext.get(id.toString()).then((result) => {
       if (result) {

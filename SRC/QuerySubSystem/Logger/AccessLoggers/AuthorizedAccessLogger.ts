@@ -1,6 +1,8 @@
 import { createLogger, format, transports, Logger } from "winston"; 
 const { combine, timestamp, label, prettyPrint } = format;
 import {UserDTO} from "../../QueryAPI/Models/User";
+import config from "config";
+
 
 
 export class AuthorizedAccessLogger{
@@ -25,6 +27,7 @@ export class AuthorizedAccessLogger{
     public log(message: string, route:string, user?: UserDTO ){
         this.logger.log({
             level: 'info',
+            system: config.get('SYS_NAME'),
             user: {email: user?.email, role: user?.role},
             route: route,
             message: message
