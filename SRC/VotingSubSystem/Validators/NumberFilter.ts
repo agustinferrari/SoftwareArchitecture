@@ -1,15 +1,15 @@
 import { IFilter } from "../../Common/Validators/IFilter";
-import { VoterQuery } from "../DataAccess/Query/VoteQuery";
+import { Query } from "../DataAccess/Query/Query";
 import { VoteIntent } from "../Models/VoteIntent";
 
-export class OneCandidateFilter implements IFilter {
+export class NumberFilter implements IFilter {
   candidateCI: any;
-  voteQuery: VoterQuery;
+  voteQuery: Query;
   key: any;
   error: string;
   maxAttempts: number;
 
-  constructor(parameters: any, vote: VoteIntent, voteQuery: VoterQuery) {
+  constructor(parameters: any, vote: VoteIntent, voteQuery: Query) {
     this.key = parameters["key"];
     this.error = parameters["errorMessage"];
     this.maxAttempts = parameters["maxAttempts"];

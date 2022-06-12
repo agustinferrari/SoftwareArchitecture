@@ -26,7 +26,7 @@ abstract class AbstractValidatorManager<T> {
     }
   }
 
-  validate() {
+  async validate() {
     for (let i = 0; i < this.pipeline.length; i++) {
       for (let j = 0; j < this.pipeline[i].length; j++) {
         let passedFilter: boolean = false;
@@ -34,7 +34,7 @@ abstract class AbstractValidatorManager<T> {
         let maxAttempts: number = this.pipeline[i][j].maxAttempts;
         while (!passedFilter && attempts < maxAttempts) {
           try {
-            this.pipeline[i][j].validate();
+            await this.pipeline[i][j].validate();
             passedFilter = true;
           } catch (e: any) {
             attempts++;

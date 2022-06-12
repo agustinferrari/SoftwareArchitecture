@@ -22,7 +22,7 @@ export class StartupHelper {
       let votingService: VotingService = new VotingService(/*encryption,*/ this.command, this.query);
       this.server = new Server(votingService);
 
-      let voteIntent: VoteIntent = new VoteIntent("10000202", 12045, 34182, "10068967");
+      let voteIntent: VoteIntent = new VoteIntent("10000202", 12045, 34182, "56420787");
       await votingService.handleVote(voteIntent);
       console.log("Termino handle vote");
     }

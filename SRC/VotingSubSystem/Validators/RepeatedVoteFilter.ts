@@ -1,6 +1,6 @@
 import { Election } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
-import { VoterQuery } from "../DataAccess/Query/VoteQuery";
+import { Query } from "../DataAccess/Query/Query";
 import { VoteIntent } from "../Models/VoteIntent";
 
 export class RepeatedVoteFilter implements IFilter {
@@ -10,9 +10,9 @@ export class RepeatedVoteFilter implements IFilter {
   key2: any;
   error: string;
   maxAttempts: number;
-  voteQuery: VoterQuery;
+  voteQuery: Query;
 
-  constructor(parameters: any, vote: VoteIntent, voteQuery: VoterQuery) {
+  constructor(parameters: any, vote: VoteIntent, voteQuery: Query) {
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.error = parameters["errorMessage"];
@@ -27,7 +27,7 @@ export class RepeatedVoteFilter implements IFilter {
     this.electionId = getKeyValue<keyof VoteIntent, VoteIntent>(this.key2)(vote);
   }
 
-  validate() {
-    this.voteQuery.checkRepeatedVote(this.voterCI, this.electionId);
+  async validate() {
+    await this.voteQuery.checkRepeatedVote(this.voterCI, this.electionId);
   }
 }

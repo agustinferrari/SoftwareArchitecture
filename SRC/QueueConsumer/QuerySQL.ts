@@ -15,7 +15,7 @@ export class QuerySQL {
     if (!found) {
       throw new Error("Voter not found");
     }
-    let voter : Voter = new Voter(found);
+    let voter: Voter = new Voter(found);
     return voter;
   }
 

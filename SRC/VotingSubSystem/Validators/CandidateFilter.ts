@@ -1,6 +1,6 @@
 import { Election } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
-import { VoterQuery } from "../DataAccess/Query/VoteQuery";
+import { Query } from "../DataAccess/Query/Query";
 import { VoteIntent } from "../Models/VoteIntent";
 
 export class CandidateFilter implements IFilter {
@@ -10,9 +10,9 @@ export class CandidateFilter implements IFilter {
   key2: any;
   error: string;
   maxAttempts: number;
-  voteQuery: VoterQuery;
+  voteQuery: Query;
 
-  constructor(parameters: any, vote: VoteIntent, voteQuery: VoterQuery) {
+  constructor(parameters: any, vote: VoteIntent, voteQuery: Query) {
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.error = parameters["errorMessage"];
@@ -29,6 +29,7 @@ export class CandidateFilter implements IFilter {
 
   async validate() {
     let candidatesCIs: string[] = await this.voteQuery.getElectionCandidates(this.electionId);
+    console.log(candidatesCIs);
     if (candidatesCIs.indexOf(this.candidateCI) === -1) {
       throw new Error(this.error);
     }

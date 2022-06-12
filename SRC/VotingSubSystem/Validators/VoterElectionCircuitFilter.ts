@@ -1,5 +1,5 @@
 import { IFilter } from "../../Common/Validators/IFilter";
-import { VoterQuery } from "../DataAccess/Query/VoteQuery";
+import { Query } from "../DataAccess/Query/Query";
 import { VoteIntent } from "../Models/VoteIntent";
 
 export class VoterElectionCircuitFilter implements IFilter {
@@ -11,9 +11,9 @@ export class VoterElectionCircuitFilter implements IFilter {
   key3: any;
   error: string;
   maxAttempts: number;
-  voteQuery: VoterQuery;
+  voteQuery: Query;
 
-  constructor(parameters: any, vote: VoteIntent, voteQuery: VoterQuery) {
+  constructor(parameters: any, vote: VoteIntent, voteQuery: Query) {
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.key3 = parameters["key3"];
@@ -30,7 +30,7 @@ export class VoterElectionCircuitFilter implements IFilter {
     this.circuitId = getKeyValue<keyof VoteIntent, VoteIntent>(this.key3)(vote);
   }
 
-  validate() {
-    this.voteQuery.voterElectionCircuit(this.voterCI, this.electionId, this.circuitId);
+  async validate() {
+    await this.voteQuery.voterElectionCircuit(this.voterCI, this.electionId, this.circuitId);
   }
 }
