@@ -2,7 +2,7 @@ import { ElectionInfo, INotificationSettings } from "../Domain";
 import { RedisContext } from "./RedisContext";
 import config from "config";
 
-export class CacheCommand {
+export class CommandCache {
   constructor() {
     this.redisContext = RedisContext.getInstance();
   }

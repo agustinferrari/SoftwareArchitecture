@@ -44,7 +44,7 @@ export class ElectionCandidateSQL extends Model {
   @Column
   candidateCI!: string;
 
-  @Column
+  @Column({ defaultValue: 0 })
   voteCount!: number;
 }
 
@@ -75,7 +75,19 @@ export class ElectionCircuitVoterSQL extends Model {
   @ForeignKey(() => VoterSQL)
   @Column
   voterCI!: string;
+}
 
+@Table
+export class ElectionCandidateVoterSQL extends Model {
+  @ForeignKey(() => ElectionCandidateSQL)
   @Column
-  voteCount!: number;
+  electionId!: number;
+
+  @ForeignKey(() => ElectionCandidateSQL)
+  @Column
+  candidateCI!: string;
+
+  @ForeignKey(() => VoterSQL)
+  @Column
+  voterCI!: string;
 }

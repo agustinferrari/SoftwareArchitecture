@@ -29,3 +29,4 @@ export class ElectionInfo {
   emails: string[];
   candidateCIs: string[];
 }
+

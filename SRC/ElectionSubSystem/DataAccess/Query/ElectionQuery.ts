@@ -1,11 +1,11 @@
 import { ElectionInfo } from "../../../Common/Domain";
-import { CacheQuery } from "./../../../Common/Redis/CacheQuery";
+import { QueryCache } from "../../../Common/Redis/QueryCache";
 import { ElectionQueryQueue } from "./ElectionQueryQueue";
 
 export class ElectionQuery {
-  electionCache: CacheQuery;
+  electionCache: QueryCache;
   electionQueryQueue: ElectionQueryQueue;
-  constructor(electionCache: CacheQuery, electionQuerySQL: ElectionQueryQueue) {
+  constructor(electionCache: QueryCache, electionQuerySQL: ElectionQueryQueue) {
     this.electionCache = electionCache;
     this.electionQueryQueue = electionQuerySQL;
     //this.startupRedis();
