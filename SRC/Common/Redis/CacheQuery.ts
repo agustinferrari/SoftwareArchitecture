@@ -15,8 +15,8 @@ export class CacheQuery {
     });
   }
 
-  existsElection(id: number): boolean {
-    let exists =  this.getElection(id) != null;
+  async existsElection(id: number): Promise<boolean> {
+    let exists = (await this.getElection(id)) != null;
     return exists;
   }
 
