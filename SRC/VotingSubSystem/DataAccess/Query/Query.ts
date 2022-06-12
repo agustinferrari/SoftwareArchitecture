@@ -1,6 +1,7 @@
 import { Voter, ElectionInfo } from "../../../Common/Domain";
 import { QueryQueue } from "./QueryQueue";
 import { QueryCache } from "../../../Common/Redis/QueryCache";
+
 export class Query {
   voterQueryQueue: QueryQueue;
   queryCache: QueryCache;
@@ -22,5 +23,38 @@ export class Query {
       throw new Error("Election not found");
     }
     return result;
+  }
+
+  public async voterElectionCircuit(voterCI: string, electionId: number, circuitId: number): Promise<boolean> {
+    let found: boolean = await this.voterQueryQueue.voterElectionCircuit(voterCI, electionId, circuitId);
+    return found;
+  }
+
+  public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
+    let electionInfo: ElectionInfo | null = await this.queryCache.getElection(electionId);
+    if (electionInfo == null || electionInfo.mode != "unique") {
+      //throw new Error("Election mode is not 'unique'");
+      return true;
+    }
+    let found: boolean = await this.voterQueryQueue.checkUniqueVote(voterCI, electionId);
+    return found;
+  }
+
+  public async checkRepeatedVote(voterCI: string, electionId: number): Promise<boolean> {
+    let electionInfo: ElectionInfo | null = await this.queryCache.getElection(electionId);
+    if (electionInfo == null || electionInfo.mode != "repeated") {
+      //throw new Error("Election mode is not 'repeated'");
+      return true;
+    }
+    let found: boolean = await this.voterQueryQueue.checkRepeatedVote(voterCI, electionId, electionInfo.maxVotesPerVoter);
+    return found;
+  }
+
+  public async getElectionCandidates(electionId: number): Promise<string[]> {
+    let electionInfo: ElectionInfo | null = await this.queryCache.getElection(electionId);
+    if (electionInfo == null) {
+      throw new Error("Election not found");
+    }
+    return electionInfo.candidateCIs;
   }
 }

@@ -1,0 +1,74 @@
+{
+  "vote": [
+    {
+      "filters": [
+        {
+          "class": "VoterElectionCircuitFilter",
+          "parameters": {
+            "maxAttempts": 1,
+            "key1": "voterCI",
+            "key2": "electionId",
+            "key3": "circuitId",
+            "errorMessage": "The voter is not eligible to vote in this election and/or circuit.",
+            "description": "Filters out voters who are not eligible to vote in this election and/or circuit."
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "UniqueVoteFilter",
+          "parameters": {
+            "maxAttempts": 1,
+            "key1": "voterCI",
+            "key2": "electionId",
+            "errorMessage": "The voter has voted already",
+            "description": "Filter voters that have voted already"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "RepeatedVoteFilter",
+          "parameters": {
+            "maxAttempts": 1,
+            "key1": "voterCI",
+            "key2": "electionId",
+            "errorMessage": "The voter has already voted the max number of times",
+            "description": "Filter voters that have voted the max number of times"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "CandidateFilter",
+          "parameters": {
+            "maxAttempts": 1,
+            "key1": "candidateCI",
+            "key2": "electionId",
+            "errorMessage": "The voted candidate is not eligible to vote in this election.",
+            "description": "Filters out candidates who are not eligible to vote in this election."
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "NumberFilter",
+          "parameters": {
+            "maxAttempts": 1,
+            "key": "candidateCI",
+            "errorMessage": "The vote should contain only one candidate",
+            "description": "Filter votes that contain more than one candidate"
+          }
+        }
+      ]
+    }
+  ]
+}

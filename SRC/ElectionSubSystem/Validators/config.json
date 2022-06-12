@@ -6,8 +6,8 @@
           "class": "DateFilter",
           "parameters": {
             "maxAttempts": 1,
-            "key1": "startDate",
-            "key2": "endDate",
+            "key1": "endDate",
+            "key2": "startDate",
             "errorMessage": "La fecha de inicio de la eleccion debe ser menor a la fecha de fin",
             "description": "Filtrar fecha de inicio mayor a fecha de fin"
           }
