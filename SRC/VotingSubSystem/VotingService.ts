@@ -20,6 +20,7 @@ export class VotingService {
   }
 
   async handleVote(voteIntentEncrypted: VoteIntent): Promise<void> {
+    // console.log("Incoming vote: " + JSON.stringify(voteIntentEncrypted));
     let startTimestamp = new Date();
     // console.log("Vote Encrypted: ", voteIntentEncrypted);
     // let voteIntent: VoteIntent = await this.voteEncryption.decryptVote(
@@ -43,7 +44,17 @@ export class VotingService {
   }
 
   private async addVote(voteIntent: VoteIntent, startTimestamp: Date) {
-    console.log("Entre a addVote");
+    let endTimestamp = new Date();
+    let vote = new Vote();
+    vote.startTimestamp = startTimestamp;
+    vote.endTimestamp = endTimestamp;
+    vote.candidateCI = voteIntent.candidateCI;
+    vote.voterCI = voteIntent.ci;
+    vote.electionId = voteIntent.electionId;
+    vote.responseTime = endTimestamp.getTime() - startTimestamp.getTime();
+    let election: ElectionInfo = await this.voteQuery.getElection(vote.electionId);
+    this.voteCommand.addVote(vote, election.mode);
+
     // let endTimestamp = new Date();
     // let vote = new Vote();
     // vote.startTimestamp = startTimestamp;

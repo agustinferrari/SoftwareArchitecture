@@ -5,6 +5,6 @@ let startupHelper: StartupHelper = new StartupHelper();
 startupHelper.startUp().then(() => {
   if (startupHelper.server) {
     const server: Server = startupHelper.server;
-    //server.start();
+    server.start();
   }
 });
