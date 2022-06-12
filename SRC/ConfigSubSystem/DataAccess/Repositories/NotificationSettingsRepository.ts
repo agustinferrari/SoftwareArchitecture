@@ -1,7 +1,7 @@
 import { INotificationSettings } from "../../ConfigAPI/Models/NotificationSettings";
 import { NotificationSettingsCommand } from "../Command/NotificationSettingsCommand";
-import { CacheQuery } from "../../../Common/Redis/CacheQuery";
-import { CacheCommand } from "../../../Common/Redis/CacheCommand";
+import { QueryCache } from "../../../Common/Redis/QueryCache";
+import { CommandCache } from "../../../Common/Redis/CommandCache";
 import { ElectionNotFound } from "../../ConfigAPI/Errors/ElectionNotFound";
 
 export class NotificationSettingsRepository {
@@ -17,8 +17,8 @@ export class NotificationSettingsRepository {
   async updateNotificationSettings(
     newSettings: INotificationSettings
   ): Promise<INotificationSettings> {
-    const cacheQuery = new CacheQuery();
-    const cacheCommand = new CacheCommand();
+    const cacheQuery = new QueryCache();
+    const cacheCommand = new CommandCache();
     const exists = await cacheQuery.existsElection(newSettings.electionId);
     if (exists) {
       const updated = await NotificationSettingsCommand.findOneAndUpdate(newSettings);
