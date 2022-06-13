@@ -1,6 +1,6 @@
+import { Vote } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
-import { VoteIntent } from "../Models/VoteIntent";
 
 export class NumberFilter implements IFilter {
   candidateCI: any;
@@ -9,7 +9,7 @@ export class NumberFilter implements IFilter {
   error: string;
   maxAttempts: number;
 
-  constructor(parameters: any, vote: VoteIntent, voteQuery: Query) {
+  constructor(parameters: any, vote: Vote, voteQuery: Query) {
     this.key = parameters["key"];
     this.error = parameters["errorMessage"];
     this.maxAttempts = parameters["maxAttempts"];
@@ -19,7 +19,7 @@ export class NumberFilter implements IFilter {
       (obj: T) =>
         obj[key];
 
-    this.candidateCI = getKeyValue<keyof VoteIntent, VoteIntent>(this.key)(vote);
+    this.candidateCI = getKeyValue<keyof Vote, Vote>(this.key)(vote);
   }
 
   validate() {

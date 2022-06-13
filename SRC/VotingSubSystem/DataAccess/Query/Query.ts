@@ -46,7 +46,7 @@ export class Query {
       //throw new Error("Election mode is not 'repeated'");
       return true;
     }
-    let found: boolean = await this.voterQueryQueue.checkRepeatedVote(voterCI, electionId, electionInfo.maxVotesPerVoter);
+    let found = await this.voterQueryQueue.checkRepeatedVote(voterCI, electionId, electionInfo.maxVotesPerVoter);
     return found;
   }
 
@@ -56,5 +56,24 @@ export class Query {
       throw new Error("Election not found");
     }
     return electionInfo.candidateCIs;
+  }
+
+  public async validateVoteTime(timestamp: Date, electionId: number): Promise<boolean> {
+    let electionInfo: ElectionInfo | null = await this.queryCache.getElection(electionId);
+    if (electionInfo == null) {
+      return false;
+    }
+    return this.parseDate(electionInfo.startDate) <= timestamp && timestamp <= this.parseDate(electionInfo.endDate);
+  }
+
+  private parseDate(myDateStr: string): Date {
+    const dateStr = myDateStr;
+    const [dateComponents, timeComponents] = dateStr.split(" ");
+
+    const [year, month, day] = dateComponents.split("-");
+    const [hours, minutes, seconds] = timeComponents.split(":");
+
+    const date = new Date(+year, +month - 1, +day, +hours, +minutes, +seconds);
+    return date;
   }
 }

@@ -19,7 +19,7 @@ export class VoteEncryption {
 
     let finalObj = crypto.publicDecrypt(voter.publicKey, decryptedVote).toString();
     let jsonObj = JSON.parse(finalObj);
-    let finalVote: VoteIntent = new VoteIntent(ci, jsonObj.circuitId, jsonObj.electionId, jsonObj.candidateCI);
+    let finalVote: VoteIntent = new VoteIntent(ci, jsonObj.circuitId, jsonObj.electionId, jsonObj.candidateCI, jsonObj.startTimestamp);
     return finalVote;
   }
 }

@@ -33,11 +33,12 @@ function setupVote(client) {
       found = true;
     }
   }
+  console.log(found);
   let candidates = election.candidates;
   let pos = getRandomInt(0, candidates.length - 1);
   let candidate = candidates[pos];
   let candidateCI = candidate.ci;
-
+  // let candidateCI = "66330300";
   // let vote = {
   //   electionId,
   //   circuitId,
@@ -46,36 +47,54 @@ function setupVote(client) {
 
   // let stringifiedVote = JSON.stringify(vote);
   //  let encrypted =  voteEncryptor(stringifiedVote);
-
+  let startTimestamp = new Date().toISOString();
   let unencryptedVote = {
     voterCI: voter.ci,
     electionId,
     circuitId,
     candidateCI,
+    startTimestamp
   };
 
-  client.setHeadersAndBody(
-    {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    JSON.stringify(unencryptedVote)
-  );
+  // Para autocannon
+  // client.setHeadersAndBody(
+  //   {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  //   JSON.stringify(unencryptedVote)
+  // );
+
+  // Para unirest
+  return unencryptedVote;
 }
 
 // makeRequests(300000);
 const autocannon = require("autocannon");
 
-autocannon(
-  {
-    url: url + endpoint,
-    method:"POST",
-    amount: 30000,
-    duration: 10,
-    setupClient: setupVote,
-  },
-  console.log
-);
+// autocannon(
+//   {
+//     url: url + endpoint,
+//     method: "POST",
+//     amount: 300000,
+//     duration: 10,
+//     setupClient: setupVote,
+//   },
+//   console.log
+// );
+
+async function makeRequest(body) {
+  unirest
+    .post(url + endpoint)
+    .headers({ Accept: "application/json", "Content-Type": "application/json" })
+    .send(body)
+    .then((response) => {
+      console.log(response.body);
+    });
+}
+
+var unirest = require("unirest");
+makeRequest(setupVote("client"));
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);

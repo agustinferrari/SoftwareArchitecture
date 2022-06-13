@@ -30,7 +30,9 @@ class Server {
   private routes(): void {
     this.app.post("/votes", (req: Request, res: Response) => {
       try {
-        let voteIntent: VoteIntent = req.body as VoteIntent;
+        let converted = req.body;
+        converted.startTimestamp = new Date(converted.startTimestamp);
+        let voteIntent: VoteIntent = converted as VoteIntent;
         this.service.handleVote(voteIntent);
         res.status(200).send("Voto procesado");
       } catch (e: any) {

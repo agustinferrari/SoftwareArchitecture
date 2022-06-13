@@ -22,6 +22,13 @@ export class VotingService {
   async handleVote(voteIntentEncrypted: VoteIntent): Promise<void> {
     // console.log("Incoming vote: " + JSON.stringify(voteIntentEncrypted));
     let startTimestamp = new Date();
+
+    let vote = new Vote();
+    vote.startTimestamp = voteIntentEncrypted.startTimestamp;
+    vote.candidateCI = voteIntentEncrypted.candidateCI;
+    vote.voterCI = voteIntentEncrypted.voterCI;
+    vote.electionId = voteIntentEncrypted.electionId;
+    vote.circuitId = voteIntentEncrypted.circuitId;
     // console.log("Vote Encrypted: ", voteIntentEncrypted);
     // let voteIntent: VoteIntent = await this.voteEncryption.decryptVote(
     //   voteIntentEncrypted
@@ -35,23 +42,18 @@ export class VotingService {
     // voteIntent = await this.voteEncryption.decryptVote(voteIntentEncrypted);
 
     //validate(voteIntent)
-    this.validatorManager.createPipeline(voteIntent, "vote");
+    this.validatorManager.createPipeline(vote, "vote");
     this.validatorManager.validate();
-    this.addVote(voteIntent, startTimestamp);
+    let endTimestamp = new Date();
+    vote.endTimestamp = endTimestamp;
+    this.addVote(vote, startTimestamp);
     return;
     // send to bull
     // response
   }
 
-  private async addVote(voteIntent: VoteIntent, startTimestamp: Date) {
-    let endTimestamp = new Date();
-    let vote = new Vote();
-    vote.startTimestamp = startTimestamp;
-    vote.endTimestamp = endTimestamp;
-    vote.candidateCI = voteIntent.candidateCI;
-    vote.voterCI = voteIntent.voterCI;
-    vote.electionId = voteIntent.electionId;
-    vote.responseTime = endTimestamp.getTime() - startTimestamp.getTime();
+  private async addVote(vote: Vote, startTimestamp: Date) {
+    vote.responseTime = vote.endTimestamp.getTime() - vote.startTimestamp.getTime();
     let election: ElectionInfo = await this.voteQuery.getElection(vote.electionId);
     this.voteCommand.addVote(vote, election.mode);
 

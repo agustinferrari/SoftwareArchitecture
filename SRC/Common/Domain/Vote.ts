@@ -3,6 +3,7 @@ export class Vote {
   voterCI: string;
   candidateCI?: string;
   electionId: number;
+  circuitId: number;
 
   startTimestamp: Date;
   endTimestamp: Date;
@@ -15,5 +16,6 @@ export class Vote {
     this.voterCI = "";
     this.candidateCI = "";
     this.electionId = -1;
+    this.circuitId = -1;
   }
 }
