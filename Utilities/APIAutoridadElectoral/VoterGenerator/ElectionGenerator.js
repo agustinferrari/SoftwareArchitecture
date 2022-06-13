@@ -23,9 +23,7 @@ class ElectionGenerator {
     this.parties = this.partyGenerator.generateParties(this.partyNumber);
 
     this.candidateGenerator = new CandidateGenerator(this.parties);
-    this.candidates = this.candidateGenerator.generateCandidates(
-      this.candidateNumber
-    );
+    this.candidates = this.candidateGenerator.generateCandidates(this.candidateNumber);
 
     // this.voterGenerator = new VoterGenerator(this.circuits);
     // this.votersElection = this.voterGenerator.generateVoters(this.voterNumber, electionId);
@@ -38,6 +36,10 @@ class ElectionGenerator {
     let startDate = this.formatDate(faker.date.future().toString());
     let endDate = this.formatDate(faker.date.future(1, startDate));
     let mode = ["unique", "repeated"][Math.floor(Math.random() * 2)];
+    let emails = [];
+    for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
+      emails.push(faker.internet.email());
+    }
     //let circuits = this.getRandomSubarray(this.circuits, this.circuitNumber/3);
     //let parties = this.getRandomSubarray(this.parties, this.circuitNumber/3);
     //let candidates = this.getRandomSubarray(this.candidates, this.circuitNumber/3);
@@ -60,6 +62,7 @@ class ElectionGenerator {
       circuits,
       parties,
       candidates,
+      emails
     };
 
     return election;
@@ -93,9 +96,7 @@ class ElectionGenerator {
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
 
-    return (
-      [year, month, day].join("-") + " " + [hours, minutes, seconds].join(":")
-    );
+    return [year, month, day].join("-") + " " + [hours, minutes, seconds].join(":");
   }
 
   getRandomSubarray(arr, size) {

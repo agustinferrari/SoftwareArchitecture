@@ -13,19 +13,11 @@ export class EmailNotificationSender implements INotificationSender {
     this.axios = Axios.create({ baseURL: config.get("EmailSender.route") });
   }
 
-  sendNotification(messageContent: string): Promise<boolean> {
+  sendNotification(messageContent: string, destinations: string[]): void {
     let messageBody = { notification: messageContent };
-    return this.axios
-      .post(this.endpoint, messageBody, {
-        headers: {
-          Accept: "application/json",
-        },
-      })
-      .then(function () {
-        return true;
-      })
-      .catch(function (error) {
-        return false;
-      });
+
+    destinations.forEach(destination => {
+      console.log("Email SENT to " + destination + " "+ JSON.stringify(messageBody));
+    });
   }
 }

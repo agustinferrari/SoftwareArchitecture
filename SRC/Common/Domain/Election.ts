@@ -5,6 +5,18 @@ import { Circuit } from "./Circuit";
 import { ElectionMode } from "./ElectionMode";
 
 export class Election {
+  name: string;
+  id: number;
+  description: string;
+  startDate: string;
+  endDate: string;
+  mode: ElectionMode;
+  voters: Voter[];
+  candidates: Candidate[];
+  parties: Party[];
+  circuits: Circuit[];
+  emails: string[];
+
   constructor(inputJson: any) {
     this.name = inputJson.name;
     this.id = inputJson.id;
@@ -13,6 +25,7 @@ export class Election {
     this.endDate = inputJson.endDate;
     this.mode = inputJson.mode;
     this.voters = [];
+    this.emails = inputJson.emails;
 
     if (inputJson.voters) {
       this.voters = inputJson.voters.map((voter: any) => {
@@ -30,15 +43,4 @@ export class Election {
       return new Circuit(circuit);
     });
   }
-
-  name: string;
-  id: number;
-  description: string;
-  startDate: string;
-  endDate: string;
-  mode: ElectionMode;
-  voters: Voter[];
-  candidates: Candidate[];
-  parties: Party[];
-  circuits: Circuit[];
 }

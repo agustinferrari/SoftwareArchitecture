@@ -1,4 +1,8 @@
-import { EmailNotificationSender, INotificationSender, SMSNotificationSender } from "../Common/NotificationSender";
+import {
+  EmailNotificationSender,
+  INotificationSender,
+  SMSNotificationSender,
+} from "../Common/NotificationSender";
 import { Election } from "../Common/Domain";
 import { AbstractValidatorManager } from "../Common/Validators/AbstractValidatorManager";
 import { AbstractAct, EndAct, StartAct } from "./Acts/";
@@ -27,10 +31,7 @@ export class StartupHelper {
 
   private async ConfigureServices(): Promise<void> {
     let predefinedEmails: string[] = [];
-    let electionStartSender: INotificationSender = new EmailNotificationSender(predefinedEmails);
-
-    let predefinedPhoneNumbers: string[] = [];
-    let electionEndSender: INotificationSender = new SMSNotificationSender(predefinedPhoneNumbers);
+    let emailSender: INotificationSender = new EmailNotificationSender(predefinedEmails);
 
     let startAct: AbstractAct = new StartAct();
     let endAct: AbstractAct = new EndAct();
@@ -41,7 +42,15 @@ export class StartupHelper {
     this.apiConsumer = new APIConsumer(apiParameters);
 
     if (this.command && this.query) {
-      this.electionManager = new ElectionManager(this.command, this.query, electionStartSender, electionEndSender, startAct, endAct, validatorManager, this.apiConsumer);
+      this.electionManager = new ElectionManager(
+        this.command,
+        this.query,
+        emailSender,
+        startAct,
+        endAct,
+        validatorManager,
+        this.apiConsumer
+      );
     }
   }
 

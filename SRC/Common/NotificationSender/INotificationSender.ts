@@ -1,3 +1,3 @@
 export interface INotificationSender {
-  sendNotification(messageContent: string): Promise<boolean>;
+  sendNotification(messageContent: string, destinations: string[]): void;
 }
