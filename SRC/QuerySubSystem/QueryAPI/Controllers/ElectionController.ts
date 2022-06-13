@@ -32,4 +32,33 @@ export class ElectionController {
       res.status(404).send("Election " + req.params.id + " does not exists");
     }
   }
+
+  public static async getVoteFrequency(req: Request, res: Response) {
+    const logger = LoggerFacade.getLogger();
+    console.log(req.params);
+    let id = parseInt(req.params.id);
+    console.log(id);
+    if (!id) {
+      try {
+        const user: UserDTO = getUserInSession(req);
+        logger.logBadRequest("electionId not provided", req.originalUrl, user);
+      } catch (err) {
+        logger.logBadRequest("electionId not provided", req.originalUrl);
+      }
+      res.status(400).send("electionId not provided");
+    }
+
+    let query = Query.getQuery();
+    try {
+      let result = await query.getVoteFrequency(id);
+      if (result.dateFrequencies == []) {
+        res.status(200).send("Election has no votes");
+      } else {
+        res.status(200).send(result);
+      }
+    } catch (err) {
+      logger.logBadRequest(`election ${id} does not exist`, req.originalUrl);
+      res.status(404).send("Election " + req.params.id + " does not exist");
+    }
+  }
 }

@@ -13,7 +13,6 @@ export const checkRole = (roles: Array<string>) => {
     let userRepo = Query.getQuery();
     try {
       user = await userRepo.findByEmailOrFail(email);
-      console.log(user);
       const userDTO = new UserDTO(user.email, user.role);
       if (roles.indexOf(user.role) > -1) {
         logger.logAuthorizedAccess(

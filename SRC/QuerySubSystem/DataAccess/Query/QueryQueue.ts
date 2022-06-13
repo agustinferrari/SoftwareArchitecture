@@ -26,4 +26,18 @@ export class QueryQueue {
     console.log("result:", response.result, " error:", response.error);
     return response.result;
   }
+
+  public async getVoteFrequency(electionId: any): Promise<string[]> {
+    let queueJob = new QueueJob();
+    queueJob.input = { electionId: electionId };
+    queueJob.priority = QueueJobPriority.GetVoteFrequency;
+    queueJob.type = QueueJobType.GetVoteFrequency;
+    let job = await this.electionQueue.add(queueJob);
+    let response: QueueResponse = await job.finished();
+    if (!response.result) {
+      throw new Error("The election does not exist");
+    }
+    console.log("result:", response.result, " error:", response.error);
+    return response.result;
+  }
 }
