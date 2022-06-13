@@ -29,7 +29,6 @@ export class CandidateFilter implements IFilter {
 
   async validate() {
     let candidatesCIs: string[] = await this.voteQuery.getElectionCandidates(this.electionId);
-    console.log(candidatesCIs);
     if (candidatesCIs.indexOf(this.candidateCI) === -1) {
       throw new Error(this.error);
     }

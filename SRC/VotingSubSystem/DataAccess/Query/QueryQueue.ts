@@ -58,16 +58,11 @@ export class QueryQueue {
 
   public async checkRepeatedVote(voterCI: string, electionId: number, maxRepeatedVotes: number): Promise<boolean> {
     let queueJob = new QueueJob();
-    queueJob.input = { voterCI: voterCI, electionId: electionId, maxRepeatedVotes: maxRepeatedVotes };
+    queueJob.input = { voterCI: voterCI, electionId: electionId, maxVotesPerVoter: maxRepeatedVotes};
     queueJob.priority = QueueJobPriority.ValidateRepeatedVote;
     queueJob.type = QueueJobType.ValidateRepeatedVote;
     let job = await this.electionQueue.add(queueJob);
     let response: QueueResponse = await job.finished();
-    let voteCount = response.result;
-    if (voteCount >= maxRepeatedVotes) {
-      throw new Error(`Voter ${voterCI} has already voted the max (${voteCount}/${maxRepeatedVotes}) times on election ${electionId}`);
-    }
-    console.log("result:", voteCount, " error:", response.error);
-    return voteCount;
+    return response.result;
   }
 }

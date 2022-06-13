@@ -10,19 +10,17 @@ export class InProgressValidator implements IFilter {
   voteQuery: Query;
 
   constructor(parameters: any, vote: Vote, voteQuery: Query) {
-    this.error = parameters["errorMessage"];
-    this.maxAttempts = parameters["maxAttempts"];
+    this.error = "The election is not in progress";
+    this.maxAttempts =1;
     this.voteQuery = voteQuery;
-    const getKeyValue =
-      <U extends keyof T, T extends object>(key: U) =>
-      (obj: T) =>
-        obj[key];
-
     this.startTimestamp = vote.startTimestamp;
     this.electionId = vote.electionId;
   }
 
   async validate() {
-    await this.voteQuery.validateVoteTime(this.startTimestamp, this.electionId);
+   let passValidation =  await this.voteQuery.validateVoteTime(this.startTimestamp, this.electionId);
+   if(!passValidation){
+    throw new Error(this.error);
+   }
   }
 }

@@ -28,6 +28,7 @@ export class VotingService {
     vote.candidateCI = voteIntentEncrypted.candidateCI;
     vote.voterCI = voteIntentEncrypted.voterCI;
     vote.electionId = voteIntentEncrypted.electionId;
+    vote.circuitId = voteIntentEncrypted.circuitId;
     // console.log("Vote Encrypted: ", voteIntentEncrypted);
     // let voteIntent: VoteIntent = await this.voteEncryption.decryptVote(
     //   voteIntentEncrypted

@@ -29,6 +29,9 @@ export class UniqueVoteFilter implements IFilter {
   }
 
   async validate() {
-    await this.voteQuery.checkUniqueVote(this.voterCI, this.electionId);
+    let passValidation = await this.voteQuery.checkUniqueVote(this.voterCI, this.electionId);
+    if(!passValidation) {
+      throw new Error(this.error);
+    }
   }
 }
