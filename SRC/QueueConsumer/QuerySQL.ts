@@ -123,11 +123,46 @@ export class QuerySQL {
     let found = await this.sequelize.query(queryString, {
       type: QueryTypes.SELECT,
     });
-    if(found[0]){
-     return found[0]['sum'];
+    if (found[0]) {
+      return found[0]["sum"];
     }
 
     throw new Error(`Error getting total votes`);
+  }
 
+  public async getCandidateResult(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT candidateCI, CONCAT( C.name," ", C.lastName) AS 'Candidate full name', 
+                                EC.voteCount
+                                FROM appEvDB.ElectionCandidateSQLs EC, 
+                                appEvDB.CandidateSQLs C
+                                where EC.electionId = ${electionId}
+                                AND EC.candidateCI = C.ci
+                                ORDER BY EC.voteCount DESC
+                                `;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+
+    return found;
+  }
+  public async getPartyResult(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT P.id AS "Id", 
+                                P.name AS 'Party name',
+                                sum(EC.voteCount) as 'Vote Count'
+                                FROM appEvDB.ElectionCandidateSQLs EC, 
+                                appEvDB.CandidateSQLs C,
+                                appEvDB.PartySQLs P
+                                where EC.electionId = 33622
+                                AND EC.candidateCI = C.ci
+                                AND C.partyId = P.id
+                                GROUP BY P.id , P.name
+                                ORDER BY sum(EC.voteCount) DESC
+                                ORDER BY EC.voteCount DESC
+                                `;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+
+    return found;
   }
 }

@@ -72,4 +72,12 @@ export class QueueTypeHandler {
   public async getTotalVotes(input: any): Promise<number> {
     return await this.query.getTotalVotes(input.electionId);
   }
+
+  public async getCandidateResult(input: any): Promise<any[]> {
+    return await this.query.getCandidateResult(input.electionId);
+  }
+
+  public async getPartyResult(input: any): Promise<any[]> {
+    return await this.query.getPartyResult(input.electionId);
+  }
 }
