@@ -46,7 +46,7 @@ export class Query {
       //throw new Error("Election mode is not 'repeated'");
       return true;
     }
-    let found: boolean = await this.voterQueryQueue.checkRepeatedVote(voterCI, electionId, electionInfo.maxVotesPerVoter);
+    let found = await this.voterQueryQueue.checkRepeatedVote(voterCI, electionId, electionInfo.maxVotesPerVoter);
     return found;
   }
 
