@@ -72,7 +72,7 @@ export class ElectionManager {
       //TODO: Enviar mail a asignados
       //TODO: Enviar log de error
       let message = "Election is not valid, election id: " + election.id + " error: \n" + e.message;
-      this.emailSender.sendNotification(message, await this.query.getElectionEmails(election.id));
+      this.emailSender.sendNotification(message, election.emails);
 
      // console.log("Election is not valid, election id: " + election.id + " error: \n" + e.message);
       return;
@@ -102,8 +102,8 @@ export class ElectionManager {
   }
 
   private async validateElection(election: Election): Promise<void> {
-    this.validatorManager.createPipeline(election, "startElection");
-    this.validatorManager.validate();
+    await this.validatorManager.createPipeline(election, "startElection");
+    await this.validatorManager.validate();
   }
 
   private async addVoters(idElection: number, pageNumber: number): Promise<number> {

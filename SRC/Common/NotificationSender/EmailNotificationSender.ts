@@ -15,8 +15,9 @@ export class EmailNotificationSender implements INotificationSender {
 
   sendNotification(messageContent: string, destinations: string[]): void {
     let messageBody = { notification: messageContent };
-    for (let destination in destinations) {
-      console.log("Email SENT to " + destination + JSON.stringify(messageBody));
-    }
+
+    destinations.forEach(destination => {
+      console.log("Email SENT to " + destination + " "+ JSON.stringify(messageBody));
+    });
   }
 }

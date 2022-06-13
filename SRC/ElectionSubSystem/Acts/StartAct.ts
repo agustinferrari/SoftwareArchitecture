@@ -21,11 +21,13 @@ export class StartAct extends AbstractAct {
         for (let i:number = 0; i < election.candidates.length; i++) {
             let candidate : Candidate = election.candidates[i];
             if(candidate.partyId == party.id) {
-              currentCandidates += ", ";
-              currentCandidates += `${candidate.name}`;
+              currentCandidates += `${candidate.name} ${candidate.lastName}`;
+              if(i < election.candidates.length-1){
+                currentCandidates += ", ";
+              }
             }
         }
-        let currentParty = `[Partido: ${party.name}| Candidatos: ${currentCandidates}] \n `;
+        let currentParty = `[Partido: ${party.name} | Candidatos: ${currentCandidates}] \n `;
         parties += currentParty;
     }
     return parties;

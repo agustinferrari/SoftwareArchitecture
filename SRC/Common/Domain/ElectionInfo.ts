@@ -7,7 +7,7 @@ export class ElectionInfo {
     this.mode = obj.mode;
     this.maxVotesPerVoter = 1;
     this.maxVoteRecordRequestsPerVoter = 1;
-    this.emails = [];
+    this.emails = obj.emails;
     this.candidateCIs = obj.candidates.map((candidate: Candidate) => candidate.ci);
   }
 
