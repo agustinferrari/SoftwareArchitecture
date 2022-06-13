@@ -5,10 +5,8 @@ import { INotificationSender } from "./INotificationSender";
 export class EmailNotificationSender implements INotificationSender {
   axios: AxiosInstance;
   endpoint: string;
-  predefinedDestination: string[];
 
-  constructor(predefinedDestination: string[]) {
-    this.predefinedDestination = predefinedDestination;
+  constructor() {
     this.endpoint = config.get("EmailSender.endpoint");
     this.axios = Axios.create({ baseURL: config.get("EmailSender.route") });
   }

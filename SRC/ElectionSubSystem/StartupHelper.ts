@@ -30,8 +30,7 @@ export class StartupHelper {
   }
 
   private async ConfigureServices(): Promise<void> {
-    let predefinedEmails: string[] = [];
-    let emailSender: INotificationSender = new EmailNotificationSender(predefinedEmails);
+    let emailSender: INotificationSender = new EmailNotificationSender();
 
     let startAct: AbstractAct = new StartAct();
     let endAct: AbstractAct = new EndAct();

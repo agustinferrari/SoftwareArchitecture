@@ -7,6 +7,9 @@ import { VoteCommand } from "./DataAccess/Command/VoteCommand";
 import { QueryCache } from "../Common/Redis/QueryCache";
 import Server from "./VotingAPI/Server";
 import { VoteIntent } from "./Models/VoteIntent";
+
+import {SMSNotificationSender, INotificationSender} from "../Common/NotificationSender";
+
 export class StartupHelper {
   query?: Query;
   command?: VoteCommand;
@@ -19,7 +22,9 @@ export class StartupHelper {
   private async ConfigureServices(): Promise<void> {
     if (this.query && this.command) {
       //let encryption = new VoteEncryption(this.query);
-      let votingService: VotingService = new VotingService(/*encryption,*/ this.command, this.query);
+      let emailSender: INotificationSender = new SMSNotificationSender();
+
+      let votingService: VotingService = new VotingService(/*encryption,*/ this.command, this.query, emailSender);
       this.server = new Server(votingService);
     }
   }
