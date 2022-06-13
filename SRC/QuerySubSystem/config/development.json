@@ -1,10 +1,11 @@
 {
   "SYS_NAME": "ConfigSubSystem",
   "MONGO": {
+    "host": "192.168.0.106",
     "port": "27017",
     "dbName": "appEv"
   },
-  "QUERY_API":{
+  "QUERY_API": {
     "port": 3003,
     "jwtSecret": "n03sC@nn0n"
   }

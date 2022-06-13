@@ -1,15 +1,13 @@
-
 import mongoose from "mongoose";
-import {model } from "mongoose";
+import { model } from "mongoose";
 import { IUser, userSchema } from "../../QueryAPI/Models/User";
 import config from "config";
 
-export class UserQuery{
-static async findByEmailOrFail(email: string): Promise<IUser> {
-
+export class QueryMongo {
+  static async findByEmailOrFail(email: string): Promise<IUser> {
     const User = model<IUser>("User", userSchema);
     await mongoose.connect(
-      `mongodb://localhost:${config.get("MONGO.port")}/${config.get(
+      `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
         "MONGO.dbName"
       )}`
     );
@@ -20,5 +18,5 @@ static async findByEmailOrFail(email: string): Promise<IUser> {
     } else {
       throw new Error("User not found repo");
     }
-  
-}}
+  }
+}

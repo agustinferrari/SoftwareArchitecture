@@ -1,19 +1,14 @@
 import mongoose from "mongoose";
-import {model } from "mongoose";
+import { model } from "mongoose";
 import { IUser, userSchema } from "../../QueryAPI/Models/User";
 import config from "config";
 
-export class UserCommand{
-static async addUser(
-    email: string,
-    password: string,
-    role: string
-  ): Promise<void> {
-
+export class CommandMongo {
+  static async addUser(email: string, password: string, role: string): Promise<void> {
     const User = model<IUser>("User", userSchema);
 
     await mongoose.connect(
-      `mongodb://localhost:${config.get("MONGO.port")}/${config.get(
+      `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
         "MONGO.dbName"
       )}`
     );
@@ -27,5 +22,5 @@ static async addUser(
     console.log("User " + email + " saved to database");
 
     return;
-  
-}}
+  }
+}
