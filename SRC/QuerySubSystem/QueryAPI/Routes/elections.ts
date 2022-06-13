@@ -1,9 +1,13 @@
 import { Router } from "express";
-import { VoteController } from "../Controllers/VoteController";
+import { ElectionController } from "../Controllers/ElectionController";
 import { checkJwt } from "../Middlewares/checkJwt";
 import { checkRole } from "../Middlewares/checkRole";
 
 const router = Router();
-router.get("/", [checkJwt, checkRole(["Electoral Authority"])], VoteController.getVote);
+router.get(
+  "/:id/config",
+  [checkJwt, checkRole(["Electoral Authority", "Consultant"])],
+  ElectionController.getConfig
+);
 
 export default router;

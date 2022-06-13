@@ -28,9 +28,7 @@ export class NotificationSettingsCommand {
       maxVotesPerVoter: settings.maxVotesPerVoter,
     });
     await newSettings.save();
-    console.log(
-      "Settings for election: " + settings.electionId + " saved to database"
-    );
+
 
     return;
   }

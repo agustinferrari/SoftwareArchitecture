@@ -37,16 +37,20 @@ export class Query {
     return await this.queryCache.existsElection(id);
   }
 
-  async getElectionConfig(id: number):Promise<NotificationSettingsDTO>{
-
-    let electionInfo : any = this.queryCache.getElection(id);
-    let settings = new NotificationSettingsDTO(electionInfo.id, electionInfo.maxVotesPerVoter, electionInfo.maxVoteRecordRequestsPerVoter,electionInfo.emails);
+  async getElectionConfig(id: number): Promise<NotificationSettingsDTO> {
+    let electionInfo: any = await this.queryCache.getElection(id);
+    let settings = new NotificationSettingsDTO(
+      electionInfo.id,
+      electionInfo.maxVotesPerVoter,
+      electionInfo.maxVoteRecordRequestsPerVoter,
+      electionInfo.emails
+    );
     return settings;
 
+    // async addUser(email: string, password: string, role: string): Promise<void> {
+    //   await UserCommand.addUser(email, password, role);
 
-  // async addUser(email: string, password: string, role: string): Promise<void> {
-  //   await UserCommand.addUser(email, password, role);
-
-  //   return;
-  // }
+    //   return;
+    // }
+  }
 }

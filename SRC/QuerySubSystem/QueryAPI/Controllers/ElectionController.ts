@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
-import * as jwt from "jsonwebtoken";
-import { IUser, UserDTO } from "../Models/User";
-import config from "config";
+import { getUserInSession } from "../Helpers/jwtHelper";
+import { UserDTO } from "../Models/User";
 import { Query } from "../../DataAccess/Query/Query";
 import { LoggerFacade } from "../../Logger/LoggerFacade";
 
-export class ConfigController {
+export class ElectionController {
   public static async getConfig(req: Request, res: Response) {
     const logger = LoggerFacade.getLogger();
 
     let query = Query.getQuery();
 
-    const user: UserDTO = res.locals.jwtPayload as UserDTO;
+    const user: UserDTO = getUserInSession(req);
 
     if (await query.existsElection(parseInt(req.params.id))) {
-      let settings = query.getElectionConfig(parseInt(req.params.id));
+      let settings = await query.getElectionConfig(parseInt(req.params.id));
+
       logger.logSuccessfulRequest(
         "User asked for election " + req.params.id + " notification settings",
         req.originalUrl,
