@@ -10,14 +10,40 @@ let apiPort = serverConfig.VOTING_API.port;
 let url = "http://" + apiHost + ":" + apiPort;
 console.log("Starting vote simulator to url: " + url);
 
-let voters = JSON.parse(
+let jsonVoters = JSON.parse(
   fs.readFileSync("./VoterVotingInformation.json")
 ).voters;
 var elections = JSON.parse(
   fs.readFileSync("../APIAutoridadElectoral/SimulatedElectoralAPI.json")
 ).elections;
 
+let electionUniqueMode = [];
+
+elections.forEach((element) => {
+  if (element.mode == "unique") {
+    electionUniqueMode.push(element.id);
+  }
+});
+
+let voters = [];
+
+// jsonVoters.forEach((element) => {
+//   if (electionUniqueMode.includes(element.electionId)) {
+//     voters.push(element);
+//   }
+// });
+
+// let firstVoter = voters[0];
+// voters = [];
+// voters.push(jsonVoters[0]);
+// jsonVoters.forEach(v=>{
+//   voters.push(v);
+// })
+voters = jsonVoters;
+
 var currentVoter = 0;
+
+let previousVoterElection = [];
 
 function setupVote(client) {
   let voter = voters[currentVoter];
@@ -33,68 +59,117 @@ function setupVote(client) {
       found = true;
     }
   }
-  console.log(found);
   let candidates = election.candidates;
   let pos = getRandomInt(0, candidates.length - 1);
   let candidate = candidates[pos];
   let candidateCI = candidate.ci;
-  // let candidateCI = "66330300";
-  // let vote = {
-  //   electionId,
-  //   circuitId,
-  //   candidateCI,
-  // };
 
-  // let stringifiedVote = JSON.stringify(vote);
-  //  let encrypted =  voteEncryptor(stringifiedVote);
-  let startTimestamp = new Date().toISOString();
+  // let candidateCI = "66330300";
+
+  let startDate = formatDate(election.startDate);
+  let endDate = formatDate(election.endDate);
+
+  //Add one day to startDate
+  startDate.setDate(startDate.getDate() + 1);
+  endDate.setDate(endDate.getDate() - 1);
+
+
+  let randomDate = getRandomDate(startDate, endDate);
+  
+  let startTimestamp = randomDate.toISOString();
   let unencryptedVote = {
     voterCI: voter.ci,
     electionId,
     circuitId,
     candidateCI,
-    startTimestamp
+    startTimestamp,
   };
 
   // Para autocannon
-  // client.setHeadersAndBody(
-  //   {
-  //     Accept: "application/json",
-  //     "Content-Type": "application/json",
-  //   },
-  //   JSON.stringify(unencryptedVote)
-  // );
+  client.setHeadersAndBody(
+    {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    JSON.stringify(unencryptedVote)
+  );
 
-  // Para unirest
-  return unencryptedVote;
+  let currentVoterElection = { voterCI: voter.ci, electionId: electionId };
+  let alreadyVoted = false;
+
+  for (let i = 0; i < previousVoterElection.length && !alreadyVoted; ++i) {
+    let previousCI = previousVoterElection[i].voterCI;
+    let previousElection = previousVoterElection[i].electionId;
+
+    if (
+      previousCI == currentVoterElection.voterCI &&
+      previousElection == currentVoterElection.electionId
+    ) {
+      alreadyVoted = true;
+    }
+  }
+
+  if (alreadyVoted) {
+    console.log("Already Voted: ", currentVoterElection);
+  }
+  previousVoterElection.push(currentVoterElection);
+  // // Para unirest
+  // return unencryptedVote;
+}
+
+function encryptedVote(vote) {
+  // let vote = {
+  //   electionId,
+  //   circuitId,
+  //   candidateCI,
+  // };
+  // let stringifiedVote = JSON.stringify(vote);
+  //  let encrypted =  voteEncryptor(stringifiedVote);
+}
+
+function getRandomDate(from, to) {
+  const fromTime = from.getTime();
+  const toTime = to.getTime();
+  return new Date(fromTime + Math.random() * (toTime - fromTime));
+}
+
+function formatDate(date) {
+  date += "Z";
+  let result = date.replace(" ", "T");
+  return new Date(result);
 }
 
 // makeRequests(300000);
 const autocannon = require("autocannon");
 
-// autocannon(
-//   {
-//     url: url + endpoint,
-//     method: "POST",
-//     amount: 300000,
-//     duration: 10,
-//     setupClient: setupVote,
-//   },
-//   console.log
-// );
+let toSend = voters.length;
 
-async function makeRequest(body) {
-  unirest
-    .post(url + endpoint)
-    .headers({ Accept: "application/json", "Content-Type": "application/json" })
-    .send(body)
-    .then((response) => {
-      console.log(response.body);
-    });
-}
+console.log("Upcoming votes: ", toSend);
 
-var unirest = require("unirest");
-makeRequest(setupVote("client"));
+autocannon(
+  {
+    url: url + endpoint,
+    method: "POST",
+    amount: toSend,
+    connections: toSend,
+    duration: 10000,
+    setupClient: setupVote,
+  },
+  console.log
+);
+
+// async function makeRequest(body) {
+//   unirest
+//     .post(url + endpoint)
+//     .headers({ Accept: "application/json", "Content-Type": "application/json" })
+//     .send(body)
+//     .then((response) => {
+//       console.log(response.body);
+//     });
+// }
+
+// var unirest = require("unirest");
+// makeRequest(setupVote("client"));
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);

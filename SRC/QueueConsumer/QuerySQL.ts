@@ -47,7 +47,7 @@ export class QuerySQL {
                                     AND electionId = '${electionId}';`;
     let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
     if (found[0]) {
-      return found[0]["Exists"] == 1;
+      return found[0]["Exists"] > 0;
     }
     return false;
   }

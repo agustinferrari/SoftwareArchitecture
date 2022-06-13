@@ -42,8 +42,8 @@ export class VotingService {
     // voteIntent = await this.voteEncryption.decryptVote(voteIntentEncrypted);
 
     //validate(voteIntent)
-    this.validatorManager.createPipeline(vote, "vote");
-    this.validatorManager.validate();
+    await this.validatorManager.createPipeline(vote, "vote");
+    await this.validatorManager.validate();
     let endTimestamp = new Date();
     vote.endTimestamp = endTimestamp;
     this.addVote(vote, startTimestamp);
@@ -53,7 +53,8 @@ export class VotingService {
   }
 
   private async addVote(vote: Vote, startTimestamp: Date) {
-    vote.responseTime = vote.endTimestamp.getTime() - vote.startTimestamp.getTime();
+    let responseTime = vote.endTimestamp.valueOf() - startTimestamp.valueOf();
+    vote.responseTime = responseTime;
     let election: ElectionInfo = await this.voteQuery.getElection(vote.electionId);
     this.voteCommand.addVote(vote, election.mode);
 
