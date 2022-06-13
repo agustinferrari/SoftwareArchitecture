@@ -1,12 +1,4 @@
 {
-  "EmailSender": {
-    "route": "http://localhost:3000",
-    "endpoint": "/emails"
-  },
-  "MessageSender": {
-    "route": "http://localhost:3000",
-    "endpoint": "/messages"
-  },
   "REDIS": {
     "host": "127.0.0.1",
     "port": "6379",

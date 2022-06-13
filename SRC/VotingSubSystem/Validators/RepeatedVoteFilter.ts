@@ -28,8 +28,8 @@ export class RepeatedVoteFilter implements IFilter {
   }
 
   async validate() {
-    let isNotRepeated = await this.voteQuery.checkRepeatedVote(this.voterCI, this.electionId);
-    if(!isNotRepeated) {
+    let isOverLimit = await this.voteQuery.checkRepeatedVote(this.voterCI, this.electionId);
+    if(isOverLimit) {
       //TODO: Notificar a emails predefinidos ALERT
       throw new Error(this.voterCI + " " + this.electionId + " " + this.error);
     }

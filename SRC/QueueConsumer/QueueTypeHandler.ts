@@ -52,9 +52,7 @@ export class QueueTypeHandler {
 
   public async checkRepeatedVote(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
-    return (
-      input.maxVotesPerVoter > (await this.query.checkRepeatedVote(input.voterCI, input.electionId))
-    );
+    return await this.query.checkRepeatedVote(input.voterCI, input.electionId, input.maxVotesPerVoter);
   }
 
   public async getVoteDates(input: any): Promise<string[]> {

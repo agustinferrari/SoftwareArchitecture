@@ -39,7 +39,16 @@ let voters = [];
 // jsonVoters.forEach(v=>{
 //   voters.push(v);
 // })
-voters = jsonVoters;
+
+for (let i =0; i< jsonVoters.length; i++){
+  let numberToVote = 3;
+  let randomNumber = getRandomInt(1,3);
+  if(numberToVote == randomNumber){
+    voters.push(jsonVoters[i]);
+  }
+}
+
+// voters = jsonVoters;
 
 var currentVoter = 0;
 
@@ -142,7 +151,7 @@ function formatDate(date) {
 // makeRequests(300000);
 const autocannon = require("autocannon");
 
-let toSend = voters.length;
+let toSend =1;
 
 console.log("Upcoming votes: ", toSend);
 
@@ -152,7 +161,7 @@ autocannon(
     method: "POST",
     amount: toSend,
     connections: toSend,
-    duration: 10000,
+    duration: 5000,
     setupClient: setupVote,
   },
   console.log

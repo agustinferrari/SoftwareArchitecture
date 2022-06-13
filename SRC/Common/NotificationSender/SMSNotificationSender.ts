@@ -1,14 +1,9 @@
-import Axios, { AxiosInstance } from "axios";
-import config from "config";
 import { INotificationSender } from "./INotificationSender";
 
 export class SMSNotificationSender implements INotificationSender {
-  axios: AxiosInstance;
-  endpoint: string;
+
 
   constructor() {
-    this.endpoint = config.get("MessageSender.endpoint");
-    this.axios = Axios.create({ baseURL: config.get("MessageSender.route") });
   }
 
   sendNotification(messageContent: string, destinations: string[]): void {

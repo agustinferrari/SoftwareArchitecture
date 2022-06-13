@@ -88,7 +88,10 @@ export class Query {
     }
     throw new Error(`Election ${electionId} does not exist`);
   }
-
+  
+  async getVoteProofLogCount(voterCI: string, electionId: number): Promise<number>{
+    return QueryMongo.getVoteProofLogCount(voterCI, electionId);
+  }
   // async addUser(email: string, password: string, role: string): Promise<void> {
   //   await UserCommand.addUser(email, password, role);
 
