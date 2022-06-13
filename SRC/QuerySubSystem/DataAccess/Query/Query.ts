@@ -5,6 +5,10 @@ import { IUser } from "../../QueryAPI/Models/User";
 import { QueryQueue } from "./QueryQueue";
 import { ElectionVotesDTO } from "../../QueryAPI/Models/ElectionVotesDTO";
 import { NotificationSettingsDTO } from "../../QueryAPI/Models/NotificationSettingsDTO";
+import {
+  DateFrequencyDTO,
+  ElectionDateFrequencyDTO,
+} from "../../QueryAPI/Models/ElectionDateFrequencyDTO";
 
 export class Query {
   static _instance: Query;
@@ -28,9 +32,13 @@ export class Query {
   }
 
   async getVotes(electionId: number, voterCI: string): Promise<ElectionVotesDTO> {
-    let queryResult: string[] = await this.queryQueue.getVotes(electionId, voterCI);
-    let result: ElectionVotesDTO = new ElectionVotesDTO(electionId, voterCI, queryResult);
-    return result;
+    let electionExists: boolean = await this.queryCache.existsElection(electionId);
+    if (electionExists) {
+      let queryResult: string[] = await this.queryQueue.getVotes(electionId, voterCI);
+      let result: ElectionVotesDTO = new ElectionVotesDTO(electionId, voterCI, queryResult);
+      return result;
+    }
+    throw new Error(`Election ${electionId} does not exist`);
   }
 
   async existsElection(id: number): Promise<boolean> {
@@ -46,11 +54,24 @@ export class Query {
       electionInfo.emails
     );
     return settings;
-
-    // async addUser(email: string, password: string, role: string): Promise<void> {
-    //   await UserCommand.addUser(email, password, role);
-
-    //   return;
-    // }
   }
+
+  async getVoteFrequency(electionId: any): Promise<ElectionDateFrequencyDTO> {
+    let electionExists: boolean = await this.queryCache.existsElection(electionId);
+    if (electionExists) {
+      let queryResult: any[] = await this.queryQueue.getVoteFrequency(electionId);
+      let electionDateFrequencyDTO: ElectionDateFrequencyDTO = new ElectionDateFrequencyDTO(
+        electionId,
+        queryResult
+      );
+      return electionDateFrequencyDTO;
+    }
+    throw new Error(`Election ${electionId} does not exist`);
+  }
+
+  // async addUser(email: string, password: string, role: string): Promise<void> {
+  //   await UserCommand.addUser(email, password, role);
+
+  //   return;
+  // }
 }
