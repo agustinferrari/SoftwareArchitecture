@@ -1,4 +1,4 @@
-import { ElectionInfo } from "../Common/Domain";
+import { ElectionInfo, Vote } from "../Common/Domain";
 import { CommandSQL } from "./CommandSQL";
 import { QuerySQL } from "./QuerySQL";
 import { QueryCache } from "./../Common/Redis/";
@@ -52,13 +52,15 @@ export class QueueTypeHandler {
 
   public async checkRepeatedVote(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
-    return (
-      input.maxVotesPerVoter > (await this.query.checkRepeatedVote(input.voterCI, input.electionId))
-    );
+    return await this.query.checkRepeatedVote(input.voterCI, input.electionId, input.maxVotesPerVoter);
   }
 
   public async getVoteDates(input: any): Promise<string[]> {
     return await this.query.getVoteDates(input.electionId, input.voterCI);
+  }
+  
+  public async getVote(input : any): Promise<Vote>{
+    return await this.query.getVote(input.voteId, input.voterCI);
   }
 
   public async getVoteFrequency(input: any): Promise<any[]> {
