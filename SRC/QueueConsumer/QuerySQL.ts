@@ -70,15 +70,20 @@ export class QuerySQL {
 
   public async checkRepeatedVote(
     voterCI: string,
-    electionId: number
-  ): Promise<number> {
+    electionId: number,
+    maxVotesPerVoter: number
+  ): Promise<boolean> {
     let queryString: string = `SELECT Count(*) as 'VoteCount' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
     let found = await this.sequelize.query(queryString, {
       type: QueryTypes.SELECT,
     });
     if (found[0]) {
-      return found[0]["VoteCount"];
+      console.log(found[0]);
+      let isOverLimit = found[0]["VoteCount"] >= maxVotesPerVoter;
+      return isOverLimit;
+    }else{
+      return false;
     }
     //TODO ver como manejar esto
     throw new Error(`Error checking vote count for voter`);

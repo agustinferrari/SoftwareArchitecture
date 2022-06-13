@@ -61,9 +61,6 @@ export class VotingService {
     vote.responseTime = responseTime;
 
     this.voteCommand.addVote(vote, election.mode);
-
-
-    console.log("Termino addVote");
   }
 
   private sendVoteProof(vote: Vote, voter: Voter, election : ElectionInfo){
