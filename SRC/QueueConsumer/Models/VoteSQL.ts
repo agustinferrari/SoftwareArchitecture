@@ -6,9 +6,8 @@ import { VoterSQL } from "./VotersSQL";
 @Table
 export class VoteSQL extends Model<Vote, Vote> {
   @PrimaryKey
-  @AutoIncrement
   @Column
-  id!: number;
+  id!: string;
 
   @ForeignKey(() => VoterSQL)
   @Column

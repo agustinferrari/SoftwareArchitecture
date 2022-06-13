@@ -4,21 +4,22 @@ import { ElectionMode } from "./ElectionMode";
 export class ElectionInfo {
   constructor(obj: any) {
     this.id = obj.id;
+    this.name = obj.name;
     this.mode = obj.mode;
     this.maxVotesPerVoter = 1;
     this.maxVoteRecordRequestsPerVoter = 1;
     this.emails = obj.emails;
-    if(obj.candidates){
+    if (obj.candidates) {
       this.candidateCIs = obj.candidates.map(
         (candidate: Candidate) => candidate.ci
-      );  
-    }else if(obj.candidateCIs){
+      );
+    } else if (obj.candidateCIs) {
       this.candidateCIs = [];
-      for(let i =0; i<obj.candidateCIs.length; i++){
+      for (let i = 0; i < obj.candidateCIs.length; i++) {
         let element = obj.candidateCIs[i];
         this.candidateCIs.push(element.toString());
       }
-    }else{
+    } else {
       this.candidateCIs = [];
     }
 
@@ -39,6 +40,7 @@ export class ElectionInfo {
   }
 
   id: number;
+  name: string;
   mode: ElectionMode;
   maxVotesPerVoter: number;
   maxVoteRecordRequestsPerVoter: number;
