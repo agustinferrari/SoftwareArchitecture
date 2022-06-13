@@ -72,6 +72,14 @@ export class ElectionCircuitVoterSQL extends Model {
   @Column
   electionCircuitId!: number;
 
+  @ForeignKey(() => ElectionCircuitSQL)
+  @Column
+  electionId!: number;
+
+  @ForeignKey(() => ElectionCircuitSQL)
+  @Column
+  circuitId!: number;
+
   @ForeignKey(() => VoterSQL)
   @Column
   voterCI!: string;
@@ -79,14 +87,17 @@ export class ElectionCircuitVoterSQL extends Model {
 
 @Table
 export class ElectionCandidateVoterSQL extends Model {
+  @PrimaryKey
   @ForeignKey(() => ElectionCandidateSQL)
   @Column
   electionId!: number;
 
+  @PrimaryKey
   @ForeignKey(() => ElectionCandidateSQL)
   @Column
   candidateCI!: string;
 
+  @PrimaryKey
   @ForeignKey(() => VoterSQL)
   @Column
   voterCI!: string;

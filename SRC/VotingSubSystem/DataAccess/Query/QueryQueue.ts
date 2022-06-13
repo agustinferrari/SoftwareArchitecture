@@ -28,7 +28,11 @@ export class QueryQueue {
     return voter;
   }
 
-  public async voterElectionCircuit(voterCI: string, electionId: number, circuitId: number): Promise<boolean> {
+  public async voterElectionCircuit(
+    voterCI: string,
+    electionId: number,
+    circuitId: number
+  ): Promise<boolean> {
     let queueJob = new QueueJob();
     queueJob.input = { voterCI: voterCI, electionId: electionId, circuitId: circuitId };
     queueJob.priority = QueueJobPriority.ValidateVoterElectionCircuit;
@@ -36,7 +40,9 @@ export class QueryQueue {
     let job = await this.electionQueue.add(queueJob);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
-      throw new Error(`Voter ${voterCI} not registered for election ${electionId} in circuit ${circuitId}`);
+      throw new Error(
+        `Voter ${voterCI} not registered for election ${electionId} in circuit ${circuitId}`
+      );
     }
     console.log("result:", response.result, " error:", response.error);
     return response.result;
@@ -52,9 +58,17 @@ export class QueryQueue {
     return response.result;
   }
 
-  public async checkRepeatedVote(voterCI: string, electionId: number, maxRepeatedVotes: number): Promise<boolean> {
+  public async checkRepeatedVote(
+    voterCI: string,
+    electionId: number,
+    maxRepeatedVotes: number
+  ): Promise<boolean> {
     let queueJob = new QueueJob();
-    queueJob.input = { voterCI: voterCI, electionId: electionId, maxVotesPerVoter: maxRepeatedVotes};
+    queueJob.input = {
+      voterCI: voterCI,
+      electionId: electionId,
+      maxVotesPerVoter: maxRepeatedVotes,
+    };
     queueJob.priority = QueueJobPriority.ValidateRepeatedVote;
     queueJob.type = QueueJobType.ValidateRepeatedVote;
     let job = await this.electionQueue.add(queueJob);

@@ -66,4 +66,13 @@ export class QueueTypeHandler {
   public async getVoteFrequency(input: any): Promise<any[]> {
     return await this.query.getVoteFrequency(input.electionId, input.voterCI);
   }
+
+  public async getElectionInfoCountPerCircuit(input: any): Promise<any[]> {
+    return await this.query.getElectionInfoCountPerCircuit(
+      input.electionId,
+      input.minAge,
+      input.maxAge,
+      input.gender
+    );
+  }
 }

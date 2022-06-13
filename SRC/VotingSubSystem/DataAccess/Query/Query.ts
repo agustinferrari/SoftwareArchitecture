@@ -25,15 +25,23 @@ export class Query {
     return result;
   }
 
-  public async voterElectionCircuit(voterCI: string, electionId: number, circuitId: number): Promise<boolean> {
-    let found: boolean = await this.voterQueryQueue.voterElectionCircuit(voterCI, electionId, circuitId);
+  public async voterElectionCircuit(
+    voterCI: string,
+    electionId: number,
+    circuitId: number
+  ): Promise<boolean> {
+    let found: boolean = await this.voterQueryQueue.voterElectionCircuit(
+      voterCI,
+      electionId,
+      circuitId
+    );
     return found;
   }
 
   public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
     let electionInfo: ElectionInfo | null = await this.queryCache.getElection(electionId);
-    if(electionInfo == null){
-      throw new Error("Election not found")
+    if (electionInfo == null) {
+      throw new Error("Election not found");
     }
     if (electionInfo.mode != "unique") {
       //throw new Error("Election mode is not 'unique'");
@@ -49,7 +57,11 @@ export class Query {
       //throw new Error("Election mode is not 'repeated'");
       return true;
     }
-    let found = await this.voterQueryQueue.checkRepeatedVote(voterCI, electionId, electionInfo.maxVotesPerVoter);
+    let found = await this.voterQueryQueue.checkRepeatedVote(
+      voterCI,
+      electionId,
+      electionInfo.maxVotesPerVoter
+    );
     return found;
   }
 
@@ -66,7 +78,10 @@ export class Query {
     if (electionInfo == null) {
       return false;
     }
-    return this.parseDate(electionInfo.startDate) <= timestamp && timestamp <= this.parseDate(electionInfo.endDate);
+    return (
+      this.parseDate(electionInfo.startDate) <= timestamp &&
+      timestamp <= this.parseDate(electionInfo.endDate)
+    );
   }
 
   private parseDate(myDateStr: string): Date {

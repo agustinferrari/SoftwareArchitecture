@@ -35,9 +35,7 @@ export class ElectionController {
 
   public static async getVoteFrequency(req: Request, res: Response) {
     const logger = LoggerFacade.getLogger();
-    console.log(req.params);
     let id = parseInt(req.params.id);
-    console.log(id);
     if (!id) {
       try {
         const user: UserDTO = getUserInSession(req);
@@ -56,6 +54,20 @@ export class ElectionController {
       } else {
         res.status(200).send(result);
       }
+    } catch (err) {
+      logger.logBadRequest(`election ${id} does not exist`, req.originalUrl);
+      res.status(404).send("Election " + req.params.id + " does not exist");
+    }
+  }
+
+  public static async getCircuitInfo(req: Request, res: Response) {
+    const logger = LoggerFacade.getLogger();
+    let id = parseInt(req.params.id);
+    let { minAge, maxAge, gender } = req.body;
+    let query = Query.getQuery();
+    try {
+      let result = await query.getElectionInfoCountPerCircuit(id, minAge, maxAge, gender);
+      res.status(200).send(result);
     } catch (err) {
       logger.logBadRequest(`election ${id} does not exist`, req.originalUrl);
       res.status(404).send("Election " + req.params.id + " does not exist");
