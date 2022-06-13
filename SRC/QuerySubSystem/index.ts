@@ -1,7 +1,4 @@
-import Server from './QueryAPI/Server';
+import Server from "./QueryAPI/Server";
 
 const server = new Server();
 server.start();
-
-
-

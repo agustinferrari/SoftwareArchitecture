@@ -2,13 +2,11 @@ import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { IUser, UserDTO } from "../Models/User";
 import config from "config";
-import { UserRepository } from "../../DataAccess/Repositories/UserRepository";
+import { Query } from "../../DataAccess/Query/Query";
 import { LoggerFacade } from "../../Logger/LoggerFacade";
 
 export class AuthController {
-
-   static login = async (req: Request, res: Response) => {
-
+  public static async login(req: Request, res: Response) {
     const logger = LoggerFacade.getLogger();
     let { email, password } = req.body;
     if (!(email && password)) {
@@ -19,43 +17,43 @@ export class AuthController {
     //Get user from database
     let user: IUser | null;
     user = null;
-    let userRepo = UserRepository.getUserRepository();
+    let query = Query.getQuery();
     try {
-      user = await userRepo.findByEmailOrFail(email);
-    } catch (error:any) {
+      user = await query.findByEmailOrFail(email);
+    } catch (error: any) {
       logger.logUnauthorizedAccess("User not found", req.originalUrl, new UserDTO(email));
       res.status(404).send("User not found");
     }
 
-    if (user){
-    const userDTO = new UserDTO(user.email, user.role)
+    if (user) {
+      const userDTO = new UserDTO(user.email, user.role);
 
-    if (user.password != password) {
-      logger.logUnauthorizedAccess("Incorrect password", req.originalUrl,userDTO);
-      res.status(401).send("Incorrect password");
-      return;
+      if (user.password != password) {
+        logger.logUnauthorizedAccess("Incorrect password", req.originalUrl, userDTO);
+        res.status(401).send("Incorrect password");
+        return;
+      }
+
+      //Sing JWT, valid for 1 hour
+      const token = jwt.sign(
+        { email: user.email, role: user.role },
+        config.get("QUERY_API.jwtSecret"),
+        { expiresIn: "1h" }
+      );
+      logger.logAuthorizedAccess("User logged in | Token: " + token, req.originalUrl, userDTO);
+      res.status(200).send(token);
     }
-
-    //Sing JWT, valid for 1 hour
-    const token = jwt.sign(
-      {email: user.email, role: user.role},
-      config.get("QUERY_API.jwtSecret"),
-      { expiresIn: "1h" }
-    );
-    logger.logAuthorizedAccess("User logged in | Token: "+ token,req.originalUrl, userDTO);
-    res.status(200).send(token);
-  
-}
-
-  };
-
-  static authority = async (req: Request, res: Response) => {
-    const logger = LoggerFacade.getLogger();
-    res.status(200);
-    logger.logAuthorizedAccess("Access granted ", req.path, new UserDTO(req.body.email,req.body.role));
-    res.send("Bienvenido");
-
   }
 
+  public static async authority(req: Request, res: Response) {
+    const logger = LoggerFacade.getLogger();
+    res.status(200);
+    logger.logAuthorizedAccess(
+      "Access granted ",
+      req.path,
+      new UserDTO(req.body.email, req.body.role)
+    );
+    res.send("Bienvenido");
+  }
 }
 export default AuthController;

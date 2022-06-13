@@ -20,7 +20,9 @@ export class QuerySQL {
   }
 
   public async getElectionsInfo(): Promise<ElectionInfo[]> {
-    let found = await this.sequelize.query("SELECT id FROM appEvDB.ElectionSQLs;", { type: QueryTypes.SELECT });
+    let found = await this.sequelize.query("SELECT id FROM appEvDB.ElectionSQLs;", {
+      type: QueryTypes.SELECT,
+    });
     let result: ElectionInfo[] = [];
     if (found) {
       for (let i = 0; i < found.length; i++) {
@@ -32,7 +34,11 @@ export class QuerySQL {
     return result;
   }
 
-  public async voterElectionCircuit(voterCI: string, electionId: number, circuitId: number): Promise<boolean> {
+  public async voterElectionCircuit(
+    voterCI: string,
+    electionId: number,
+    circuitId: number
+  ): Promise<boolean> {
     let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.ElectionCircuitVoterSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionCircuitId = '${electionId}_${circuitId}';`;
     let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
@@ -61,5 +67,18 @@ export class QuerySQL {
     }
     //TODO ver como manejar esto
     throw new Error(`Error checking vote count for voter`);
+  }
+
+  public async getVoteDates(electionId: number, voterCI: string): Promise<string[]> {
+    let queryString: string = `SELECT startTimestamp FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND electionId = '${electionId}';`;
+    let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    let result: string[] = [];
+    if (found)
+      for (let i = 0; i < found.length; i++) {
+        if (found[i]) result.push(found[i]["startTimestamp"]);
+      }
+    console.log(result);
+    return result;
   }
 }

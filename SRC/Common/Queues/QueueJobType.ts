@@ -7,4 +7,5 @@ export enum QueueJobType {
   GetElectionsInfo = "getElectionsInfo",
   ValidateVoterElectionCircuit = "voterElectionCircuit",
   GetVoter = "getVoter",
+  GetVoteDates = "getVoteDates",
 }
