@@ -1,4 +1,4 @@
-import { ElectionInfo } from "../Common/Domain";
+import { ElectionInfo, Vote } from "../Common/Domain";
 import { CommandSQL } from "./CommandSQL";
 import { QuerySQL } from "./QuerySQL";
 import { QueryCache } from "./../Common/Redis/";
@@ -59,6 +59,10 @@ export class QueueTypeHandler {
 
   public async getVoteDates(input: any): Promise<string[]> {
     return await this.query.getVoteDates(input.electionId, input.voterCI);
+  }
+  
+  public async getVote(input : any): Promise<Vote>{
+    return await this.query.getVote(input.voteId, input.voterCI);
   }
 
   public async getVoteFrequency(input: any): Promise<any[]> {
