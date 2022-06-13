@@ -41,36 +41,43 @@ export class VoteController {
     if (!(voteId && voterCI)) {
       logger.logBadRequest("voteId or voterCI not provided", req.originalUrl);
       res.status(400).send("voteId or voterCI not provided");
+      return;
     }
 
     let query = Query.getQuery();
-    let vote = await query.getVote(voteId, voterCI);
+    try{
+      let vote = await query.getVote(voteId, voterCI);
 
-    if (!vote) {
+      if (!vote) {
+        logger.logBadRequest("vote not found", req.originalUrl);
+        res.status(404).send("vote not found");
+        return;
+      }
+  
+      let voter = await query.getVoter(voterCI);
+  
+      let election = await query.getElection(vote.electionId);
+  
+      if (!voter || !election) {
+        logger.logBadRequest("voter or election not found", req.originalUrl);
+        res.status(404).send("voter or election not found");
+        return;
+      }
+  
+      let voteProof: VoteProof = new VoteProof(vote, voter, election);
+      let message = voteProof.ToString();
+  
+      let notificationSender: NotificationHelper =
+        NotificationHelper.getNotificationHelper();
+  
+      let sender: INotificationSender = notificationSender.notificationSender;
+      sender.sendNotification(message,[voter.email]);
+  
+      res.status(200).send(`Vote Proof sent to email`);
+    }catch(err){
       logger.logBadRequest("vote not found", req.originalUrl);
       res.status(404).send("vote not found");
-      return;
     }
-
-    let voter = await query.getVoter(voterCI);
-
-    let election = await query.getElection(vote.electionId);
-
-    if (!voter || !election) {
-      logger.logBadRequest("voter or election not found", req.originalUrl);
-      res.status(404).send("voter or election not found");
-      return;
-    }
-
-    let voteProof: VoteProof = new VoteProof(vote, voter, election);
-    let message = voteProof.ToString();
-
-    let notificationSender: NotificationHelper =
-      NotificationHelper.getNotificationHelper();
-
-    let sender: INotificationSender = notificationSender.notificationSender;
-    sender.sendNotification(message,[voter.email]);
-
-    res.status(200).send(`Vote Proof sent to email`);
+    
   }
 }
