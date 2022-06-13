@@ -32,9 +32,12 @@ export class Query {
 
   public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
     let electionInfo: ElectionInfo | null = await this.queryCache.getElection(electionId);
-    if (electionInfo == null || electionInfo.mode != "unique") {
+    if(electionInfo == null){
+      throw new Error("Election not found")
+    }
+    if (electionInfo.mode != "unique") {
       //throw new Error("Election mode is not 'unique'");
-      return true;
+      return false;
     }
     let found: boolean = await this.voterQueryQueue.checkUniqueVote(voterCI, electionId);
     return found;

@@ -90,7 +90,6 @@ export class CommandSQL {
       ElectionCandidateSQL.decrement({ voteCount: 1 }, { where: { electionId: previousVote.electionId, candidateCI: previousVote.candidateCI } });
       ElectionCandidateVoterSQL.update({ candidateCI: vote.candidateCI }, { where: { id: previousVote.id } });
     } else {
-      console.log("No decrement ni update");
       ElectionCandidateVoterSQL.create({
         electionId: vote.electionId,
         candidateCI: vote.candidateCI,

@@ -49,10 +49,6 @@ export class QueryQueue {
     queueJob.type = QueueJobType.ValidateOneVote;
     let job = await this.electionQueue.add(queueJob);
     let response: QueueResponse = await job.finished();
-    if (!response.result) {
-      throw new Error(`Voter ${voterCI} has not voted on election ${electionId}`);
-    }
-    console.log("result:", response.result, " error:", response.error);
     return response.result;
   }
 

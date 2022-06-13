@@ -29,8 +29,8 @@ export class UniqueVoteFilter implements IFilter {
   }
 
   async validate() {
-    let passValidation = await this.voteQuery.checkUniqueVote(this.voterCI, this.electionId);
-    if(!passValidation) {
+    let voteAlreadyExists = await this.voteQuery.checkUniqueVote(this.voterCI, this.electionId);
+    if(voteAlreadyExists) {
       throw new Error(this.error);
     }
   }

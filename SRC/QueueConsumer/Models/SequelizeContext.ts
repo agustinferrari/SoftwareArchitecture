@@ -16,7 +16,7 @@ export class SequelizeContext {
     this.connection = new Sequelize(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`, {
       logging: false,
       pool: {
-        max: 100,
+        max: 30,
         min: 0,
         idle: 200000,
         // @note https://github.com/sequelize/sequelize/issues/8133#issuecomment-359993057

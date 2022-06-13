@@ -31,7 +31,7 @@ export class RepeatedVoteFilter implements IFilter {
     let isNotRepeated = await this.voteQuery.checkRepeatedVote(this.voterCI, this.electionId);
     if(!isNotRepeated) {
       //TODO: Notificar a emails predefinidos ALERT
-      throw new Error(this.error);
+      throw new Error(this.voterCI + " " + this.electionId + " " + this.error);
     }
   }
 }
