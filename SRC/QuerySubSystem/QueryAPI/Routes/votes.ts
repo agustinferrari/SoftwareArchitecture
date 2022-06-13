@@ -4,6 +4,6 @@ import { checkJwt } from "../Middlewares/checkJwt";
 import { checkRole } from "../Middlewares/checkRole";
 
 const router = Router();
-router.get("/", [checkJwt, checkRole(["Electoral Authority"])], VoteController.getVote);
+router.get("", [checkJwt, checkRole(["Electoral Authority"])], VoteController.getVote);
 
 export default router;

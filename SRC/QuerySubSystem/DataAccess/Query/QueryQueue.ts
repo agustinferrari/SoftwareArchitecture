@@ -16,8 +16,8 @@ export class QueryQueue {
   public async getVotes(electionId: number, voterCI: string): Promise<string[]> {
     let queueJob = new QueueJob();
     queueJob.input = { electionId: electionId, voterCI: voterCI };
-    queueJob.priority = QueueJobPriority.GetVoter;
-    queueJob.type = QueueJobType.GetVoter;
+    queueJob.priority = QueueJobPriority.GetVoteDates;
+    queueJob.type = QueueJobType.GetVoteDates;
     let job = await this.electionQueue.add(queueJob);
     let response: QueueResponse = await job.finished();
     if (!response.result) {

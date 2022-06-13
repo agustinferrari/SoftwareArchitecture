@@ -7,4 +7,5 @@ export enum QueueJobPriority {
   ValidateRepeatedVote = 5,
   ValidateVoterElectionCircuit = 5,
   GetVoter = 6,
+  GetVoteDates = 6,
 }

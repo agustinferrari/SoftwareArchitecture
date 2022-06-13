@@ -72,8 +72,13 @@ export class QuerySQL {
   public async getVoteDates(electionId: number, voterCI: string): Promise<string[]> {
     let queryString: string = `SELECT startTimestamp FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
-    let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
-    console.log(found);
-    return [];
+    let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    let result: string[] = [];
+    if (found)
+      for (let i = 0; i < found.length; i++) {
+        if (found[i]) result.push(found[i]["startTimestamp"]);
+      }
+    console.log(result);
+    return result;
   }
 }

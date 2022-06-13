@@ -15,5 +15,7 @@ export class VoteController {
     }
 
     let query = Query.getQuery();
+    let result = await query.getVotes(electionId, voterCI);
+    res.status(200).send(result);
   }
 }
