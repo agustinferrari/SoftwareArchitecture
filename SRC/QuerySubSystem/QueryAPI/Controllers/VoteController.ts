@@ -18,8 +18,18 @@ export class VoteController {
     }
 
     let query = Query.getQuery();
-    let result = await query.getVotes(electionId, voterCI);
-    res.status(200).send(result);
+    try {
+      let result = await query.getVotes(electionId, voterCI);
+      if (result.voteDates == []) {
+        //TODO ver si 200 esta bien
+        res.status(200).send("The voter has not voted yet");
+      } else {
+        res.status(200).send(result);
+      }
+    } catch (err) {
+      logger.logBadRequest(`election ${electionId} does not exist`, req.originalUrl);
+      res.status(404).send("Election " + electionId + " does not exist");
+    }
   }
 
   public static async getVoteProof(req: Request, res: Response) {

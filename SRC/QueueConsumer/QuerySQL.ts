@@ -98,7 +98,6 @@ export class QuerySQL {
       for (let i = 0; i < found.length; i++) {
         if (found[i]) result.push(found[i]["startTimestamp"]);
       }
-    console.log(result);
     return result;
   }
 
@@ -121,5 +120,12 @@ export class QuerySQL {
       vote.id= foundVoteSQL.id;
       return vote;
     }
+   }
+
+  public async getVoteFrequency(electionId: number, voterCI: string): Promise<any[]> {
+    let queryString: string = `SELECT hour(startTimestamp) AS 'hour', Count(*) AS 'totalVotes' FROM appEvDB.VoteSQLs WHERE electionId = '${electionId}'
+                                  GROUP BY hour(startTimestamp) ORDER BY Count(*) DESC LIMIT 10;`;
+    let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    return found;
   }
 }
