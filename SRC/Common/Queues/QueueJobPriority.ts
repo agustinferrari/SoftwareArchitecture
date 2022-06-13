@@ -8,4 +8,5 @@ export enum QueueJobPriority {
   ValidateVoterElectionCircuit = 5,
   GetVoter = 6,
   GetVoteDates = 6,
+  GetVote = 1
 }

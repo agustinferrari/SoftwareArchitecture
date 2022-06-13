@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import { ElectionInfo, Voter } from "../Common/Domain";
-import { VoterSQL } from "./Models";
+import { ElectionInfo, Vote, Voter } from "../Common/Domain";
+import { VoterSQL, VoteSQL } from "./Models";
 
 const { QueryTypes } = require("sequelize");
 
@@ -20,9 +20,12 @@ export class QuerySQL {
   }
 
   public async getElectionsInfo(): Promise<ElectionInfo[]> {
-    let found = await this.sequelize.query("SELECT id FROM appEvDB.ElectionSQLs;", {
-      type: QueryTypes.SELECT,
-    });
+    let found = await this.sequelize.query(
+      "SELECT id FROM appEvDB.ElectionSQLs;",
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
     let result: ElectionInfo[] = [];
     if (found) {
       for (let i = 0; i < found.length; i++) {
@@ -41,27 +44,39 @@ export class QuerySQL {
   ): Promise<boolean> {
     let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.ElectionCircuitVoterSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionCircuitId = '${electionId}_${circuitId}';`;
-    let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
     if (found[0]) {
       return found[0]["Exists"] == 1;
     }
     return false;
   }
 
-  public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
+  public async checkUniqueVote(
+    voterCI: string,
+    electionId: number
+  ): Promise<boolean> {
     let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
-    let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
     if (found[0]) {
       return found[0]["Exists"] > 0;
     }
     return false;
   }
 
-  public async checkRepeatedVote(voterCI: string, electionId: number): Promise<number> {
+  public async checkRepeatedVote(
+    voterCI: string,
+    electionId: number
+  ): Promise<number> {
     let queryString: string = `SELECT Count(*) as 'VoteCount' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
-    let found = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
     if (found[0]) {
       return found[0]["VoteCount"];
     }
@@ -69,10 +84,15 @@ export class QuerySQL {
     throw new Error(`Error checking vote count for voter`);
   }
 
-  public async getVoteDates(electionId: number, voterCI: string): Promise<string[]> {
+  public async getVoteDates(
+    electionId: number,
+    voterCI: string
+  ): Promise<string[]> {
     let queryString: string = `SELECT startTimestamp FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
-    let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    let found: any = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
     let result: string[] = [];
     if (found)
       for (let i = 0; i < found.length; i++) {
@@ -80,5 +100,26 @@ export class QuerySQL {
       }
     console.log(result);
     return result;
+  }
+
+  public async getVote(voteId: string, voterCI: string): Promise<Vote> {
+    let queryString: string = `SELECT * FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND id = '${voteId}';`;
+    let found: any = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    if(!found){
+      throw new Error("Vote not found");
+    }else{
+      let foundVoteSQL = found[0];
+      let vote : Vote = new Vote();
+      vote.candidateCI= foundVoteSQL.candidateCI;
+      vote.voterCI = foundVoteSQL.voterCI;
+      vote.electionId = foundVoteSQL.electionId;
+      vote.startTimestamp = foundVoteSQL.startTimestamp;
+      vote.endTimestamp= foundVoteSQL.endTimestamp;
+      vote.id= foundVoteSQL.id;
+      return vote;
+    }
   }
 }

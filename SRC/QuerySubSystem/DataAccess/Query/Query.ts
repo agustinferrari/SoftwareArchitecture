@@ -5,6 +5,7 @@ import { IUser } from "../../QueryAPI/Models/User";
 import { QueryQueue } from "./QueryQueue";
 import { ElectionVotesDTO } from "../../QueryAPI/Models/ElectionVotesDTO";
 import { NotificationSettingsDTO } from "../../QueryAPI/Models/NotificationSettingsDTO";
+import { ElectionInfo, Vote, Voter } from "../../../Common/Domain";
 
 export class Query {
   static _instance: Query;
@@ -30,6 +31,25 @@ export class Query {
   async getVotes(electionId: number, voterCI: string): Promise<ElectionVotesDTO> {
     let queryResult: string[] = await this.queryQueue.getVotes(electionId, voterCI);
     let result: ElectionVotesDTO = new ElectionVotesDTO(electionId, voterCI, queryResult);
+    return result;
+  }
+
+  async getVote(voteId: string, voterCI: string): Promise<Vote | null> {
+    let queryResult: Vote | null = await this.queryQueue.getVote(voteId, voterCI);
+    return queryResult;
+  }
+
+  public async getVoter(ci: string): Promise<Voter> {
+    let found: Voter = await this.queryQueue.getVoter(ci);
+    return found;
+  }
+
+  public async getElection(electionId: number): Promise<ElectionInfo> {
+    let result: ElectionInfo | null = await this.queryCache.getElection(electionId);
+    console.log("Busco " + electionId + " en cache");
+    if (!result) {
+      throw new Error("Election not found");
+    }
     return result;
   }
 
