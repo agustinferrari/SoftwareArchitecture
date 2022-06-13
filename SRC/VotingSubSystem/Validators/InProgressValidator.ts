@@ -18,6 +18,9 @@ export class InProgressValidator implements IFilter {
   }
 
   async validate() {
-    await this.voteQuery.validateVoteTime(this.startTimestamp, this.electionId);
+   let passValidation =  await this.voteQuery.validateVoteTime(this.startTimestamp, this.electionId);
+   if(!passValidation){
+    throw new Error(this.error);
+   }
   }
 }

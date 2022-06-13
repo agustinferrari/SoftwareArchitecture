@@ -31,6 +31,9 @@ export class VoterElectionCircuitFilter implements IFilter {
   }
 
   async validate() {
-    await this.voteQuery.voterElectionCircuit(this.voterCI, this.electionId, this.circuitId);
+    let passValidator = await this.voteQuery.voterElectionCircuit(this.voterCI, this.electionId, this.circuitId);
+    if(!passValidator) {
+      throw new Error(this.error);
+    }
   }
 }
