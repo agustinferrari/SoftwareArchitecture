@@ -9,6 +9,7 @@ import {
   DateFrequencyDTO,
   ElectionDateFrequencyDTO,
 } from "../../QueryAPI/Models/ElectionDateFrequencyDTO";
+import { ElectionInfoPerCircuitDTO } from "../../QueryAPI/Models/ElectionInfoPerCircuitDTO";
 
 export class Query {
   static _instance: Query;
@@ -63,6 +64,29 @@ export class Query {
       let electionDateFrequencyDTO: ElectionDateFrequencyDTO = new ElectionDateFrequencyDTO(
         electionId,
         queryResult
+      );
+      return electionDateFrequencyDTO;
+    }
+    throw new Error(`Election ${electionId} does not exist`);
+  }
+
+  public async getElectionInfoCountPerCircuit(
+    electionId: number,
+    minAge: number,
+    maxAge: number,
+    gender: string
+  ): Promise<ElectionInfoPerCircuitDTO> {
+    let electionExists: boolean = await this.queryCache.existsElection(electionId);
+    if (electionExists) {
+      let response: any[] = await this.queryQueue.getElectionInfoCountPerCircuit(
+        electionId,
+        minAge,
+        maxAge,
+        gender
+      );
+      let electionDateFrequencyDTO: ElectionInfoPerCircuitDTO = new ElectionInfoPerCircuitDTO(
+        electionId,
+        response
       );
       return electionDateFrequencyDTO;
     }

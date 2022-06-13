@@ -40,4 +40,24 @@ export class QueryQueue {
     console.log("result:", response.result, " error:", response.error);
     return response.result;
   }
+
+  public async getElectionInfoCountPerCircuit(
+    electionId: number,
+    minAge: number,
+    maxAge: number,
+    gender: string
+  ): Promise<any[]> {
+    let queueJob = new QueueJob();
+    queueJob.input = {
+      electionId: electionId,
+      minAge: minAge,
+      maxAge: maxAge,
+      gender: gender,
+    };
+    queueJob.priority = QueueJobPriority.GetElectionInfoCountPerCircuit;
+    queueJob.type = QueueJobType.GetElectionInfoCountPerCircuit;
+    let job = await this.electionQueue.add(queueJob);
+    let response: QueueResponse = await job.finished();
+    return response.result;
+  }
 }
