@@ -9,8 +9,7 @@ import config from "config";
 import { ElectionQuery } from "./DataAccess/Query/ElectionQuery";
 
 export class ElectionManager {
-  electionStartSender: INotificationSender;
-  electionEndSender: INotificationSender;
+  emailSender: INotificationSender;
   startAct: AbstractAct;
   endAct: AbstractAct;
   commander: ElectionCommand;
@@ -21,8 +20,7 @@ export class ElectionManager {
   public constructor(
     electionCommand: ElectionCommand,
     electionQuery: ElectionQuery,
-    electionStartSender: INotificationSender,
-    electionEndSender: INotificationSender,
+    emailSender: INotificationSender,
     startAct: AbstractAct,
     endAct: AbstractAct,
     validatorManager: AbstractValidatorManager<Election>,
@@ -30,8 +28,7 @@ export class ElectionManager {
   ) {
     this.commander = electionCommand;
     this.query = electionQuery;
-    this.electionStartSender = electionStartSender;
-    this.electionEndSender = electionEndSender;
+    this.emailSender = emailSender;
     this.startAct = startAct;
     this.endAct = endAct;
     this.validatorManager = validatorManager;
@@ -49,12 +46,22 @@ export class ElectionManager {
     }
   }
 
-  public startElection(election: Election, voterCount:number): void {
-    this.startAct.generateAndSendAct(election, voterCount, this.electionStartSender);
+  public async startElection(election: Election, voterCount: number): Promise<void> {
+    this.startAct.generateAndSendAct(
+      election,
+      voterCount,
+      await this.query.getElectionEmails(election.id),
+      this.emailSender
+    );
   }
 
-  public endElection(election: Election, voterCount : number): void {
-    this.endAct.generateAndSendAct(election, voterCount, this.electionEndSender);
+  public async endElection(election: Election, voterCount: number): Promise<void> {
+    this.endAct.generateAndSendAct(
+      election,
+      voterCount,
+      await this.query.getElectionEmails(election.id),
+      this.emailSender
+    );
   }
 
   private async handleElection(election: Election): Promise<void> {
@@ -64,12 +71,10 @@ export class ElectionManager {
     } catch (e: any) {
       //TODO: Enviar mail a asignados
       //TODO: Enviar log de error
-      console.log(
-        "Election is not valid, election id: " +
-          election.id +
-          " error: \n" +
-          e.message
-      );
+      let message = "Election is not valid, election id: " + election.id + " error: \n" + e.message;
+      this.emailSender.sendNotification(message, await this.query.getElectionEmails(election.id));
+
+     // console.log("Election is not valid, election id: " + election.id + " error: \n" + e.message);
       return;
     }
     const scheduler = new ElectionScheduler(this);
@@ -86,10 +91,7 @@ export class ElectionManager {
 
       while (memory > 996286464) {
         await new Promise((resolve) => setTimeout(resolve, 5000));
-        console.log(
-          "Waiting for my friend the Garbage Collector " +
-            this.formatBytes(memory)
-        );
+        console.log("Waiting for my friend the Garbage Collector " + this.formatBytes(memory));
         memory = process.memoryUsage().heapTotal;
       }
     } while (lastAdded > 0);
@@ -104,10 +106,7 @@ export class ElectionManager {
     this.validatorManager.validate();
   }
 
-  private async addVoters(
-    idElection: number,
-    pageNumber: number
-  ): Promise<number> {
+  private async addVoters(idElection: number, pageNumber: number): Promise<number> {
     return await this.commander.addVoters(
       await this.electoralConsumer.getVoterPaginated(
         idElection,

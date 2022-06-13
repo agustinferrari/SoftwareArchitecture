@@ -26,4 +26,13 @@ export class ElectionQuery {
     let result = await this.electionCache.getElection(electionId);
     return result != null;
   }
+
+  public async getElectionEmails(electionId: number): Promise<string[]> {
+    let result = await this.electionCache.getElection(electionId);
+    if (result) {
+      return result.emails;
+    } else {
+      return [];
+    }
+  }
 }
