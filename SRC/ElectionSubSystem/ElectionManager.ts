@@ -12,7 +12,7 @@ export class ElectionManager {
   emailSender: INotificationSender;
   startAct: AbstractAct;
   endAct: AbstractAct;
-  commander: ElectionCommand;
+  command: ElectionCommand;
   query: ElectionQuery;
   validatorManager: AbstractValidatorManager<Election>;
   electoralConsumer: IConsumer;
@@ -26,7 +26,7 @@ export class ElectionManager {
     validatorManager: AbstractValidatorManager<Election>,
     electoralConsumer: IConsumer
   ) {
-    this.commander = electionCommand;
+    this.command = electionCommand;
     this.query = electionQuery;
     this.emailSender = emailSender;
     this.startAct = startAct;
@@ -56,7 +56,7 @@ export class ElectionManager {
   }
 
   public async endElection(election: Election, voterCount: number): Promise<void> {
-//TODO validar
+    //TODO validar
 
     this.endAct.generateAndSendAct(
       election,
@@ -76,12 +76,12 @@ export class ElectionManager {
       let message = "Election is not valid, election id: " + election.id + " error: \n" + e.message;
       this.emailSender.sendNotification(message, election.emails);
 
-     // console.log("Election is not valid, election id: " + election.id + " error: \n" + e.message);
+      // console.log("Election is not valid, election id: " + election.id + " error: \n" + e.message);
       return;
     }
     const scheduler = new ElectionScheduler(this);
 
-    await this.commander.addElection(election);
+    await this.command.addElection(election);
     let currentPage: number = 1;
     let totalAdded: number = 0;
     let lastAdded: number = 0;
@@ -98,6 +98,7 @@ export class ElectionManager {
       }
     } while (lastAdded > 0);
 
+    this.command.addVoterCount(election.id, totalAdded);
     scheduler.scheduleStartElection(election, totalAdded);
     scheduler.scheduleEndElection(election, totalAdded);
     return;
@@ -109,7 +110,7 @@ export class ElectionManager {
   }
 
   private async addVoters(idElection: number, pageNumber: number): Promise<number> {
-    return await this.commander.addVoters(
+    return await this.command.addVoters(
       await this.electoralConsumer.getVoterPaginated(
         idElection,
         pageNumber,

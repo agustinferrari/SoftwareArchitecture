@@ -52,7 +52,11 @@ export class QueueTypeHandler {
 
   public async checkRepeatedVote(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
-    return await this.query.checkRepeatedVote(input.voterCI, input.electionId, input.maxVotesPerVoter);
+    return await this.query.checkRepeatedVote(
+      input.voterCI,
+      input.electionId,
+      input.maxVotesPerVoter
+    );
   }
 
   public async getVoteDates(input: any): Promise<string[]> {
@@ -95,5 +99,9 @@ export class QueueTypeHandler {
       input.maxAge,
       input.gender
     );
+  }
+
+  public async getElectionInfo(input: any): Promise<any[]> {
+    return await this.query.getElectionInfo(input.electionId);
   }
 }

@@ -12,6 +12,7 @@ import {
 } from "../../QueryAPI/Models/ElectionDateFrequencyDTO";
 import { ElectionInfoPerCircuitDTO } from "../../QueryAPI/Models/ElectionInfoPerCircuitDTO";
 import { ElectionInfoPerStateDTO } from "../../QueryAPI/Models/ElectionInfoPerStateDTO";
+import { ElectionInfoDTO } from "../../QueryAPI/Models/ElectionInfoDTO";
 
 export class Query {
   static _instance: Query;
@@ -91,7 +92,6 @@ export class Query {
     throw new Error(`Election ${electionId} does not exist`);
   }
 
-
   public async getElectionInfoCountPerCircuit(
     electionId: number,
     minAge: number,
@@ -138,8 +138,26 @@ export class Query {
     throw new Error(`Election ${electionId} does not exist`);
   }
 
-  public async getVoteProofLogCount(voterCI: string, electionId: number): Promise<number>{
+  public async getVoteProofLogCount(voterCI: string, electionId: number): Promise<number> {
     return QueryMongo.getVoteProofLogCount(voterCI, electionId);
+  }
+
+  public async getElectionInfo(electionId: number) {
+    let electionCache: ElectionInfo | null = await this.queryCache.getElection(electionId);
+    if (electionCache != null) {
+      let electionInfo: any[] = await this.queryQueue.getElectionInfo(electionId);
+
+      let electionStateInfoDTO: ElectionInfoDTO = new ElectionInfoDTO(
+        electionId,
+        electionCache?.voterCount,
+        electionInfo[0],
+        electionInfo[1],
+        electionInfo[2],
+        electionInfo[3]
+      );
+      return electionStateInfoDTO;
+    }
+    throw new Error(`Election ${electionId} does not exist`);
   }
   // async addUser(email: string, password: string, role: string): Promise<void> {
   //   await UserCommand.addUser(email, password, role);

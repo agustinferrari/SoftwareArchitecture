@@ -2,6 +2,17 @@ import { Candidate } from "./Candidate";
 import { ElectionMode } from "./ElectionMode";
 
 export class ElectionInfo {
+  id: number;
+  name: string;
+  mode: ElectionMode;
+  maxVotesPerVoter: number;
+  maxVoteRecordRequestsPerVoter: number;
+  emails: string[];
+  candidateCIs: string[];
+  startDate: string;
+  endDate: string;
+  voterCount: number;
+
   constructor(obj: any) {
     this.id = obj.id;
     this.name = obj.name;
@@ -10,9 +21,7 @@ export class ElectionInfo {
     this.maxVoteRecordRequestsPerVoter = 1;
     this.emails = obj.emails;
     if (obj.candidates) {
-      this.candidateCIs = obj.candidates.map(
-        (candidate: Candidate) => candidate.ci
-      );
+      this.candidateCIs = obj.candidates.map((candidate: Candidate) => candidate.ci);
     } else if (obj.candidateCIs) {
       this.candidateCIs = [];
       for (let i = 0; i < obj.candidateCIs.length; i++) {
@@ -25,6 +34,7 @@ export class ElectionInfo {
 
     this.startDate = obj.startDate;
     this.endDate = obj.endDate;
+    this.voterCount = 0;
   }
 
   setMaxVotes(maxVotesPerVoter: number) {
@@ -38,14 +48,4 @@ export class ElectionInfo {
   setEmails(emails: string[]) {
     this.emails = emails;
   }
-
-  id: number;
-  name: string;
-  mode: ElectionMode;
-  maxVotesPerVoter: number;
-  maxVoteRecordRequestsPerVoter: number;
-  emails: string[];
-  candidateCIs: string[];
-  startDate: string;
-  endDate: string;
 }

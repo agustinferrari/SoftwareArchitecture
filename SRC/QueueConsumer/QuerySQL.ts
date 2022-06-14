@@ -62,7 +62,6 @@ export class QuerySQL {
     return false;
   }
 
-
   public async checkRepeatedVote(
     voterCI: string,
     electionId: number,
@@ -74,10 +73,9 @@ export class QuerySQL {
       type: QueryTypes.SELECT,
     });
     if (found[0]) {
-      console.log(found[0]);
       let isOverLimit = found[0]["VoteCount"] >= maxVotesPerVoter;
       return isOverLimit;
-    }else{
+    } else {
       return false;
     }
     //TODO ver como manejar esto
@@ -201,9 +199,9 @@ export class QuerySQL {
 
   public async getElectionInfoCountPerState(
     electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
+    minAge: number | undefined,
+    maxAge: number | undefined,
+    gender: string | undefined
   ): Promise<any[]> {
     let minAgeFilter = minAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) > ${minAge}` : ``;
     let maxAgeFilter = maxAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) < ${maxAge}` : ``;
@@ -213,15 +211,28 @@ export class QuerySQL {
     FROM
     (SELECT C.state, Count(*) as voters
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.CircuitSQLs C, appEvDB.VoterSQLs V
-      WHERE ECV.electionId = 33622 AND ECV.circuitId = C.id AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
+      WHERE ECV.electionId = ${electionId} AND ECV.circuitId = C.id AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
     GROUP BY C.state ORDER BY C.state ASC) Q1,
     (SELECT C.state, Count(*) as votes
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.CircuitSQLs C, appEvDB.VoteSQLs Vo, appEvDB.VoterSQLs V
-      WHERE ECV.electionId = 33622 AND ECV.circuitId = C.id AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
+      WHERE ECV.electionId = ${electionId} AND ECV.circuitId = C.id AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
     GROUP BY C.state ORDER BY C.state ASC) Q2
     WHERE Q1.state = Q2.state
     `;
     let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
     return found;
+  }
+
+  public async getElectionInfo(electionId: number): Promise<any[]> {
+    let candidates = await this.getCandidatesResult(electionId);
+    let parties = await this.getPartiesResult(electionId);
+    let totalVotes = await this.getTotalVotes(electionId);
+    let responseState = await this.getElectionInfoCountPerState(
+      electionId,
+      undefined,
+      undefined,
+      undefined
+    );
+    return [totalVotes, candidates, parties, responseState];
   }
 }
