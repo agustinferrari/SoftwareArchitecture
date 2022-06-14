@@ -56,6 +56,8 @@ export class ElectionManager {
   }
 
   public async endElection(election: Election, voterCount: number): Promise<void> {
+//TODO validar
+
     this.endAct.generateAndSendAct(
       election,
       voterCount,
