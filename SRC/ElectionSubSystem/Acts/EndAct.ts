@@ -1,12 +1,19 @@
-import { Candidate, Election, Party } from "../../Common/Domain";
+import { Election, ElectionResult } from "../../Common/Domain";
 import { AbstractAct } from "./AbstractAct";
 import { ElectionQueryQueue } from "../DataAccess/Query/ElectionQueryQueue";
 
 export class EndAct extends AbstractAct {
-  getActInformation(election: Election, voterCount: number): string {
+  async getActInformation(election: Election, voterCount: number): Promise<string> {
     //TODO: FALTA CANTIDAD DE VOTOS Y GANADOR
+
     let query = new ElectionQueryQueue();
-    let totalVotes = query.getTotalVotes(election.id);
+    let electionResult: ElectionResult;
+
+    let parties = await query.getCandidatesResult(33622);
+    let candidates = await query.getCandidatesResult(33622);
+
+    electionResult = new ElectionResult(candidates, parties);
+    let totalVotes = await query.getTotalVotes(election.id);
 
     let electionId: string = `[Elección ${election.id}: ${election.name}] \n `;
     let startDate: string = `[Fecha de inicio: ${election.startDate.toString()}] \n `;
@@ -14,9 +21,20 @@ export class EndAct extends AbstractAct {
     let currentVoters: string = `[Cantidad de habilitados a votar ${voterCount}] \n `;
     let totalVotesStr: string = `[Cantidad total de votos ${totalVotes}] \n `;
     let votingMode: string = `[Modalidad de votación: ${election.mode}] \n `;
-    
-    return electionId + startDate + endDate + votingMode + currentVoters + totalVotesStr;
+    let electionResultStr = `[Resultado de votación: ${JSON.stringify(
+      electionResult,
+      null,
+      "\t"
+    )}] \n `;
+
+    return (
+      electionId +
+      startDate +
+      endDate +
+      votingMode +
+      currentVoters +
+      totalVotesStr +
+      electionResultStr
+    );
   }
-
-
 }

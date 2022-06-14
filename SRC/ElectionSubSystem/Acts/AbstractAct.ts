@@ -1,11 +1,15 @@
 import { Election } from "../../Common/Domain";
-import { INotificationSender } from "../../dist/Common/NotificationSender/INotificationSender";
-
+import { INotificationSender } from "../../Common/NotificationSender/INotificationSender";
 
 export abstract class AbstractAct {
-    generateAndSendAct(election: Election, voterCount : number, emails : string[],sender: INotificationSender): void {
-        let information = this.getActInformation(election, voterCount);
-        sender.sendNotification(information,emails);
-    };
-    abstract getActInformation(Election : Election, voterCount: number): string;
+  async generateAndSendAct(
+    election: Election,
+    voterCount: number,
+    emails: string[],
+    sender: INotificationSender
+  ): Promise<void> {
+    let information = await this.getActInformation(election, voterCount);
+    sender.sendNotification(information, emails);
+  }
+  abstract  getActInformation(Election: Election, voterCount: number): Promise<string>;
 }
