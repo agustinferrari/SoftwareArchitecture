@@ -5,11 +5,16 @@ import config from "config";
 
 export class ElectionCommandQueue {
   electionQueue: any;
+  jobOptions: any;
 
   constructor() {
     this.electionQueue = new Queue<QueueJob>("sqlqueue", {
       redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
     });
+    this.jobOptions = {
+      removeOnComplete: true,
+      removeOnFail: true,
+    };
   }
 
   public async addElection(election: Election): Promise<void> {
@@ -17,7 +22,7 @@ export class ElectionCommandQueue {
     queueJob.input = election;
     queueJob.priority = QueueJobPriority.AddElection;
     queueJob.type = QueueJobType.AddElection;
-    let job = await this.electionQueue.add(queueJob);
+    let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();
     console.log("result:", result.result, " error:", result.error);
   }
@@ -28,7 +33,7 @@ export class ElectionCommandQueue {
     queueJob.input = { voters, electionId };
     queueJob.priority = QueueJobPriority.AddVoters;
     queueJob.type = QueueJobType.AddVoters;
-    let job = await this.electionQueue.add(queueJob);
+    let job = await this.electionQueue.add(queueJob, this.jobOptions);
     voters.length = 0;
     voters = [];
     queueJob.input = {};

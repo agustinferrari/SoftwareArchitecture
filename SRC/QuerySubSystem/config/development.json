@@ -1,12 +1,4 @@
 {
-  "EmailSender": {
-    "route": "http://localhost:3000",
-    "endpoint": "/emails"
-  },
-  "MessageSender": {
-    "route": "http://localhost:3000",
-    "endpoint": "/messages"
-  },
   "SYS_NAME": "ConfigSubSystem",
   "MONGO": {
     "host": "192.168.0.106",
@@ -18,7 +10,7 @@
     "jwtSecret": "n03sC@nn0n"
   },
   "REDIS": {
-    "host": "127.0.0.1",
+    "host": "192.168.0.106",
     "port": "6379",
     "statusKey": "status"
   },

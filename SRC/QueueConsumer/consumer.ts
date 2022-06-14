@@ -39,7 +39,6 @@ async function consumer() {
       response.error = e.message;
     }
     response.result = result;
-
     done(null, response);
   });
 }
