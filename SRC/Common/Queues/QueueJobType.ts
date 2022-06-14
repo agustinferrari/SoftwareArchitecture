@@ -8,8 +8,11 @@ export enum QueueJobType {
   ValidateVoterElectionCircuit = "voterElectionCircuit",
   GetVoter = "getVoter",
   GetVoteDates = "getVoteDates",
-  GetVote="getVote",
+  GetVote = "getVote",
   GetVoteFrequency = "getVoteFrequency",
+  GetTotalVotes = "getTotalVotes",
+  GetCandidateResult = "getCandidateResult",
+  GetPartyResult = "getPartyResult",
   GetElectionInfoCountPerCircuit = "getElectionInfoCountPerCircuit",
   GetElectionInfoCountPerState = "getElectionInfoCountPerState",
 }

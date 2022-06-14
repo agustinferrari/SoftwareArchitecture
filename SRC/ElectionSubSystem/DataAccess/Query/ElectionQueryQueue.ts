@@ -22,4 +22,25 @@ export class ElectionQueryQueue {
     console.log("result:", result.result, " error:", result.error);
     return result.result;
   }
+
+  public async getTotalVotes(electionId: number): Promise<number> {
+    let queueJob = new QueueJob();
+    queueJob.input = { electionId: electionId };
+    queueJob.priority = QueueJobPriority.GetTotalVotes;
+    queueJob.type = QueueJobType.GetTotalVotes;
+    let job = await this.electionQueue.add(queueJob);
+    let result: QueueResponse = await job.finished();
+    console.log("result:", result.result, " error:", result.error);
+    return result.result;
+  }
+  // public async getElectionResult(electionId: number): Promise<ElectionResult> {
+  //   let queueJob = new QueueJob();
+  //   queueJob.input = { electionId: electionId };
+  //   queueJob.priority = QueueJobPriority.GetElectionResult;
+  //   queueJob.type = QueueJobType.GetElectionResult;
+  //   let job = await this.electionQueue.add(queueJob);
+  //   let result: QueueResponse = await job.finished();
+  //   console.log("result:", result.result, " error:", result.error);
+  //   return result.result;
+  // }
 }
