@@ -24,6 +24,7 @@ export class StartupHelper {
   electionManager?: ElectionManager;
   command?: ElectionCommand;
   query?: ElectionQuery;
+
   public async startUp() {
     await this.ConfigureDBServices();
     await this.ConfigureServices();
@@ -54,8 +55,6 @@ export class StartupHelper {
   }
 
   private async ConfigureDBServices(): Promise<void> {
-    let redisContext: RedisContext = new RedisContext();
-
     let electionQueueManager: ElectionCommandQueue = new ElectionCommandQueue();
     let queryQueue: ElectionQueryQueue = new ElectionQueryQueue();
 

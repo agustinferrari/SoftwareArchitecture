@@ -24,7 +24,6 @@ export class ElectionQueryQueue {
     queueJob.type = QueueJobType.GetElectionsInfo;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();
-    console.log("result:", result.result, " error:", result.error);
     return result.result;
   }
 
@@ -35,14 +34,13 @@ export class ElectionQueryQueue {
     queueJob.type = QueueJobType.GetTotalVotes;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();
-    console.log("result:", result.result, " error:", result.error);
     return result.result;
   }
 
   public async getCandidatesResult(electionId: number): Promise<any[]> {
     let queueJob = new QueueJob();
     queueJob.input = { electionId: electionId };
-    queueJob.priority = QueueJobPriority.GetPartiesResult;
+    queueJob.priority = QueueJobPriority.GetCandidatesResult;
     queueJob.type = QueueJobType.GetCandidatesResult;
 
     let job = await this.electionQueue.add(queueJob);
@@ -60,6 +58,7 @@ export class ElectionQueryQueue {
     let result: QueueResponse = await job.finished();
     return result.result;
   }
+
   // public async getElectionResult(electionId: number): Promise<ElectionResult> {
   //   let queueJob = new QueueJob();
   //   queueJob.input = { electionId: electionId };

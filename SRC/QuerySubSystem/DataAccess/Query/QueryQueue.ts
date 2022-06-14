@@ -43,7 +43,6 @@ export class QueryQueue {
     if (!response.result) {
       throw new Error("The voter has not voted in this election");
     }
-    console.log("result:", response.result, " error:", response.error);
     return response.result;
   }
 
@@ -71,7 +70,6 @@ export class QueryQueue {
     if (!response.result) {
       throw new Error("The election does not exist");
     }
-    console.log("result:", response.result, " error:", response.error);
     return response.result;
   }
 
@@ -112,6 +110,19 @@ export class QueryQueue {
     queueJob.type = QueueJobType.GetElectionInfoCountPerState;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
+    return response.result;
+  }
+
+  public async getElectionInfo(electionId: number): Promise<any[]> {
+    let queueJob = new QueueJob();
+    queueJob.input = { electionId: electionId };
+    queueJob.priority = QueueJobPriority.GetElectionInfo;
+    queueJob.type = QueueJobType.GetElectionInfo;
+    let job = await this.electionQueue.add(queueJob, this.jobOptions);
+    let response: QueueResponse = await job.finished();
+    if (!response.result) {
+      throw new Error("The election does not exist");
+    }
     return response.result;
   }
 }

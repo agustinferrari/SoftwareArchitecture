@@ -9,7 +9,7 @@ export class EndAct extends AbstractAct {
     let query = new ElectionQueryQueue();
     let electionResult: ElectionResult;
 
-    let parties = await query.getCandidatesResult(election.id);
+    let parties = await query.getPartiesResult(election.id);
     let candidates = await query.getCandidatesResult(election.id);
 
     electionResult = new ElectionResult(candidates, parties);

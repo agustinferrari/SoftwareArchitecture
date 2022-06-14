@@ -36,8 +36,10 @@ async function consumer() {
     try {
       result = await queueTypeHandler[type](input);
     } catch (e: any) {
+      //console.log("ERROR job:", type);
       response.error = e.message;
     }
+    //console.log("FINISHED job:", type);
     response.result = result;
     done(null, response);
   });

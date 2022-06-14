@@ -26,4 +26,13 @@ export class CommandCache {
       this.redisContext.set(settings.electionId.toString(), JSON.stringify(election));
     }
   }
+
+  async addVoterCount(electionId: number, voterCount: number): Promise<void> {
+    let electionString: string | null = await this.redisContext.get(electionId.toString());
+    if (electionString != null) {
+      const election: ElectionInfo = JSON.parse(electionString);
+      election.voterCount = voterCount;
+      this.redisContext.set(electionId.toString(), JSON.stringify(election));
+    }
+  }
 }

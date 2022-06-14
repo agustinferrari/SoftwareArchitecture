@@ -19,4 +19,8 @@ export class ElectionCommand {
   public async addVoters(voters: Voter[], electionId: number): Promise<number> {
     return this.electionQueueManager.addVoters(voters, electionId);
   }
+
+  public async addVoterCount(id: number, totalAdded: number): Promise<void> {
+    this.electionCache.addVoterCount(id, totalAdded);
+  }
 }
