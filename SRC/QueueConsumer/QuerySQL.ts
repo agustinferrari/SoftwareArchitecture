@@ -140,7 +140,7 @@ export class QuerySQL {
     maxAge: number,
     gender: string
   ): Promise<any[]> {
-    let minAgeFilter = minAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) >  ${minAge}` : ``;
+    let minAgeFilter = minAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) > ${minAge}` : ``;
     let maxAgeFilter = maxAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) < ${maxAge}` : ``;
     let genderFilter = gender ? `AND V.gender = '${gender}'` : ``;
     let queryString: string = `
@@ -149,12 +149,38 @@ export class QuerySQL {
     (SELECT ECV.circuitId, Count(V.ci) as voters
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.VoterSQLs V 
       WHERE ECV.electionId = ${electionId} AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
-    GROUP BY circuitId ORDER BY ECV.circuitId DESC) Q1,
+    GROUP BY circuitId ORDER BY ECV.circuitId ASC) Q1,
     (SELECT ECV.circuitId, Count(V.ci) as votes
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.VoterSQLs V, appEvDB.VoteSQLs Vo
       WHERE ECV.electionId = ${electionId} AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
-    GROUP BY circuitId ORDER BY ECV.circuitId DESC) Q2
+    GROUP BY circuitId ORDER BY ECV.circuitId ASC) Q2
     WHERE Q1.circuitId = Q2.circuitId
+    `;
+    let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    return found;
+  }
+
+  public async getElectionInfoCountPerState(
+    electionId: number,
+    minAge: number,
+    maxAge: number,
+    gender: string
+  ): Promise<any[]> {
+    let minAgeFilter = minAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) > ${minAge}` : ``;
+    let maxAgeFilter = maxAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) < ${maxAge}` : ``;
+    let genderFilter = gender ? `AND V.gender = '${gender}'` : ``;
+    let queryString: string = `
+    SELECT  Q1.state, voters, votes
+    FROM
+    (SELECT C.state, Count(*) as voters
+      FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.CircuitSQLs C, appEvDB.VoterSQLs V
+      WHERE ECV.electionId = 33622 AND ECV.circuitId = C.id AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
+    GROUP BY C.state ORDER BY C.state ASC) Q1,
+    (SELECT C.state, Count(*) as votes
+      FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.CircuitSQLs C, appEvDB.VoteSQLs Vo, appEvDB.VoterSQLs V
+      WHERE ECV.electionId = 33622 AND ECV.circuitId = C.id AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
+    GROUP BY C.state ORDER BY C.state ASC) Q2
+    WHERE Q1.state = Q2.state
     `;
     let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
     return found;

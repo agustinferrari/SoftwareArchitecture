@@ -75,4 +75,13 @@ export class QueueTypeHandler {
       input.gender
     );
   }
+
+  public async getElectionInfoCountPerState(input: any): Promise<any[]> {
+    return await this.query.getElectionInfoCountPerState(
+      input.electionId,
+      input.minAge,
+      input.maxAge,
+      input.gender
+    );
+  }
 }

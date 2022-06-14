@@ -11,4 +11,5 @@ export enum QueueJobType {
   GetVote="getVote",
   GetVoteFrequency = "getVoteFrequency",
   GetElectionInfoCountPerCircuit = "getElectionInfoCountPerCircuit",
+  GetElectionInfoCountPerState = "getElectionInfoCountPerState",
 }

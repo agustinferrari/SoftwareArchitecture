@@ -73,4 +73,18 @@ export class ElectionController {
       res.status(404).send("Election " + req.params.id + " does not exist");
     }
   }
+
+  public static async getStateInfo(req: Request, res: Response) {
+    const logger = LoggerFacade.getLogger();
+    let id = parseInt(req.params.id);
+    let { minAge, maxAge, gender } = req.body;
+    let query = Query.getQuery();
+    try {
+      let result = await query.getElectionInfoCountPerState(id, minAge, maxAge, gender);
+      res.status(200).send(result);
+    } catch (err) {
+      logger.logBadRequest(`election ${id} does not exist`, req.originalUrl);
+      res.status(404).send("Election " + req.params.id + " does not exist");
+    }
+  }
 }
