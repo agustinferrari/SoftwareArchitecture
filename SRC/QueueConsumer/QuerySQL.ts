@@ -1,98 +1,167 @@
-import { ElectionInfo, Vote } from "../Common/Domain";
-import { CommandSQL } from "./CommandSQL";
-import { QuerySQL } from "./QuerySQL";
-import { QueryCache } from "./../Common/Redis/";
+import { Sequelize } from "sequelize-typescript";
+import { ElectionInfo, Vote, Voter } from "../Common/Domain";
+import { VoterSQL, VoteSQL } from "./Models";
 
-export class QueueTypeHandler {
-  query: QuerySQL;
-  command: CommandSQL;
+const { QueryTypes } = require("sequelize");
 
-  constructor(query: QuerySQL, command: CommandSQL) {
-    this.query = query;
-    this.command = command;
+export class QuerySQL {
+  sequelize: Sequelize;
+  public constructor(sequelize: Sequelize) {
+    this.sequelize = sequelize;
   }
 
-  public async voterElectionCircuit(input: any): Promise<boolean> {
-    //TODO ver si validar que no esten vacios
-    return await this.query.voterElectionCircuit(input.voterCI, input.electionId, input.circuitId);
+  public async getVoter(ci: string): Promise<Voter> {
+    let found = await VoterSQL.findByPk(ci);
+    if (!found) {
+      throw new Error("Voter not found");
+    }
+    let voter: Voter = new Voter(found);
+    return voter;
   }
 
-  public async getVoter(input: any) {
-    //TODO ver si validar que sea ci
-    return await this.query.getVoter(input.ci);
+  public async getElectionsInfo(): Promise<ElectionInfo[]> {
+    let found = await this.sequelize.query("SELECT id FROM appEvDB.ElectionSQLs;", {
+      type: QueryTypes.SELECT,
+    });
+    let result: ElectionInfo[] = [];
+    if (found) {
+      for (let i = 0; i < found.length; i++) {
+        let obj = { id: found[i] };
+        let election: ElectionInfo = new ElectionInfo(obj);
+        result.push(election);
+      }
+    }
+    return result;
   }
 
-  public async getElectionsInfo(input: any): Promise<ElectionInfo[]> {
-    //TODO ver si validar que no esten vacios
-    return await this.query.getElectionsInfo();
+  public async voterElectionCircuit(
+    voterCI: string,
+    electionId: number,
+    circuitId: number
+  ): Promise<boolean> {
+    let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.ElectionCircuitVoterSQLs WHERE voterCI = '${voterCI}' 
+                                    AND electionCircuitId = '${electionId}_${circuitId}';`;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    if (found[0]) {
+      return found[0]["Exists"] == 1;
+    }
+    return false;
   }
 
-  public async addElection(input: any): Promise<string> {
-    //TODO ver si validar que no esten vacios
-    await this.command.addElection(input);
-    return "Added sucessfully";
+  public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
+    let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND electionId = '${electionId}';`;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    if (found[0]) {
+      return found[0]["Exists"] > 0;
+    }
+    return false;
   }
 
-  public async addVoters(input: any): Promise<string> {
-    //TODO ver si validar que no esten vacios
-    await this.command.addVoters(input.voters, input.electionId);
-    return "Added sucessfully";
+  public async checkRepeatedVote(voterCI: string, electionId: number): Promise<number> {
+    let queryString: string = `SELECT Count(*) as 'VoteCount' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND electionId = '${electionId}';`;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    if (found[0]) {
+      return found[0]["VoteCount"];
+    }
+    //TODO ver como manejar esto
+    throw new Error(`Error checking vote count for voter`);
   }
 
-  public async addVote(input: any): Promise<string> {
-    //TODO ver si validar que no esten vacios
-    await this.command.addVote(input.vote, input.mode);
-    return "Added sucessfully";
+  public async getVoteDates(electionId: number, voterCI: string): Promise<string[]> {
+    let queryString: string = `SELECT startTimestamp FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND electionId = '${electionId}';`;
+    let found: any = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    let result: string[] = [];
+    if (found)
+      for (let i = 0; i < found.length; i++) {
+        if (found[i]) result.push(found[i]["startTimestamp"]);
+      }
+    return result;
   }
 
-  public async checkUniqueVote(input: any): Promise<boolean> {
-    //TODO ver si validar que no esten vacios
-    return await this.query.checkUniqueVote(input.voterCI, input.electionId);
+  public async getVote(voteId: string, voterCI: string): Promise<Vote> {
+    let queryString: string = `SELECT * FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
+                                    AND id = '${voteId}';`;
+    let found: any = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    if (!found) {
+      throw new Error("Vote not found");
+    } else {
+      let foundVoteSQL = found[0];
+      let vote: Vote = new Vote();
+      vote.candidateCI = foundVoteSQL.candidateCI;
+      vote.voterCI = foundVoteSQL.voterCI;
+      vote.electionId = foundVoteSQL.electionId;
+      vote.startTimestamp = foundVoteSQL.startTimestamp;
+      vote.endTimestamp = foundVoteSQL.endTimestamp;
+      vote.id = foundVoteSQL.id;
+      return vote;
+    }
   }
 
-  public async checkRepeatedVote(input: any): Promise<boolean> {
-    //TODO ver si validar que no esten vacios
-    return await this.query.checkRepeatedVote(input.voterCI, input.electionId, input.maxVotesPerVoter);
+  public async getVoteFrequency(electionId: number, voterCI: string): Promise<any[]> {
+    let queryString: string = `SELECT hour(startTimestamp) AS 'hour', Count(*) AS 'totalVotes' FROM appEvDB.VoteSQLs WHERE electionId = '${electionId}'
+                                  GROUP BY hour(startTimestamp) ORDER BY Count(*) DESC LIMIT 10;`;
+    let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
+    return found;
   }
 
-  public async getVoteDates(input: any): Promise<string[]> {
-    return await this.query.getVoteDates(input.electionId, input.voterCI);
+  public async getTotalVotes(electionId: number): Promise<number> {
+    let queryString: string = ` SELECT sum(voteCount) AS 'sum' FROM appEvDB.ElectionCandidateSQLs
+                                WHERE electionId = ${electionId};`;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    if (found[0]) {
+      return found[0]["sum"];
+    }
+
+    throw new Error(`Error getting total votes`);
   }
 
-  public async getVote(input: any): Promise<Vote> {
-    return await this.query.getVote(input.voteId, input.voterCI);
+  public async getCandidatesResult(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT candidateCI, CONCAT( C.name," ", C.lastName) AS 'fullName', 
+                                EC.voteCount
+                                FROM appEvDB.ElectionCandidateSQLs EC, 
+                                appEvDB.CandidateSQLs C
+                                where EC.electionId = ${electionId}
+                                AND EC.candidateCI = C.ci
+                                ORDER BY EC.voteCount DESC
+                                `;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+
+    return found;
   }
+  public async getPartiesResult(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT P.id AS "partyId", 
+                                P.name AS 'partyName',
+                                sum(EC.voteCount) as 'voteCount'
+                                FROM appEvDB.ElectionCandidateSQLs EC, 
+                                appEvDB.CandidateSQLs C,
+                                appEvDB.PartySQLs P
+                                where EC.electionId = 33622
+                                AND EC.candidateCI = C.ci
+                                AND C.partyId = P.id
+                                GROUP BY P.id , P.name
+                                ORDER BY sum(EC.voteCount) DESC
+                                `;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
 
-  public async getVoteFrequency(input: any): Promise<any[]> {
-    return await this.query.getVoteFrequency(input.electionId, input.voterCI);
-  }
-
-  public async getTotalVotes(input: any): Promise<number> {
-    return await this.query.getTotalVotes(input.electionId);
-  }
-
-  public async getCandidateResult(input: any): Promise<any[]> {
-    return await this.query.getCandidateResult(input.electionId);
-  }
-
-  public async getPartyResult(input: any): Promise<any[]> {
-    return await this.query.getPartyResult(input.electionId);
-
-  public async getElectionInfoCountPerCircuit(input: any): Promise<any[]> {
-    return await this.query.getElectionInfoCountPerCircuit(
-      input.electionId,
-      input.minAge,
-      input.maxAge,
-      input.gender
-    );
-  }
-
-  public async getElectionInfoCountPerState(input: any): Promise<any[]> {
-    return await this.query.getElectionInfoCountPerState(
-      input.electionId,
-      input.minAge,
-      input.maxAge,
-      input.gender
-    );
+    return found;
   }
 }
