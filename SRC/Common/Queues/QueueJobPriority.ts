@@ -13,6 +13,6 @@ export enum QueueJobPriority {
   GetVote = 1,
   GetVoteFrequency = 6,
   GetTotalVotes = 4,
-  GetCandidateResult = 6,
-  GetPartyResult = 6,
+  GetPartiesResult = 6,
+  GetCandidatesResult = 6,
 }

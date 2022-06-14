@@ -9,8 +9,8 @@ export class EndAct extends AbstractAct {
     let query = new ElectionQueryQueue();
     let electionResult: ElectionResult;
 
-    let parties = await query.getCandidatesResult(33622);
-    let candidates = await query.getCandidatesResult(33622);
+    let parties = await query.getCandidatesResult(election.id);
+    let candidates = await query.getCandidatesResult(election.id);
 
     electionResult = new ElectionResult(candidates, parties);
     let totalVotes = await query.getTotalVotes(election.id);

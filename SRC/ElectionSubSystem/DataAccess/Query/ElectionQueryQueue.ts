@@ -38,6 +38,28 @@ export class ElectionQueryQueue {
     console.log("result:", result.result, " error:", result.error);
     return result.result;
   }
+
+  public async getCandidatesResult(electionId: number): Promise<any[]> {
+    let queueJob = new QueueJob();
+    queueJob.input = { electionId: electionId };
+    queueJob.priority = QueueJobPriority.GetPartiesResult;
+    queueJob.type = QueueJobType.GetCandidatesResult;
+
+    let job = await this.electionQueue.add(queueJob);
+    let result: QueueResponse = await job.finished();
+    return result.result;
+  }
+
+  public async getPartiesResult(electionId: number): Promise<any[]> {
+    let queueJob = new QueueJob();
+    queueJob.input = { electionId: electionId };
+    queueJob.priority = QueueJobPriority.GetPartiesResult;
+    queueJob.type = QueueJobType.GetPartiesResult;
+
+    let job = await this.electionQueue.add(queueJob);
+    let result: QueueResponse = await job.finished();
+    return result.result;
+  }
   // public async getElectionResult(electionId: number): Promise<ElectionResult> {
   //   let queueJob = new QueueJob();
   //   queueJob.input = { electionId: electionId };

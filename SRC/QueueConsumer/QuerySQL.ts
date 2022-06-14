@@ -139,8 +139,8 @@ export class QuerySQL {
     throw new Error(`Error getting total votes`);
   }
 
-  public async getCandidateResult(electionId: number): Promise<any[]> {
-    let queryString: string = ` SELECT candidateCI, CONCAT( C.name," ", C.lastName) AS 'Candidate full name', 
+  public async getCandidatesResult(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT candidateCI, CONCAT( C.name," ", C.lastName) AS 'fullName', 
                                 EC.voteCount
                                 FROM appEvDB.ElectionCandidateSQLs EC, 
                                 appEvDB.CandidateSQLs C
@@ -154,10 +154,10 @@ export class QuerySQL {
 
     return found;
   }
-  public async getPartyResult(electionId: number): Promise<any[]> {
-    let queryString: string = ` SELECT P.id AS "Id", 
-                                P.name AS 'Party name',
-                                sum(EC.voteCount) as 'Vote Count'
+  public async getPartiesResult(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT P.id AS "partyId", 
+                                P.name AS 'partyName',
+                                sum(EC.voteCount) as 'voteCount'
                                 FROM appEvDB.ElectionCandidateSQLs EC, 
                                 appEvDB.CandidateSQLs C,
                                 appEvDB.PartySQLs P
@@ -166,7 +166,6 @@ export class QuerySQL {
                                 AND C.partyId = P.id
                                 GROUP BY P.id , P.name
                                 ORDER BY sum(EC.voteCount) DESC
-                                ORDER BY EC.voteCount DESC
                                 `;
     let found = await this.sequelize.query(queryString, {
       type: QueryTypes.SELECT,
