@@ -39,7 +39,11 @@ async function producer() {
   queueJob.input = election;
   queueJob.priority = QueueJobPriority.AddElection;
   queueJob.type = QueueJobType.AddElection;
-  let job = await queue.add(queueJob);
+  let jobOptions = {
+    removeOnComplete: true,
+    removeOnFail: true,
+  };
+  let job = await queue.add(queueJob, jobOptions);
   let result: QueueResponse = await job.finished();
   console.log("result:", result.result, " error:", result.error);
 }
@@ -51,7 +55,11 @@ async function validateUserElectionParty() {
   queueJob.input = { voterCI: "10000246", electionId: 19014, circuitId: 14276 };
   queueJob.priority = QueueJobPriority.ValidateVoterElectionCircuit;
   queueJob.type = QueueJobType.ValidateVoterElectionCircuit;
-  let job = await queue.add(queueJob);
+  let jobOptions = {
+    removeOnComplete: true,
+    removeOnFail: true,
+  };
+  let job = await queue.add(queueJob, jobOptions);
   let result: QueueResponse = await job.finished();
   console.log("result:", result.result, " error:", result.error);
 }
