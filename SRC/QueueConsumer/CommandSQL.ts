@@ -1,7 +1,18 @@
 import { Console } from "console";
 import { Circuit, Election, Party, Voter, Candidate, Vote } from "../Common/Domain";
 
-import { CandidateSQL, ElectionSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, VoterSQL, CircuitSQL, ElectionCandidateSQL, VoteSQL, ElectionCandidateVoterSQL } from "./Models";
+import {
+  CandidateSQL,
+  ElectionSQL,
+  ElectionCircuitSQL,
+  ElectionCircuitVoterSQL,
+  PartySQL,
+  VoterSQL,
+  CircuitSQL,
+  ElectionCandidateSQL,
+  VoteSQL,
+  ElectionCandidateVoterSQL,
+} from "./Models";
 
 export class CommandSQL {
   public async addElection(election: Election): Promise<void> {
@@ -63,6 +74,8 @@ export class CommandSQL {
         let currentVoter: Voter = voters[i];
         ElectionCircuitVoterSQL.create({
           electionCircuitId: `${idElection}_${currentVoter.circuitId}`,
+          electionId: idElection,
+          circuitId: currentVoter.circuitId,
           voterCI: currentVoter.ci,
         });
       }
@@ -80,15 +93,26 @@ export class CommandSQL {
 
   private async addVoteUnique(vote: Vote): Promise<void> {
     VoteSQL.create(vote);
-    ElectionCandidateSQL.increment({ voteCount: 1 }, { where: { electionId: vote.electionId, candidateCI: vote.candidateCI } });
+    ElectionCandidateSQL.increment(
+      { voteCount: 1 },
+      { where: { electionId: vote.electionId, candidateCI: vote.candidateCI } }
+    );
     return;
   }
 
   private async addVoteRepeated(vote: Vote): Promise<void> {
-    let previousVote: ElectionCandidateVoterSQL | null = await ElectionCandidateVoterSQL.findOne({ where: { electionId: vote.electionId, voterCI: vote.voterCI } });
+    let previousVote: ElectionCandidateVoterSQL | null = await ElectionCandidateVoterSQL.findOne({
+      where: { electionId: vote.electionId, voterCI: vote.voterCI },
+    });
     if (previousVote != null) {
-      ElectionCandidateSQL.decrement({ voteCount: 1 }, { where: { electionId: previousVote.electionId, candidateCI: previousVote.candidateCI } });
-      ElectionCandidateVoterSQL.update({ candidateCI: vote.candidateCI }, { where: { id: previousVote.id } });
+      ElectionCandidateSQL.decrement(
+        { voteCount: 1 },
+        { where: { electionId: previousVote.electionId, candidateCI: previousVote.candidateCI } }
+      );
+      ElectionCandidateVoterSQL.update(
+        { candidateCI: vote.candidateCI },
+        { where: { id: previousVote.id } }
+      );
     } else {
       ElectionCandidateVoterSQL.create({
         electionId: vote.electionId,

@@ -6,6 +6,8 @@ export enum QueueJobPriority {
   ValidateOneVote = 5,
   ValidateRepeatedVote = 5,
   ValidateVoterElectionCircuit = 5,
+  GetElectionInfoCountPerCircuit = 5,
+  GetElectionInfoCountPerState = 5,
   GetVoter = 6,
   GetVoteDates = 6,
   GetVote = 1,

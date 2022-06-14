@@ -10,5 +10,7 @@ router.get(
   ElectionController.getConfig
 );
 router.get("/vote-frequency", ElectionController.getVoteFrequency);
+router.get("/circuit-info", ElectionController.getCircuitInfo);
+router.get("/state-info", ElectionController.getStateInfo);
 
 export default router;
