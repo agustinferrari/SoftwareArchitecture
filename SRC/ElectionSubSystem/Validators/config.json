@@ -91,5 +91,33 @@
         }
       ]
     }
+  ],
+  "endElection": [
+    {
+      "filters": [
+        {
+          "class": "ElectionVoteDateFilter",
+          "parameters": {
+            "maxAttempts": 1,
+            "key": "electionId",
+            "errorMessage": "The election has votes registered out of the range of the election date",
+            "description": "Filter election vote dates"
+          }
+        }
+      ]
+    },
+    {
+      "filters": [
+        {
+          "class": "ElectionVoteCountFilter",
+          "parameters": {
+            "maxAttempts": 1,
+            "key": "electionId",
+            "errorMessage": "The election has more votes than voters",
+            "description": "Filter that the election has more votes than voters"
+          }
+        }
+      ]
+    }
   ]
 }

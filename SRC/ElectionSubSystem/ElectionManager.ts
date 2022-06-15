@@ -57,7 +57,13 @@ export class ElectionManager {
 
   public async endElection(election: Election, voterCount: number): Promise<void> {
     //TODO validar
-
+    await this.validatorManager.createPipeline(election, "endElection");
+    try {
+      await this.validatorManager.validate();
+    } catch (e: any) {
+      let message = "ERROR ON ELECTION END:" + e.message;
+      this.emailSender.sendNotification(message, election.emails);
+    }
     this.endAct.generateAndSendAct(
       election,
       voterCount,
