@@ -59,6 +59,28 @@ export class ElectionQueryQueue {
     return result.result;
   }
 
+  public async validateElectionVotesDate(electionId: number): Promise<boolean> {
+    let queueJob = new QueueJob();
+    queueJob.input = { electionId: electionId };
+    queueJob.priority = QueueJobPriority.ValidateElectionVotesDate;
+    queueJob.type = QueueJobType.ValidateElectionVotesDate;
+
+    let job = await this.electionQueue.add(queueJob);
+    let result: QueueResponse = await job.finished();
+    return result.result;
+  }
+
+  public async validateElectionVotesCount(electionId: number): Promise<boolean> {
+    let queueJob = new QueueJob();
+    queueJob.input = { electionId: electionId };
+    queueJob.priority = QueueJobPriority.ValidateElectionVotesCount;
+    queueJob.type = QueueJobType.ValidateElectionVotesCount;
+
+    let job = await this.electionQueue.add(queueJob);
+    let result: QueueResponse = await job.finished();
+    return result.result;
+  }
+
   // public async getElectionResult(electionId: number): Promise<ElectionResult> {
   //   let queueJob = new QueueJob();
   //   queueJob.input = { electionId: electionId };

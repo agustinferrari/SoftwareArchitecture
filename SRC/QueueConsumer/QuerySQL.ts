@@ -152,6 +152,7 @@ export class QuerySQL {
 
     return found;
   }
+
   public async getPartiesResult(electionId: number): Promise<any[]> {
     let queryString: string = ` SELECT P.id AS "partyId", 
                                 P.name AS 'partyName',
@@ -234,5 +235,24 @@ export class QuerySQL {
       undefined
     );
     return [totalVotes, candidates, parties, responseState];
+  }
+
+  public async validateElectionVotesDate(electionId: number): Promise<boolean> {
+    let queryString: string = `SELECT MAX(V.startTimestamp)<=E.endDate FROM appEvDB.VoteSQLs V, appEvDB.ElectionSQLs E 
+                                  WHERE E.id = V.electionId AND V.electionId = ${electionId};`;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    return found[0] == 1;
+  }
+
+  public async validateElectionVotesCount(electionId: number): Promise<boolean> {
+    let queryString: string = `SELECT Q1.voteCount <= Q2.voterCount  FROM
+                                (SELECT COUNT(*) as "voteCount" FROM appEvDB.ElectionCandidateSQLs WHERE electionId = ${electionId} GROUP BY electionId) Q1, 
+                                (SELECT COUNT(*) as "voterCount" FROM appEvDB.ElectionCircuitVoterSQLs WHERE electionId = ${electionId} GROUP BY electionId) Q2`;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    return found[0] == 1;
   }
 }

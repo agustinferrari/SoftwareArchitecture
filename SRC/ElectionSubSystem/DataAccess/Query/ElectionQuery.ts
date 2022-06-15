@@ -5,10 +5,18 @@ import { ElectionQueryQueue } from "./ElectionQueryQueue";
 export class ElectionQuery {
   electionCache: QueryCache;
   electionQueryQueue: ElectionQueryQueue;
-  constructor(electionCache: QueryCache, electionQuerySQL: ElectionQueryQueue) {
-    this.electionCache = electionCache;
-    this.electionQueryQueue = electionQuerySQL;
+  static instance: ElectionQuery;
+  constructor() {
+    this.electionCache = new QueryCache();
+    this.electionQueryQueue = new ElectionQueryQueue();
     //this.startupRedis();
+  }
+
+  public static getInstance(): ElectionQuery {
+    if (!ElectionQuery.instance) {
+      ElectionQuery.instance = new ElectionQuery();
+    }
+    return ElectionQuery.instance;
   }
 
   // private async startupRedis() {
@@ -23,7 +31,7 @@ export class ElectionQuery {
   // }
 
   public async existsElection(electionId: number): Promise<boolean> {
-    let result = await this.electionCache.getElection(electionId);
+    let result = await this.electionCache.existsElection(electionId);
     return result != null;
   }
 
@@ -34,5 +42,21 @@ export class ElectionQuery {
     } else {
       return [];
     }
+  }
+
+  public async validateElectionVotesDate(electionId: number): Promise<boolean> {
+    let result = await this.electionCache.getElection(electionId);
+    if (result) {
+      return this.electionQueryQueue.validateElectionVotesDate(electionId);
+    }
+    throw Error("Election " + electionId + "not found");
+  }
+
+  public async validateElectionVotesCount(electionId: number): Promise<boolean> {
+    let result = await this.electionCache.existsElection(electionId);
+    if (result) {
+      return this.electionQueryQueue.validateElectionVotesDate(electionId);
+    }
+    throw Error("Election " + electionId + "not found");
   }
 }
