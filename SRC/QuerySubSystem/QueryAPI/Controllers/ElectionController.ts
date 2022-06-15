@@ -3,6 +3,9 @@ import { getUserInSession } from "../Helpers/jwtHelper";
 import { UserDTO } from "../Models/User";
 import { Query } from "../../DataAccess/Query/Query";
 import { LoggerFacade } from "../../Logger/LoggerFacade";
+import { INotificationSettings } from "../Models/NotificationSettings";
+import { ElectionNotFound } from "../Errors/ElectionNotFound";
+import { Command } from "../../DataAccess/Command/Command";
 
 export class ElectionController {
   public static async getConfig(req: Request, res: Response) {
@@ -100,4 +103,33 @@ export class ElectionController {
       res.status(404).send("Election " + req.params.id + " does not exist");
     }
   }
+
+  static setSettings = async (req: Request, res: Response) => {
+    try {
+      const settings: INotificationSettings = req.body;
+      settings.electionId = parseInt(req.params.id);
+      const updated = await Command.getCommand().updateNotificationSettings(settings);
+
+      res
+        .status(200)
+        .send(
+          "Notification settings for election " +
+            settings.electionId +
+            " updated: " +
+            JSON.stringify(updated)
+        );
+    } catch (error: any) {
+      if (error instanceof ElectionNotFound) {
+        res.status(404).send(error.message);
+      } else {
+        console.log(error.message);
+        res
+          .status(400)
+          .send(
+            "Invalid request: Incorrect format. Format: {maxVotesPerVoter: number, maxVoteReportRequestsPerVoter: number, emailsSubscribed: string[]}"
+          );
+      }
+      return;
+    }
+  };
 }

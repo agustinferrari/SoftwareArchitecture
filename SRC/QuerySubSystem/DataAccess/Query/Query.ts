@@ -1,4 +1,4 @@
-import { CommandMongo } from "../Command/CommandMongo";
+import { ElectionNotFound } from "../../QueryAPI/Errors/ElectionNotFound";
 import { QueryMongo } from "./QueryMongo";
 import { QueryCache } from "../../../Common/Redis/QueryCache";
 import { IUser } from "../../QueryAPI/Models/User";
@@ -6,10 +6,7 @@ import { QueryQueue } from "./QueryQueue";
 import { ElectionVotesDTO } from "../../QueryAPI/Models/ElectionVotesDTO";
 import { NotificationSettingsDTO } from "../../QueryAPI/Models/NotificationSettingsDTO";
 import { ElectionInfo, Vote, Voter } from "../../../Common/Domain";
-import {
-  DateFrequencyDTO,
-  ElectionDateFrequencyDTO,
-} from "../../QueryAPI/Models/ElectionDateFrequencyDTO";
+import { ElectionDateFrequencyDTO } from "../../QueryAPI/Models/ElectionDateFrequencyDTO";
 import { ElectionInfoPerCircuitDTO } from "../../QueryAPI/Models/ElectionInfoPerCircuitDTO";
 import { ElectionInfoPerStateDTO } from "../../QueryAPI/Models/ElectionInfoPerStateDTO";
 import { ElectionInfoDTO } from "../../QueryAPI/Models/ElectionInfoDTO";
@@ -42,7 +39,7 @@ export class Query {
       let result: ElectionVotesDTO = new ElectionVotesDTO(electionId, voterCI, queryResult);
       return result;
     }
-    throw new Error(`Election ${electionId} does not exist`);
+    throw new ElectionNotFound(electionId);
   }
 
   public async getVote(voteId: string, voterCI: string): Promise<Vote | null> {
