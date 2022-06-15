@@ -1,28 +1,118 @@
-export class VoteUtils {
+const fs = require("fs");
 
-  static getElection(electionId) {
-    for (let i = 0; i < elections.length; ++i) {
-      if (elections[i].id === electionId) {
-        return elections[i];
+class VoteUtils {
+  
+  constructor() {
+    let jsonVoters = JSON.parse(
+      fs.readFileSync("./VoterVotingInformation.json")
+    ).voters;
+    let elections = JSON.parse(
+      fs.readFileSync("../APIAutoridadElectoral/SimulatedElectoralAPI.json")
+    ).elections;
+    
+    let voters = [];
+    
+    for (let i = 0; i < jsonVoters.length; i++) {
+      let numberToVote = 3;
+      let randomNumber = this.getRandomInt(1, 3);
+      if (numberToVote == randomNumber) {
+        voters.push(jsonVoters[i]);
+      }
+    }
+    
+    voters = jsonVoters;
+
+    this.voters = voters;
+    this.elections = elections;
+    this.currentVoter = 0;
+    this.previousVoterElection = [];
+  }
+
+  setupVote() {
+    let voter = this.voters[this.currentVoter];
+    ++this.currentVoter;
+
+    let electionId = voter.electionId;
+    let circuitId = voter.circuitId;
+
+    let election = this.getElection(electionId);
+    let candidate = this.getRandomCandidate(election);
+    let candidateCI = candidate.ci;
+
+
+    let startDate = this.formatDate(election.startDate);
+    let endDate = this.formatDate(election.endDate);
+
+    startDate.setDate(startDate.getDate() + 1);
+    endDate.setDate(endDate.getDate() - 1);
+    let randomDate = this.getRandomDate(startDate, endDate);
+
+    let startTimestamp = randomDate.toISOString();
+    let unencryptedVote = {
+      voterCI: voter.ci,
+      electionId,
+      circuitId,
+      candidateCI,
+      startTimestamp,
+    };
+
+    this.checkIfAlreadyVoted(voter, electionId);
+    return unencryptedVote;
+  }
+
+  setupAxiosVote(voter) {
+    let electionId = voter.electionId;
+    let circuitId = voter.circuitId;
+
+    let election = this.getElection(electionId);
+    let candidate = this.getRandomCandidate(election);
+    let candidateCI = candidate.ci;
+
+
+    let startDate = this.formatDate(election.startDate);
+    let endDate = this.formatDate(election.endDate);
+
+    startDate.setDate(startDate.getDate() + 1);
+    endDate.setDate(endDate.getDate() - 1);
+
+    let randomDate = this.getRandomDate(startDate, endDate);
+
+    let startTimestamp = randomDate.toISOString();
+    let unencryptedVote = {
+      voterCI: voter.ci,
+      electionId,
+      circuitId,
+      candidateCI,
+      startTimestamp,
+    };
+
+    this.checkIfAlreadyVoted(voter, electionId);
+    return unencryptedVote;
+  }
+
+  getElection(electionId) {
+    for (let i = 0; i < this.elections.length; ++i) {
+      if (this.elections[i].id === electionId) {
+        return this.elections[i];
       }
     }
 
     console.log("NO ELECTION BY ID " + electionId);
   }
 
-  static getRandomCandidate(election) {
+  getRandomCandidate(election) {
     let candidates = election.candidates;
-    let pos = VoteManager.getRandomInt(0, candidates.length - 1);
+    let pos = this.getRandomInt(0, candidates.length - 1);
     return candidates[pos];
   }
 
-  static checkIfAlreadyVoted() {
+  checkIfAlreadyVoted(voter, electionId) {
     let currentVoterElection = { voterCI: voter.ci, electionId: electionId };
     let alreadyVoted = false;
 
-    for (let i = 0; i < previousVoterElection.length && !alreadyVoted; ++i) {
-      let previousCI = previousVoterElection[i].voterCI;
-      let previousElection = previousVoterElection[i].electionId;
+    for (let i = 0; i < this.previousVoterElection.length && !alreadyVoted; ++i) {
+      let previousCI = this.previousVoterElection[i].voterCI;
+      let previousElection = this.previousVoterElection[i].electionId;
 
       if (
         previousCI == currentVoterElection.voterCI &&
@@ -35,24 +125,26 @@ export class VoteUtils {
     if (alreadyVoted) {
       console.log("Already Voted: ", currentVoterElection);
     }
-    previousVoterElection.push(currentVoterElection);
+    this.previousVoterElection.push(currentVoterElection);
   }
 
-  static getRandomDate(from, to) {
+  getRandomDate(from, to) {
     const fromTime = from.getTime();
     const toTime = to.getTime();
     return new Date(fromTime + Math.random() * (toTime - fromTime));
   }
 
-  static formatDate(date) {
+  formatDate(date) {
     date += "Z";
     let result = date.replace(" ", "T");
     return new Date(result);
   }
 
-  static getRandomInt(min, max) {
+  getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
+
+module.exports = VoteUtils;

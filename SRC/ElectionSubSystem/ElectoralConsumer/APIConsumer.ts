@@ -21,8 +21,8 @@ export class APIConsumer implements IConsumer {
   ): Promise<Voter[]> {
     let endpoint: string = "/voters";
     let specifyElection: string = "?electionId=" + electionId;
-    let specifyPage: string = "&_page=" + page;
-    let specifyLimit: string = "&_limit=" + pageSize;
+    let specifyPage: string = "&page=" + page;
+    let specifyLimit: string = "&limit=" + pageSize;
     let errorMessage: string =
       "Error getting voters for election " + electionId;
     electionId;

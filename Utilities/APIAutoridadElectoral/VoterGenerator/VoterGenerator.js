@@ -4,7 +4,7 @@ const fs = require("fs");
 const readlines = require("n-readlines");
 let fileName = "../private-public-keys.txt";
 const liner = new readlines(fileName);
-
+const config = require("config");
 class VoterGenerator {
   constructor() {
     this.voters = [];
@@ -52,6 +52,7 @@ class VoterGenerator {
     let residency = faker.address.cityName();
     let phone = faker.phone.phoneNumber("+598 ## ######");
     let email = faker.internet.email();
+    let password = faker.internet.password();
     // let circuitId =
     //   this.circuits[Math.floor(Math.random() * this.circuits.length)].id;
     let circuitId = -1;
@@ -59,6 +60,7 @@ class VoterGenerator {
     let keys = this.getKeys();
     let publicKey = keys.publicKey;
     let privateKey = keys.privateKey;
+    let role = config.get("voterRole");
     let voter = {
       ci,
       credential,
@@ -69,6 +71,8 @@ class VoterGenerator {
       residency,
       phone,
       email,
+      role,
+      password,
       circuitId,
       electionId,
       publicKey,

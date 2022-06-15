@@ -1,0 +1,11 @@
+{
+  "MONGO": {
+    "host": "127.0.0.1",
+    "port": "27017",
+    "dbName": "electoralAPI"
+  },
+  "API": {
+    "port": 3000,
+    "verbose": true
+  }
+}
