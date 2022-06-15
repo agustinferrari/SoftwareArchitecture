@@ -5,6 +5,7 @@ const express = require("express");
 import config from "config";
 import { VoteEncryption } from "../VoteEncryption";
 import { VoteIntent } from "../Models/VoteIntent";
+import { TimeoutError } from "../Errors/TimeoutError";
 class Server {
   public app: Application;
   private service: VotingService;
@@ -36,6 +37,9 @@ class Server {
         this.service.handleVote(voteIntent);
         res.status(200).send("Voto procesado");
       } catch (e: any) {
+        if(e instanceof TimeoutError) {
+          res.status(500).send(e.message);
+        }
         res.status(400).send(e.message);
       }
     });
