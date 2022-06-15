@@ -42,6 +42,7 @@ const Voter = new Schema({
 
 const Authentication = new Schema({
   ci: String,
+  email: String,
   password: String,
   role: String,
 });
@@ -91,7 +92,7 @@ class MongoAccess {
       batchCount = 1;
     }
 
-    for (let i = 0; i < voters.length; i = i + batchSize + 1) {
+    for (let i = 0; i < voters.length; i = i + batchSize) {
       await VoterModel.insertMany(voters.slice(i, i + batchSize));
       console.log(`Voter batches processed ${currentBatch} / ${batchCount}`);
 
@@ -124,17 +125,23 @@ class MongoAccess {
   }
 
   async getVoterPaginated(page, limit, electionId) {
+    if (page >= 0) {
+      page = page - 1;
+    }
     const VoterModel = mongoose.model("Voter", Voter);
     let result = await VoterModel.find({ electionId: { $eq: electionId } })
-      .skip(page * limit)
+      .skip(page*limit)
       .limit(limit)
       .exec();
     return result;
   }
 
-  async getVoters() {
+  async getVoters(page, limit) {
     const VoterModel = mongoose.model("Voter", Voter);
-    let result = await VoterModel.find();
+    let result = await VoterModel.find()
+      .skip(page * limit)
+      .limit(limit)
+      .exec();
     return result;
   }
 }

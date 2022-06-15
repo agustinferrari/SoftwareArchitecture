@@ -1,15 +1,7 @@
 const fs = require("fs");
-
 class VoteUtils {
   
-  constructor() {
-    let jsonVoters = JSON.parse(
-      fs.readFileSync("./VoterVotingInformation.json")
-    ).voters;
-    let elections = JSON.parse(
-      fs.readFileSync("../APIAutoridadElectoral/SimulatedElectoralAPI.json")
-    ).elections;
-    
+  constructor(elections) {
     let voters = [];
     
     for (let i = 0; i < jsonVoters.length; i++) {
@@ -21,15 +13,12 @@ class VoteUtils {
     }
     
     voters = jsonVoters;
-
-    this.voters = voters;
     this.elections = elections;
     this.currentVoter = 0;
     this.previousVoterElection = [];
   }
 
-  setupVote() {
-    let voter = this.voters[this.currentVoter];
+  setupVote(voter) {
     ++this.currentVoter;
 
     let electionId = voter.electionId;
