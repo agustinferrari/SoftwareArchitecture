@@ -125,11 +125,8 @@ class MongoAccess {
 
   async getVoterPaginated(page, limit, electionId) {
     const VoterModel = mongoose.model("Voter", Voter);
-    let result = await VoterModel.find()
-      .where({
-        electionId: electionId,
-      })
-      .skip(page)
+    let result = await VoterModel.find({ electionId: { $eq: electionId } })
+      .skip(page * limit)
       .limit(limit)
       .exec();
     return result;

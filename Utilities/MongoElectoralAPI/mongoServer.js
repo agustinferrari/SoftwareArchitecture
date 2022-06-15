@@ -51,10 +51,14 @@ class Server {
         try {
           let startTimestamp = new Date();
 
+          if(this.verbose) {
+            console.log(`[${req.url}] Searching for voters`);
+          }
 
           let limit = req.query.limit;
           let page = req.query.page;
-          let found = await this.MongoAccess.getVoterPaginated(page, limit);
+          let electionId = req.query.electionId
+          let found = await this.MongoAccess.getVoterPaginated(page, limit, electionId);
 
           let endTimestamp = new Date();
           let duration = this.dateDiff(endTimestamp, startTimestamp);
