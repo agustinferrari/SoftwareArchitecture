@@ -53,9 +53,12 @@ export class Query {
 
   public async checkRepeatedVote(voterCI: string, electionId: number): Promise<boolean> {
     let electionInfo: ElectionInfo | null = await this.queryCache.getElection(electionId);
-    if (electionInfo == null || electionInfo.mode != "repeated") {
+    if (electionInfo == null) {
+      throw new Error("Election not found");
+    }
+    if (electionInfo.mode != "repeated") {
       //throw new Error("Election mode is not 'repeated'");
-      return true;
+      return false;
     }
     let found = await this.voterQueryQueue.checkRepeatedVote(
       voterCI,

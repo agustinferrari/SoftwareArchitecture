@@ -8,10 +8,6 @@ import { QueueTypeHandler } from "./QueueTypeHandler";
 import { CommandSQL } from "./CommandSQL";
 
 let context: SequelizeContext = new SequelizeContext();
-(async () => {
-  await context.addModels();
-  await context.syncAllModels();
-})();
 
 const query = new QuerySQL(context.connection);
 const command = new CommandSQL();
@@ -46,5 +42,7 @@ async function consumer() {
 }
 
 (async () => {
+  await context.addModels();
+  await context.syncAllModels();
   consumer();
 })();

@@ -1,0 +1,15 @@
+{
+  "name": "mongoutilities",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mongoAccess.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.7",
+    "mongoose": "^6.3.8"
+  }
+}

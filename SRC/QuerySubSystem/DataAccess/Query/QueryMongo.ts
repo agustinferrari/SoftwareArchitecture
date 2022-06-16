@@ -22,7 +22,7 @@ export class QueryMongo {
   }
 
   static async getVoteProofLogCount(voterCI: string, electionId:number): Promise<number> {
-    const VoteProofLog = model<IVoteProofLog>("VoteProofLoog", voteProofSchema);
+    const VoteProofLog = model<IVoteProofLog>("VoteProofLog", voteProofSchema);
     await mongoose.connect(
       `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
         "MONGO.dbName"

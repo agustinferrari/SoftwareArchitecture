@@ -31,8 +31,7 @@ class Server {
     this.app.post("/votes", (req: Request, res: Response) => {
       try {
         let converted = req.body;
-        converted.startTimestamp = new Date(converted.startTimestamp);
-        let voteIntent: VoteIntent = converted as VoteIntent;
+        let voteIntent: VoteIntentEncrypted = converted as VoteIntentEncrypted;
         this.service.handleVote(voteIntent);
         res.status(200).send("Voto procesado");
       } catch (e: any) {

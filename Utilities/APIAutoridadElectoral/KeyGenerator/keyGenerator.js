@@ -21,7 +21,7 @@ function clearLastLine() {
 
 function generateKeys() {
   let keyPair = generateKeyPairSync("rsa", {
-    modulusLength: 512,
+    modulusLength: config.get("Keys.size"),
     publicKeyEncoding: {
       type: "spki",
       format: "pem",
