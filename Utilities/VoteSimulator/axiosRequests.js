@@ -3,7 +3,8 @@ const fs = require("fs");
 const VoteUtils = require("./VoteUtils");
 const MetricsUtils = require("./MetricsUtils");
 const MongoAccess = require("../MongoUtilities/mongoAccess");
-
+const ESC = "\x1b"; // ASCII escape character
+const CSI = ESC + "["; // control sequence introducer
 
 startRequests();
 
@@ -11,10 +12,11 @@ async function startRequests() {
   let serverConfig = JSON.parse(
     fs.readFileSync("../../SRC/VotingSubSystem/config/development.json")
   );
-  let elections = await mongoAccess.getElections();
-
+  let appEvPublicKey = serverConfig.publicKey;
   let mongoAccess = new MongoAccess();
-  let voteUtils = new VoteUtils(elections);
+  let elections = await mongoAccess.getElections();
+  let voteUtils = new VoteUtils(elections,appEvPublicKey);
+  let metrics = new MetricsUtils();
 
   let apiHost = "localhost";
   let endpoint = "/votes";
@@ -22,25 +24,29 @@ async function startRequests() {
   let url = "http://" + apiHost + ":" + apiPort;
 
   console.log("Starting vote simulator to url: " + url);
-  
-  let metrics = new MetricsUtils();
-
-  metrics.totalAttempts = requestCount;
 
   let isFinished = false;
 
   let batchSize = 100000;
-  let requestCount = 1;
-  
-  
-  for (let currentBatch = 0; currentBatch < requestCount; currentBatch++) {
-    let voters = await mongoAccess.getVoters(currentBatch, batchSize);
+  let batchCount = 1;
 
-    for (let i = 0; i < batchSize && !isFinished; i++) {
+  metrics.totalAttempts = 0;
+
+  for (
+    let currentBatch = 0;
+    currentBatch < batchCount && !isFinished;
+    currentBatch++
+  ) {
+    let voters = await mongoAccess.getVoterInformation(currentBatch, batchSize);
+    if (batchSize != voters.length) {
+      isFinished = true;
+    }
+    for (let i = 0; i < voters.length; i++) {
       let electionVoter = voters[i];
+      let body = voteUtils.setupAxiosVote(electionVoter);
       let startTimestamp = new Date();
       axios
-        .post(url + endpoint, voteUtils.setupAxiosVote(electionVoter), {
+        .post(url + endpoint, body, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -60,12 +66,26 @@ async function startRequests() {
           let endTimeStamp = new Date();
           let responseTime = metrics.DateDiff(endTimeStamp, startTimestamp);
           metrics.responseTimes.push(responseTime);
+        })
+        .finally(() => {
+          metrics.totalAttempts++;
         });
-
-      if (i == requestCount - 1 || i == voters.length - 1) {
-        metrics.calculate();
-        console.log(metrics);
-      }
+      metrics.calculate();
+      writeChangingLine(metrics);
+      // if (i == batchCount - 1 || i == voters.length - 1) {
+      //   metrics.calculate();
+      //   console.log(metrics);
+      // }
     }
   }
+}
+
+function writeChangingLine(name) {
+  clearLastLine();
+  process.stdout.write("\n" + name + "\r");
+}
+
+function clearLastLine() {
+  process.stdout.write(CSI + "A"); // moves cursor up one line
+  process.stdout.write(CSI + "K"); // clears from cursor to line end
 }

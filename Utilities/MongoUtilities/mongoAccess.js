@@ -144,6 +144,15 @@ class MongoAccess {
       .exec();
     return result;
   }
+
+  async getVoterInformation(page, limit) {
+    const VotingInformationModel = mongoose.model("VotingInformation", VotingInformation);
+    let result = await VotingInformationModel.find()
+      .skip(page * limit)
+      .limit(limit)
+      .exec();
+    return result;
+  }
 }
 
 function writeChangingLine(name, count) {

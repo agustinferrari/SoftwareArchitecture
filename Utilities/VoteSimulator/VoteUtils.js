@@ -1,25 +1,13 @@
 const fs = require("fs");
 class VoteUtils {
   
-  constructor(elections) {
-    let voters = [];
-    
-    for (let i = 0; i < jsonVoters.length; i++) {
-      let numberToVote = 3;
-      let randomNumber = this.getRandomInt(1, 3);
-      if (numberToVote == randomNumber) {
-        voters.push(jsonVoters[i]);
-      }
-    }
-    
-    voters = jsonVoters;
+  constructor(elections, appEvPublicKey) {
     this.elections = elections;
-    this.currentVoter = 0;
     this.previousVoterElection = [];
+    this.appEvPublicKey = appEvPublicKey;
   }
 
   setupVote(voter) {
-    ++this.currentVoter;
 
     let electionId = voter.electionId;
     let circuitId = voter.circuitId;
