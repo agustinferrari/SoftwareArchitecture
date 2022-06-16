@@ -1,25 +1,42 @@
-import { Voter } from "../Common/Domain";
-import { Query } from "./DataAccess/Query/Query";
+import { Vote, Voter } from "../Common/Domain";
 import config from "config";
 import crypto from "crypto";
 import { VoteIntent } from "./Models/VoteIntent";
 import { VoteIntentEncrypted } from "./Models/VoteIntentEncrypted";
 export class VoteEncryption {
-  voterQuery: Query;
 
-  public constructor(voterQuery: Query) {
-    this.voterQuery = voterQuery;
-  }
-  public async decryptVote(voteEncrypted: VoteIntentEncrypted): Promise<VoteIntent> {
-    let vote: string = voteEncrypted.data;
-    let ci: string = voteEncrypted.voterCI;
-    let voter: Voter = await this.voterQuery.getVoter(ci);
-    let appEvPrivateKey: string = config.get("privateKey");
-    let decryptedVote = crypto.privateDecrypt(appEvPrivateKey, Buffer.from(vote, "utf8"));
+  public static async decryptVote(
+    encrypted: VoteIntentEncrypted,
+    voter: Voter
+  ): Promise<Vote> {
 
-    let finalObj = crypto.publicDecrypt(voter.publicKey, decryptedVote).toString();
-    let jsonObj = JSON.parse(finalObj);
-    let finalVote: VoteIntent = new VoteIntent(ci, jsonObj.circuitId, jsonObj.electionId, jsonObj.candidateCI, jsonObj.startTimestamp);
-    return finalVote;
+    let privateKey: string = config.get("privateKey");
+    let body = encrypted.data;
+    let data = Buffer.from(body, "base64");
+    let decrypted = crypto.privateDecrypt(privateKey, data);
+    let decryptedVote = JSON.parse(decrypted.toString("utf8"));
+
+    let signData = Buffer.from(JSON.stringify(decryptedVote.vote));
+    let signature = Buffer.from(decryptedVote.signature, "base64");
+
+    let verified = crypto.verify(
+      "SHA256",
+      signData,
+      voter.publicKey,
+      signature
+    );
+
+    if(!verified){
+      throw new Error("Signature is not valid");
+    }
+
+    let decryptedData = decryptedVote.vote as VoteIntent;
+    let vote = new Vote();
+    vote.startTimestamp = new Date(decryptedData.startTimestamp);
+    vote.candidateCI = decryptedData.candidateCI;
+    vote.voterCI = encrypted.voterCI;
+    vote.electionId = decryptedData.electionId;
+    vote.circuitId = decryptedData.circuitId;
+    return vote;
   }
 }

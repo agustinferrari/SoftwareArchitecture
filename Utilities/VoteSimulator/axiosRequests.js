@@ -6,6 +6,8 @@ const MongoAccess = require("../MongoUtilities/mongoAccess");
 const ESC = "\x1b"; // ASCII escape character
 const CSI = ESC + "["; // control sequence introducer
 
+const OnlyOneRequest = true;
+
 startRequests();
 
 async function startRequests() {
@@ -15,7 +17,7 @@ async function startRequests() {
   let appEvPublicKey = serverConfig.publicKey;
   let mongoAccess = new MongoAccess();
   let elections = await mongoAccess.getElections();
-  let voteUtils = new VoteUtils(elections,appEvPublicKey);
+  let voteUtils = new VoteUtils(elections, appEvPublicKey);
   let metrics = new MetricsUtils();
 
   let apiHost = "localhost";
@@ -28,7 +30,7 @@ async function startRequests() {
   let isFinished = false;
 
   let batchSize = 100000;
-  let batchCount = 1;
+  let batchCount = 10;
 
   metrics.totalAttempts = 0;
 
@@ -43,7 +45,7 @@ async function startRequests() {
     }
     for (let i = 0; i < voters.length; i++) {
       let electionVoter = voters[i];
-      let body = voteUtils.setupAxiosVote(electionVoter);
+      let body = voteUtils.setupVote(electionVoter);
       let startTimestamp = new Date();
       axios
         .post(url + endpoint, body, {
@@ -71,7 +73,7 @@ async function startRequests() {
           metrics.totalAttempts++;
         });
       metrics.calculate();
-      writeChangingLine(metrics);
+      writeChangingLine(JSON.stringify(metrics));
       // if (i == batchCount - 1 || i == voters.length - 1) {
       //   metrics.calculate();
       //   console.log(metrics);
@@ -81,6 +83,7 @@ async function startRequests() {
 }
 
 function writeChangingLine(name) {
+  clearLastLine();
   clearLastLine();
   process.stdout.write("\n" + name + "\r");
 }

@@ -1,6 +1,6 @@
 const fs = require("fs");
+const EncryptionUtils = require("./EncryptionUtils");
 class VoteUtils {
-  
   constructor(elections, appEvPublicKey) {
     this.elections = elections;
     this.previousVoterElection = [];
@@ -8,14 +8,12 @@ class VoteUtils {
   }
 
   setupVote(voter) {
-
     let electionId = voter.electionId;
     let circuitId = voter.circuitId;
 
     let election = this.getElection(electionId);
     let candidate = this.getRandomCandidate(election);
     let candidateCI = candidate.ci;
-
 
     let startDate = this.formatDate(election.startDate);
     let endDate = this.formatDate(election.endDate);
@@ -25,16 +23,28 @@ class VoteUtils {
     let randomDate = this.getRandomDate(startDate, endDate);
 
     let startTimestamp = randomDate.toISOString();
+
     let unencryptedVote = {
-      voterCI: voter.ci,
       electionId,
       circuitId,
       candidateCI,
       startTimestamp,
     };
 
+    let signature = this.sign(unencryptedVote, voter);
+
+    let toEncrypt = {
+      vote: unencryptedVote,
+      signature: signature,
+    };
+    let encrypted = this.encryptVote(toEncrypt);
+    let result = {
+      voterCI: voter.ci,
+      data: encrypted,
+    };
+
     this.checkIfAlreadyVoted(voter, electionId);
-    return unencryptedVote;
+    return result;
   }
 
   setupAxiosVote(voter) {
@@ -45,7 +55,6 @@ class VoteUtils {
     let candidate = this.getRandomCandidate(election);
     let candidateCI = candidate.ci;
 
-
     let startDate = this.formatDate(election.startDate);
     let endDate = this.formatDate(election.endDate);
 
@@ -65,6 +74,17 @@ class VoteUtils {
 
     this.checkIfAlreadyVoted(voter, electionId);
     return unencryptedVote;
+  }
+
+  sign(unencryptedVote, voter) {
+    return EncryptionUtils.signVote(JSON.stringify(unencryptedVote), voter.privateKey);
+  }
+
+  encryptVote(vote) {
+    return EncryptionUtils.encryptVote(
+      JSON.stringify(vote),
+      this.appEvPublicKey
+    );
   }
 
   getElection(electionId) {
@@ -87,7 +107,11 @@ class VoteUtils {
     let currentVoterElection = { voterCI: voter.ci, electionId: electionId };
     let alreadyVoted = false;
 
-    for (let i = 0; i < this.previousVoterElection.length && !alreadyVoted; ++i) {
+    for (
+      let i = 0;
+      i < this.previousVoterElection.length && !alreadyVoted;
+      ++i
+    ) {
       let previousCI = this.previousVoterElection[i].voterCI;
       let previousElection = this.previousVoterElection[i].electionId;
 

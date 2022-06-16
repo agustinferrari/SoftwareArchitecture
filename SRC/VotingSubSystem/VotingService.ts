@@ -21,22 +21,14 @@ export class VotingService {
     this.validatorManager = new ValidatorManager(voteQuery);
   }
 
-  async handleVote(voteIntentEncrypted: VoteIntent): Promise<void> {
+  async handleVote(voteIntentEncrypted: VoteIntentEncrypted): Promise<void> {
     let startTimestamp = new Date();
 
 
     
     let voter : Voter = await this.voteQuery.getVoter(voteIntentEncrypted.voterCI);
     
-    //TODO: Replace with decrypted
-    // let voteIntent: VoteIntent = voteIntentEncrypted;
-    
-    let vote = new Vote();
-    vote.startTimestamp = voteIntentEncrypted.startTimestamp;
-    vote.candidateCI = voteIntentEncrypted.candidateCI;
-    vote.voterCI = voteIntentEncrypted.voterCI;
-    vote.electionId = voteIntentEncrypted.electionId;
-    vote.circuitId = voteIntentEncrypted.circuitId;
+    let vote = await VoteEncryption.decryptVote(voteIntentEncrypted, voter);
     
     await this.validatorManager.createPipeline(vote, "vote");
     await this.validatorManager.validate();
@@ -45,8 +37,6 @@ export class VotingService {
     vote.endTimestamp = endTimestamp;
     this.afterValidation(vote, voter, startTimestamp);
     return;
-    // send to bull
-    // response
   }
 
   private async afterValidation(vote: Vote, voter: Voter, startTimestamp :Date){
