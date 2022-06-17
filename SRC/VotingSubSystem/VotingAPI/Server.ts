@@ -6,6 +6,7 @@ import config from "config";
 import { TimeoutError } from "./Error/TimeOutError";
 import { checkJWTAndRole } from "./Middlewares/checkJWTAndRole";
 import {LoggerFacade} from "../Logger/LoggerFacade"
+import { RequestStatus } from "./Models/RequestStatus";
 class Server {
   public app: Application;
   private service: VotingService;
@@ -34,12 +35,14 @@ class Server {
     this.app.post("/votes", checkJWTAndRole(["Voter"]), async (req: Request, res: Response) => {
       try {
         let converted = req.body;
+        let requestStatus = new RequestStatus(converted.ci, new Date());
 
         let voteIntent: VoteIntentEncrypted = converted as VoteIntentEncrypted;
-        await this.service.handleVote(voteIntent);
+        await this.service.handleVote(voteIntent, requestStatus);
         res.status(200).send("Voto procesado");
       } catch (e: any) {
         if (e instanceof TimeoutError) {
+          this
           res.status(500).send(e.message);
         } else {
           res.status(400).send(e.message);

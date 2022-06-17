@@ -1,20 +1,13 @@
 {
   "API": {
-    "route": "http://192.168.0.106:3000",
+    "route": "http://localhost:3000",
     "key": "",
     "fetchDate": { "date": "27", "hour": "17", "minute": "38" },
     "electionsVoterPageLimit": 1,
     "votersPageLimit": 100000
   },
-  "SQL_DB": {
-    "name": "appEvDB",
-    "user": "root",
-    "password": "secret",
-    "host": "192.168.0.106",
-    "port": "3306"
-  },
   "REDIS": {
-    "host": "192.168.0.106",
+    "host": "127.0.0.1",
     "port": "6379",
     "statusKey": "status"
   }

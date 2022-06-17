@@ -7,7 +7,16 @@ import { QuerySQL } from "./QuerySQL";
 import { QueueTypeHandler } from "./QueueTypeHandler";
 import { CommandSQL } from "./CommandSQL";
 
-let context: SequelizeContext = new SequelizeContext();
+
+let pm2id : string | undefined = process.env.pm_id;
+let MySQLPort;
+if(pm2id) {
+  let id = parseInt(pm2id)
+  let ports : string[] = config.get("SQL_DB.ports");
+  let MySQLPort = ports[id%ports.length];
+  console.log("MySQLPort:", MySQLPort);
+}
+let context: SequelizeContext = new SequelizeContext(MySQLPort);
 
 const query = new QuerySQL(context.connection);
 const command = new CommandSQL();
@@ -40,7 +49,6 @@ async function consumer() {
     done(null, response);
   });
 }
-let pm2id = process.env.pm_id;
 
 (async () => {
   await context.addModels();

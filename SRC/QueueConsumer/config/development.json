@@ -5,9 +5,11 @@
   "SQL_DB": {
     "name": "appEvDB",
     "user": "root",
-    "password": "secret",
+    "password": "111",
     "host": "localhost",
-    "port": "3306"
+    "port": "4406",
+    "masterPort":"4406",
+    "ports": ["5506","5507","5508"]
   },
   "REDIS": {
     "host": "127.0.0.1",

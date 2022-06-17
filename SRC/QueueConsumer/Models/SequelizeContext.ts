@@ -6,12 +6,14 @@ import { ElectionSQL, ElectionCandidateSQL, ElectionCircuitSQL, ElectionCircuitV
 export class SequelizeContext {
   connection: Sequelize;
 
-  public constructor() {
+  public constructor(port? : string) {
     const dbHost = config.get("SQL_DB.host");
-    const dbPort = config.get("SQL_DB.port");
+    let dbPort = port ? port : config.get("SQL_DB.port");
     const dbUser = config.get("SQL_DB.user");
     const dbPassword = config.get("SQL_DB.password");
     const dbName = config.get("SQL_DB.name");
+    
+
 
     this.connection = new Sequelize(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`, {
       logging: false,
@@ -30,6 +32,7 @@ export class SequelizeContext {
   }
 
   public async syncAllModels() {
+    await this.connection.query(`set global max_connections = 5000;`);
     await ElectionSQL.sync({ alter: true });
     await PartySQL.sync({ alter: true });
     await CandidateSQL.sync({ alter: true });

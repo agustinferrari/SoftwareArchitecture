@@ -7,6 +7,7 @@ import { Query } from "../DataAccess/Query/Query";
 import { ValidatorManager } from "../Validators/ValidatorManager";
 import { INotificationSender } from "../../Common/NotificationSender";
 import { TimeoutError } from "./Error/TimeOutError";
+import { RequestStatus } from "./Models/RequestStatus";
 
 export class VotingService {
   //voteEncryption: VoteEncryption;
@@ -22,8 +23,8 @@ export class VotingService {
     this.validatorManager = new ValidatorManager(voteQuery);
   }
 
-  async handleVote(voteIntentEncrypted: VoteIntentEncrypted): Promise<void> {
-    let startTimestamp = new Date();
+  async handleVote(voteIntentEncrypted: VoteIntentEncrypted, requestStatus : RequestStatus): Promise<void> {
+    let startTimestamp = requestStatus.startTimeStamp;
     let voter : Voter = await this.voteQuery.getVoter(voteIntentEncrypted.voterCI);
     
     let vote = await VoteEncryption.decryptVote(voteIntentEncrypted, voter);
