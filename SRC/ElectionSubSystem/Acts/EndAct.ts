@@ -4,8 +4,6 @@ import { ElectionQueryQueue } from "../DataAccess/Query/ElectionQueryQueue";
 
 export class EndAct extends AbstractAct {
   async getActInformation(election: Election, voterCount: number): Promise<string> {
-    //TODO: FALTA CANTIDAD DE VOTOS Y GANADOR
-
     let query = new ElectionQueryQueue();
     let electionResult: ElectionResult;
 

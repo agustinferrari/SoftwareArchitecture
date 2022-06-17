@@ -1,7 +1,6 @@
 import { ElectionNotFound } from "../../QueryAPI/Errors/ElectionNotFound";
 import { QueryMongo } from "./QueryMongo";
 import { QueryCache } from "../../../Common/Redis/QueryCache";
-import { IUser } from "../../QueryAPI/Models/User";
 import { QueryQueue } from "./QueryQueue";
 import { ElectionVotesDTO } from "../../QueryAPI/Models/ElectionVotesDTO";
 import { NotificationSettingsDTO } from "../../QueryAPI/Models/NotificationSettingsDTO";
@@ -28,9 +27,6 @@ export class Query {
     return Query._instance;
   }
 
-  public async findByEmailOrFail(email: string): Promise<IUser> {
-    return await QueryMongo.findByEmailOrFail(email);
-  }
 
   public async getVotes(electionId: number, voterCI: string): Promise<ElectionVotesDTO> {
     let electionExists: boolean = await this.queryCache.existsElection(electionId);

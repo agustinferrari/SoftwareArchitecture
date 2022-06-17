@@ -7,7 +7,7 @@ import {UserDTO } from "../../VotingAPI/Models/User";
 
 const clientService: ClientService = new ClientService();
 
-console.log("gRPC:GreeterClient", new Date().toLocaleString());
+console.log("gRPC:TokenClient", new Date().toLocaleString());
 
 export async function validateToken(token: string): Promise<UserDTO> {
   const param: TokenRequest = new TokenRequest();

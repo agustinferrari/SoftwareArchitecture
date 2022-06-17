@@ -21,8 +21,7 @@ export class VoteController {
     try {
       let result = await query.getVotes(electionId, voterCI);
       if (result.voteDates == []) {
-        //TODO ver si 200 esta bien
-        res.status(200).send("The voter has not voted yet");
+        res.status(404).send("The voter has not voted yet");
       } else {
         res.status(200).send(result);
       }

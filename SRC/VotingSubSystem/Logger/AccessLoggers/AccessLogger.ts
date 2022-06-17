@@ -1,5 +1,5 @@
 import { Logger } from "winston";
-import {UserDTO} from "../../QueryAPI/Models/User";
+import {UserDTO} from "../../VotingAPI/Models/User";
 
 export abstract class AccessLogger{
 
