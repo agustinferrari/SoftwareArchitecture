@@ -40,9 +40,12 @@ async function consumer() {
     done(null, response);
   });
 }
+let pm2id = process.env.pm_id;
 
 (async () => {
   await context.addModels();
-  await context.syncAllModels();
+  if (!pm2id) {
+    await context.syncAllModels();
+  }
   consumer();
 })();

@@ -21,7 +21,7 @@ export class VoteCommandQueue {
   public async addVote(vote: Vote, mode: ElectionMode): Promise<void> {
     let queueJob = new QueueJob();
     queueJob.input = { vote, mode };
-    queueJob.priority = QueueJobPriority.AddVote;
+    this.jobOptions.priority = QueueJobPriority.AddVote;
     queueJob.type = QueueJobType.AddVote;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();

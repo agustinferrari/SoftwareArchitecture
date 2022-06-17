@@ -21,8 +21,10 @@ export class QueryQueue {
   public async getVoter(ci: string): Promise<Voter> {
     let queueJob = new QueueJob();
     queueJob.input = { ci: ci };
-    queueJob.priority = QueueJobPriority.GetVoter;
     queueJob.type = QueueJobType.GetVoter;
+    
+    this.jobOptions.priority = QueueJobPriority.GetVoter;
+
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
@@ -40,7 +42,7 @@ export class QueryQueue {
   ): Promise<boolean> {
     let queueJob = new QueueJob();
     queueJob.input = { voterCI: voterCI, electionId: electionId, circuitId: circuitId };
-    queueJob.priority = QueueJobPriority.ValidateVoterElectionCircuit;
+    this.jobOptions.priority = QueueJobPriority.ValidateVoterElectionCircuit;
     queueJob.type = QueueJobType.ValidateVoterElectionCircuit;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
@@ -56,7 +58,7 @@ export class QueryQueue {
   public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
     let queueJob = new QueueJob();
     queueJob.input = { voterCI: voterCI, electionId: electionId };
-    queueJob.priority = QueueJobPriority.ValidateOneVote;
+    this.jobOptions.priority = QueueJobPriority.ValidateOneVote;
     queueJob.type = QueueJobType.ValidateOneVote;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
@@ -74,7 +76,7 @@ export class QueryQueue {
       electionId: electionId,
       maxVotesPerVoter: maxRepeatedVotes,
     };
-    queueJob.priority = QueueJobPriority.ValidateRepeatedVote;
+    this.jobOptions.priority = QueueJobPriority.ValidateRepeatedVote;
     queueJob.type = QueueJobType.ValidateRepeatedVote;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();

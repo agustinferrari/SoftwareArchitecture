@@ -20,7 +20,7 @@ export class ElectionCommandQueue {
   public async addElection(election: Election): Promise<void> {
     let queueJob = new QueueJob();
     queueJob.input = election;
-    queueJob.priority = QueueJobPriority.AddElection;
+    this.jobOptions.priority = QueueJobPriority.AddElection;
     queueJob.type = QueueJobType.AddElection;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();
@@ -31,7 +31,7 @@ export class ElectionCommandQueue {
     let queueJob = new QueueJob();
     let lengthReceived = voters.length;
     queueJob.input = { voters, electionId };
-    queueJob.priority = QueueJobPriority.AddVoters;
+    this.jobOptions.priority = QueueJobPriority.AddVoters;
     queueJob.type = QueueJobType.AddVoters;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     voters.length = 0;

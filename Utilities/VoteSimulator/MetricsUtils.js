@@ -33,7 +33,8 @@ class MetricsUtils {
   }
 
   incrementCode(code) {
-    let codeMod = code[0] + "XX";
+    let stringCode = code+"";
+    let codeMod = stringCode.charAt(0)  + "XX";
     if (this.resCodes[codeMod]) {
       this.resCodes[codeMod]++;
     } else {

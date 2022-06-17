@@ -6,6 +6,7 @@ import { VoteCommand } from "./DataAccess/Command/VoteCommand";
 import { Query } from "./DataAccess/Query/Query";
 import { ValidatorManager } from "./Validators/ValidatorManager";
 import { INotificationSender } from "../Common/NotificationSender";
+import { TimeoutError } from "./Error/TimeOutError";
 
 export class VotingService {
   //voteEncryption: VoteEncryption;
@@ -23,9 +24,6 @@ export class VotingService {
 
   async handleVote(voteIntentEncrypted: VoteIntentEncrypted): Promise<void> {
     let startTimestamp = new Date();
-
-
-    
     let voter : Voter = await this.voteQuery.getVoter(voteIntentEncrypted.voterCI);
     
     let vote = await VoteEncryption.decryptVote(voteIntentEncrypted, voter);
@@ -35,6 +33,13 @@ export class VotingService {
 
     let endTimestamp = new Date();
     vote.endTimestamp = endTimestamp;
+
+    let responseTime = endTimestamp.valueOf() - vote.startTimestamp.valueOf();
+    
+    if (responseTime > 2000) {
+      throw new TimeoutError();
+    }
+
     this.afterValidation(vote, voter, startTimestamp);
     return;
   }
