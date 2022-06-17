@@ -1,21 +1,21 @@
 {
   "API": {
-    "route": "http://localhost:3000",
+    "route": "http://192.168.0.106:3000",
     "key": ""
   },
   "EmailSender": {
-    "route": "http://localhost:3000",
+    "route": "http://192.168.0.106:3000",
     "endpoint": "/emails"
   },
   "MessageSender": {
-    "route": "http://localhost:3000",
+    "route": "http://192.168.0.106:3000",
     "endpoint": "/messages"
   },
   "SQL_DB": {
     "name": "appEvDB",
     "user": "root",
     "password": "secret",
-    "host": "localhost",
+    "host": "192.168.0.106",
     "port": "3306"
   }
 }

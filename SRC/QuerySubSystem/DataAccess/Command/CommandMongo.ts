@@ -69,7 +69,7 @@ export class CommandMongo {
     settings: INotificationSettings
   ): Promise<INotificationSettings> {
     await mongoose.connect(
-      `mongodb://localhost:${config.get("MONGO.port")}/${config.get("MONGO.dbName")}`
+      `mongodb://192.168.0.106:${config.get("MONGO.port")}/${config.get("MONGO.dbName")}`
     );
 
     const NotificationSettings = model<INotificationSettings>(

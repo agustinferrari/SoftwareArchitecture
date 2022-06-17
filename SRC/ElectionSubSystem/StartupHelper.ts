@@ -64,7 +64,7 @@ export class StartupHelper {
     let command: ElectionCommand = new ElectionCommand(electionQueueManager, cacheCommand);
     this.command = command;
 
-    let query: ElectionQuery = new ElectionQuery(cacheQuery, queryQueue);
+    let query: ElectionQuery = new ElectionQuery();
     this.query = query;
   }
 }
