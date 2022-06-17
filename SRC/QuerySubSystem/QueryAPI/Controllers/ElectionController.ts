@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { getUserInSession } from "../Helpers/jwtHelper";
 import { UserDTO } from "../Models/User";
 import { Query } from "../../DataAccess/Query/Query";
 import { LoggerFacade } from "../../Logger/LoggerFacade";
@@ -13,7 +12,7 @@ export class ElectionController {
 
     let query = Query.getQuery();
 
-    const user: UserDTO = getUserInSession(req);
+    const user: UserDTO = res.locals.userDTO;
 
     if (await query.existsElection(parseInt(req.params.id))) {
       let settings = await query.getElectionConfig(parseInt(req.params.id));
@@ -41,7 +40,7 @@ export class ElectionController {
     let id = parseInt(req.params.id);
     if (!id) {
       try {
-        const user: UserDTO = getUserInSession(req);
+        const user: UserDTO = res.locals.userDTO;
         logger.logBadRequest("electionId not provided", req.originalUrl, user);
       } catch (err) {
         logger.logBadRequest("electionId not provided", req.originalUrl);
