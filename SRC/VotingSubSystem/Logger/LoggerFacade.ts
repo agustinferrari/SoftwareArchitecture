@@ -2,7 +2,7 @@ import { AuthorizedAccessLogger } from "./AccessLoggers/AuthorizedAccessLogger";
 import { UnauthorizedAccessLogger } from "./AccessLoggers/UnauthorizedAccessLogger";
 import { SuccessfulRequestLogger } from "./RequestLoggers/SuccessfulRequestLogger";
 import { BadRequestLogger } from "./RequestLoggers/BadRequestLogger";
-import { UserDTO } from "../QueryAPI/Models/User";
+import { UserDTO } from "../VotingAPI/Models/User";
 
 export class LoggerFacade {
   _authorizedAccessLogger: AuthorizedAccessLogger;

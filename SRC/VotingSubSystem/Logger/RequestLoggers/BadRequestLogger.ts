@@ -1,6 +1,6 @@
 import { createLogger, format, transports, Logger } from "winston";
 const { combine, timestamp, label, prettyPrint } = format;
-import { UserDTO } from "../../QueryAPI/Models/User";
+import { UserDTO } from "../../VotingAPI/Models/User";
 import config from "config";
 
 export class BadRequestLogger {

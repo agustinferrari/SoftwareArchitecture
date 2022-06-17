@@ -1,5 +1,5 @@
 import { createLogger, format, transports, Logger } from "winston"; 
-import {UserDTO} from "../../QueryAPI/Models/User";
+import {UserDTO} from "../../VotingAPI/Models/User";
 import config from "config";
 
 const { combine, timestamp, label, prettyPrint } = format;

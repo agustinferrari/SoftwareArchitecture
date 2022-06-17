@@ -31,7 +31,9 @@ class Server {
   private routes(): void {
     this.app.post("/votes", checkJWTAndRole(["Voter"]), async (req: Request, res: Response) => {
       try {
+        console.log("entra");
         let converted = req.body;
+
         let voteIntent: VoteIntentEncrypted = converted as VoteIntentEncrypted;
         await this.service.handleVote(voteIntent);
         res.status(200).send("Voto procesado");
