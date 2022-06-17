@@ -2,7 +2,7 @@ import { Vote } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
 
-export class NumberFilter implements IFilter {
+export class NumberFilter extends IFilter {
   candidateCI: any;
   voteQuery: Query;
   key: any;
@@ -10,6 +10,7 @@ export class NumberFilter implements IFilter {
   maxAttempts: number;
 
   constructor(parameters: any, vote: Vote, voteQuery: Query) {
+    super();
     this.key = parameters["key"];
     this.error = parameters["errorMessage"];
     this.maxAttempts = parameters["maxAttempts"];
@@ -22,7 +23,7 @@ export class NumberFilter implements IFilter {
     this.candidateCI = getKeyValue<keyof Vote, Vote>(this.key)(vote);
   }
 
-  validate() {
+  async validate() {
     const regEx = /^[1-9][0-9]*$/;
     if (!regEx.test(this.candidateCI)) {
       throw new Error(this.error);

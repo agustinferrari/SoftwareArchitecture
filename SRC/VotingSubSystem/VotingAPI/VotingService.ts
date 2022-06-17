@@ -8,6 +8,7 @@ import { ValidatorManager } from "../Validators/ValidatorManager";
 import { INotificationSender } from "../../Common/NotificationSender";
 import { TimeoutError } from "./Error/TimeOutError";
 import { RequestStatus } from "./Models/RequestStatus";
+import { RequestCountHelper } from "../RequestCountHelper";
 
 export class VotingService {
   //voteEncryption: VoteEncryption;
@@ -24,11 +25,18 @@ export class VotingService {
   }
 
   async handleVote(voteIntentEncrypted: VoteIntentEncrypted, requestStatus : RequestStatus): Promise<void> {
+    let reqCountHelper = RequestCountHelper.getInstance();
+
+
     let startTimestamp = requestStatus.startTimeStamp;
+    reqCountHelper.beforeGetVoter++;
+    
     let voter : Voter = await this.voteQuery.getVoter(voteIntentEncrypted.voterCI);
     
+    reqCountHelper.beforeEncryptionCount++;
     let vote = await VoteEncryption.decryptVote(voteIntentEncrypted, voter);
     
+    reqCountHelper.beforeValidationCount++;
     await this.validatorManager.createPipeline(vote, "vote");
     await this.validatorManager.validate();
 
@@ -36,11 +44,10 @@ export class VotingService {
     vote.endTimestamp = endTimestamp;
 
     let responseTime = endTimestamp.valueOf() - vote.startTimestamp.valueOf();
-    
-    if (responseTime > 2000) {
-      throw new TimeoutError();
-    }
-
+    // if (responseTime > 2000) {
+    //   throw new TimeoutError();
+    // }
+    reqCountHelper.afterValidationCount++;
     this.afterValidation(vote, voter, startTimestamp);
     return;
   }
@@ -48,7 +55,11 @@ export class VotingService {
   private async afterValidation(vote: Vote, voter: Voter, startTimestamp :Date){
     let election: ElectionInfo = await this.voteQuery.getElection(vote.electionId);
     vote.randomizeAndSetId();
-    this.addVote(vote, election, startTimestamp);
+    let reqCountHelper = RequestCountHelper.getInstance();
+
+    reqCountHelper.beforeAddVoteCount++;
+    await this.addVote(vote, election, startTimestamp);
+    reqCountHelper.afterAddVoteCount++;
     this.sendVoteProof(vote, voter, election);
   }
 
@@ -56,7 +67,7 @@ export class VotingService {
     let responseTime = vote.endTimestamp.valueOf() - startTimestamp.valueOf();
     vote.responseTime = responseTime;
 
-    this.voteCommand.addVote(vote, election.mode);
+    return this.voteCommand.addVote(vote, election.mode);
   }
 
   private sendVoteProof(vote: Vote, voter: Voter, election : ElectionInfo){

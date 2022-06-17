@@ -14,16 +14,25 @@ export class QueueTypeHandler {
 
   public async voterElectionCircuit(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
+    if(input.voterCI == undefined || input.electionId == undefined || input.circuitId == undefined) {
+     console.log("VoterElectionCircuit: ", input);
+    }
     return await this.query.voterElectionCircuit(input.voterCI, input.electionId, input.circuitId);
   }
 
   public async getVoter(input: any) {
     //TODO ver si validar que sea ci
+    if(input.ci == undefined) {
+     console.log("getVoter: ", input);
+    }
     return await this.query.getVoter(input.ci);
   }
 
   public async getElectionsInfo(input: any): Promise<ElectionInfo[]> {
     //TODO ver si validar que no esten vacios
+    if(input == undefined) {
+     console.log("ElectionsInfo: ", input);
+    }
     return await this.query.getElectionsInfo();
   }
 
@@ -41,17 +50,26 @@ export class QueueTypeHandler {
 
   public async addVote(input: any): Promise<string> {
     //TODO ver si validar que no esten vacios
+    if(input.vote == undefined || input.mode == undefined) {
+     console.log("AddVote: ", input);
+    }
     await this.command.addVote(input.vote, input.mode);
     return "Added sucessfully";
   }
 
   public async checkUniqueVote(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
+    if(input.voterCI == undefined) {
+     console.log("UniqueVote: ", input);
+    }
     return await this.query.checkUniqueVote(input.voterCI, input.electionId);
   }
 
   public async checkRepeatedVote(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
+    if(input.voterCI == undefined || input.electionId == undefined || input.maxVotesPerVoter == undefined) { 
+     console.log("RepeatedVote: ", input);
+    }
     return await this.query.checkRepeatedVote(
       input.voterCI,
       input.electionId,

@@ -14,7 +14,7 @@ if(pm2id) {
   let id = parseInt(pm2id)
   let ports : string[] = config.get("SQL_DB.ports");
   let MySQLPort = ports[id%ports.length];
-  console.log("MySQLPort:", MySQLPort);
+ console.log("MySQLPort:", MySQLPort);
 }
 let context: SequelizeContext = new SequelizeContext(MySQLPort);
 
@@ -30,7 +30,7 @@ const queue = new Queue<QueueQueryJob>(config.get("REDIS.queryQueue"), {
 
 async function consumer() {
   console.log("Consumer started");
-  queue.process(100, async function (job, done) {
+  queue.process(1000, async function (job, done) {
     let type = job.data.type;
     let input = job.data.input;
     console.log("Received job:", type);
@@ -52,8 +52,8 @@ async function consumer() {
 
 (async () => {
   await context.addModels();
-  await context.syncAllModels();
   if (!pm2id) {
+    await context.syncAllModels();
   }
   consumer();
 })();

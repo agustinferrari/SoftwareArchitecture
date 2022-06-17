@@ -87,8 +87,9 @@ export class CommandSQL {
   public async addVote(vote: Vote, mode: string): Promise<void> {
     await this.addVoteUnique(vote);
     if (mode === "repeated") {
-      this.addVoteRepeated(vote);
+      await this.addVoteRepeated(vote);
     }
+    return;
   }
 
   private async addVoteUnique(vote: Vote): Promise<void> {
@@ -101,8 +102,10 @@ export class CommandSQL {
   }
 
   private async addVoteRepeated(vote: Vote): Promise<void> {
+
+    let parameters = { electionId: vote.electionId, voterCI: vote.voterCI };
     let previousVote: ElectionCandidateVoterSQL | null = await ElectionCandidateVoterSQL.findOne({
-      where: { electionId: vote.electionId, voterCI: vote.voterCI },
+      where: parameters,
     });
     if (previousVote != null) {
       ElectionCandidateSQL.decrement(
@@ -111,7 +114,7 @@ export class CommandSQL {
       );
       ElectionCandidateVoterSQL.update(
         { candidateCI: vote.candidateCI },
-        { where: { id: previousVote.id } }
+        { where: { electionId: previousVote.electionId,  candidateCI: previousVote.candidateCI, voterCI: previousVote.voterCI} }
       );
     } else {
       ElectionCandidateVoterSQL.create({

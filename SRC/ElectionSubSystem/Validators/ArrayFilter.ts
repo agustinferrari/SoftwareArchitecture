@@ -1,13 +1,14 @@
 import { Election } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 
-class ArrayFilter implements IFilter {
+class ArrayFilter extends IFilter {
   array: any;
   key: any;
   error: string;
   maxAttempts: number;
 
   constructor(parameters: any, election: Election) {
+    super()
     this.key = parameters["key"];
     this.error = parameters["errorMessage"];
     this.maxAttempts = parameters["maxAttempts"];
@@ -20,7 +21,7 @@ class ArrayFilter implements IFilter {
     this.array = array;
   }
 
-  validate() {
+  async validate() {
     if (this.array.length == 0) {
       throw new Error(this.error);
     }

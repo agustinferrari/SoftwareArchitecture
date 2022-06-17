@@ -1,7 +1,7 @@
 import { Election } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 
-class DateFilter implements IFilter {
+class DateFilter extends IFilter {
   startDate: Date;
   endDate: Date;
   key1: any;
@@ -10,6 +10,7 @@ class DateFilter implements IFilter {
   maxAttempts: number;
 
   constructor(parameters: any, election: Election) {
+    super();
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.error = parameters["errorMessage"];
@@ -30,7 +31,7 @@ class DateFilter implements IFilter {
     this.endDate = new Date(endDate);
   }
 
-  validate() {
+  async validate() {
     if (this.startDate >= this.endDate) {
       throw new Error(
         this.error +

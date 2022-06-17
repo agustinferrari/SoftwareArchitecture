@@ -3,7 +3,7 @@ import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
 import { VoteIntent } from "../VotingAPI/Models/VoteIntent";
 
-export class UniqueVoteFilter implements IFilter {
+export class UniqueVoteFilter extends IFilter {
   voterCI: any;
   electionId: any;
   circuitId: any;
@@ -14,6 +14,7 @@ export class UniqueVoteFilter implements IFilter {
   voteQuery: Query;
 
   constructor(parameters: any, vote: Vote, voteQuery: Query) {
+    super();
     this.key1 = parameters["key1"];
     this.key2 = parameters["key2"];
     this.error = parameters["errorMessage"];
