@@ -3,7 +3,9 @@
   "REDIS": {
     "host": "localhost",
     "port": "6379",
-    "statusKey": "status"
+    "statusKey": "status",
+    "commandQueue":"commandQueue",
+    "queryQueue":"queryQueue"
   },
   "VOTING_API": {
     "port": 3008

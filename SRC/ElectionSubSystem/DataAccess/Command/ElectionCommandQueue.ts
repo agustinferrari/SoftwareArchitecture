@@ -1,6 +1,6 @@
 import { Election, Voter } from "../../../Common/Domain";
 import Queue from "bull";
-import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../../../Common/Queues";
+import { QueueQueryJob, QueueQueryPriority, QueueQueryType, QueueResponse, QueueCommandPriority, QueueCommandType, QueueCommandJob } from "../../../Common/Queues";
 import config from "config";
 
 export class ElectionCommandQueue {
@@ -8,7 +8,7 @@ export class ElectionCommandQueue {
   jobOptions: any;
 
   constructor() {
-    this.electionQueue = new Queue<QueueJob>("sqlqueue", {
+    this.electionQueue = new Queue<QueueQueryJob>(config.get("REDIS.commandQueue"), {
       redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
     });
     this.jobOptions = {
@@ -18,21 +18,21 @@ export class ElectionCommandQueue {
   }
 
   public async addElection(election: Election): Promise<void> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueCommandJob();
     queueJob.input = election;
-    this.jobOptions.priority = QueueJobPriority.AddElection;
-    queueJob.type = QueueJobType.AddElection;
+    this.jobOptions.priority = QueueCommandPriority.AddElection;
+    queueJob.type = QueueCommandType.AddElection;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();
     console.log("result:", result.result, " error:", result.error);
   }
 
   public async addVoters(voters: Voter[], electionId: number): Promise<number> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueCommandJob();
     let lengthReceived = voters.length;
     queueJob.input = { voters, electionId };
-    this.jobOptions.priority = QueueJobPriority.AddVoters;
-    queueJob.type = QueueJobType.AddVoters;
+    this.jobOptions.priority = QueueCommandPriority.AddVoters;
+    queueJob.type = QueueCommandType.AddVoters;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     voters.length = 0;
     voters = [];

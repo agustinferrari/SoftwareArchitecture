@@ -2,13 +2,13 @@ import {} from "../Common/Domain";
 import { SequelizeContext } from "./Models";
 import Queue from "bull";
 import config from "config";
-import { QueueJob, QueueResponse } from "../Common/Queues";
+import { QueueQueryJob, QueueResponse } from "../Common/Queues";
 import { QuerySQL } from "./QuerySQL";
 import { QueueTypeHandler } from "./QueueTypeHandler";
 import { CommandSQL } from "./CommandSQL";
 
 
-let pm2id : string | undefined = process.env.pm_id;
+let pm2id : string | undefined = process.env.pm_id ? process.env.pm_id : "0";
 let MySQLPort;
 if(pm2id) {
   let id = parseInt(pm2id)
@@ -24,7 +24,7 @@ const queueTypeHandler = new QueueTypeHandler(query, command);
 
 //Consumidor
 
-const queue = new Queue<QueueJob>("sqlqueue", {
+const queue = new Queue<QueueQueryJob>(config.get("REDIS.queryQueue"), {
   redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
 });
 
@@ -52,8 +52,8 @@ async function consumer() {
 
 (async () => {
   await context.addModels();
+  await context.syncAllModels();
   if (!pm2id) {
-    await context.syncAllModels();
   }
   consumer();
 })();

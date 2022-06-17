@@ -1,10 +1,7 @@
-export enum QueueJobPriority {
-  AddVoters = 10,
+export enum QueueQueryPriority {
   GetVote = 10,
-  AddElection = 9,
   ValidateElectionVotesDate = 9,
   ValidateElectionVotesCount = 8,
-  AddVote = 8,
   GetElectionsInfo = 7,
   GetTotalVotes = 7,
   ValidateOneVote = 6,
@@ -18,4 +15,10 @@ export enum QueueJobPriority {
   GetPartiesResult = 5,
   GetCandidatesResult = 5,
   GetElectionInfo = 1,
+}
+
+export enum QueueCommandPriority {
+  AddVoters = 10,
+  AddElection = 9,
+  AddVote = 8,
 }

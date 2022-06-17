@@ -9,6 +9,8 @@
   "REDIS": {
     "host": "127.0.0.1",
     "port": "6379",
-    "statusKey": "status"
+    "statusKey": "status",
+    "commandQueue":"commandQueue",
+    "queryQueue":"queryQueue"
   }
 }

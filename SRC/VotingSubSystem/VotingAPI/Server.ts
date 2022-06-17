@@ -32,7 +32,7 @@ class Server {
   }
 
   private routes(): void {
-    this.app.post("/votes", checkJWTAndRole(["Voter"]), async (req: Request, res: Response) => {
+    this.app.post("/votes", /*checkJWTAndRole(["Voter"]),*/ async (req: Request, res: Response) => {
       try {
         let converted = req.body;
         let requestStatus = new RequestStatus(converted.ci, new Date());

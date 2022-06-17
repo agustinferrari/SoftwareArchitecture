@@ -1,7 +1,7 @@
 import { Vote, Voter } from "../../../Common/Domain";
 
 import Queue from "bull";
-import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../../../Common/Queues";
+import { QueueQueryJob, QueueQueryPriority, QueueQueryType, QueueResponse } from "../../../Common/Queues";
 import config from "config";
 
 export class QueryQueue {
@@ -9,7 +9,7 @@ export class QueryQueue {
   jobOptions: any;
 
   constructor() {
-    this.electionQueue = new Queue<QueueJob>("sqlqueue", {
+    this.electionQueue = new Queue<QueueQueryJob>(config.get("REDIS.queryQueue"), {
       redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
     });
     this.jobOptions = {
@@ -19,10 +19,10 @@ export class QueryQueue {
   }
 
   public async getVoter(ci: string): Promise<Voter> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { ci: ci };
-    this.jobOptions.priority = QueueJobPriority.GetVoter;
-    queueJob.type = QueueJobType.GetVoter;
+    this.jobOptions.priority = QueueQueryPriority.GetVoter;
+    queueJob.type = QueueQueryType.GetVoter;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
@@ -34,10 +34,10 @@ export class QueryQueue {
   }
 
   public async getVotes(electionId: number, voterCI: string): Promise<string[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId, voterCI: voterCI };
-    this.jobOptions.priority = QueueJobPriority.GetVoteDates;
-    queueJob.type = QueueJobType.GetVoteDates;
+    this.jobOptions.priority = QueueQueryPriority.GetVoteDates;
+    queueJob.type = QueueQueryType.GetVoteDates;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
@@ -47,10 +47,10 @@ export class QueryQueue {
   }
 
   public async getVote(voteId: string, voterCI: string): Promise<Vote> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { voteId: voteId, voterCI: voterCI };
-    this.jobOptions.priority = QueueJobPriority.GetVote;
-    queueJob.type = QueueJobType.GetVote;
+    this.jobOptions.priority = QueueQueryPriority.GetVote;
+    queueJob.type = QueueQueryType.GetVote;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
@@ -61,10 +61,10 @@ export class QueryQueue {
   }
 
   public async getVoteFrequency(electionId: any): Promise<string[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.GetVoteFrequency;
-    queueJob.type = QueueJobType.GetVoteFrequency;
+    this.jobOptions.priority = QueueQueryPriority.GetVoteFrequency;
+    queueJob.type = QueueQueryType.GetVoteFrequency;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
@@ -79,15 +79,15 @@ export class QueryQueue {
     maxAge: number,
     gender: string
   ): Promise<any[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = {
       electionId: electionId,
       minAge: minAge,
       maxAge: maxAge,
       gender: gender,
     };
-    this.jobOptions.priority = QueueJobPriority.GetElectionInfoCountPerCircuit;
-    queueJob.type = QueueJobType.GetElectionInfoCountPerCircuit;
+    this.jobOptions.priority = QueueQueryPriority.GetElectionInfoCountPerCircuit;
+    queueJob.type = QueueQueryType.GetElectionInfoCountPerCircuit;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     return response.result;
@@ -99,25 +99,25 @@ export class QueryQueue {
     maxAge: number,
     gender: string
   ): Promise<any[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = {
       electionId: electionId,
       minAge: minAge,
       maxAge: maxAge,
       gender: gender,
     };
-    this.jobOptions.priority = QueueJobPriority.GetElectionInfoCountPerState;
-    queueJob.type = QueueJobType.GetElectionInfoCountPerState;
+    this.jobOptions.priority = QueueQueryPriority.GetElectionInfoCountPerState;
+    queueJob.type = QueueQueryType.GetElectionInfoCountPerState;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     return response.result;
   }
 
   public async getElectionInfo(electionId: number): Promise<any[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.GetElectionInfo;
-    queueJob.type = QueueJobType.GetElectionInfo;
+    this.jobOptions.priority = QueueQueryPriority.GetElectionInfo;
+    queueJob.type = QueueQueryType.GetElectionInfo;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
