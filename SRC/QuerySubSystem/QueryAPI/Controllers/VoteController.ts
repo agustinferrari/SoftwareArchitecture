@@ -5,8 +5,6 @@ import { LoggerFacade } from "../../Logger/LoggerFacade";
 import { ElectionInfo, VoteProof, Voter } from "../../../Common/Domain";
 import { NotificationHelper } from "../Helpers/NotificationHelper";
 import { INotificationSender } from "../../../Common/NotificationSender";
-import { QueryMongo } from "../../DataAccess/Query/QueryMongo";
-import { CommandMongo } from "../../DataAccess/Command/CommandMongo";
 import { Command } from "../../DataAccess/Command/Command";
 
 export class VoteController {

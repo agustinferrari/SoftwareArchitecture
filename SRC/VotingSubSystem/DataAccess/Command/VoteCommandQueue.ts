@@ -2,7 +2,7 @@ import { Election, Vote, Voter, ElectionMode } from "../../../Common/Domain";
 import Queue from "bull";
 import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../../../Common/Queues";
 import config from "config";
-import { VoteIntent } from "../../Models/VoteIntent";
+import { VoteIntent } from "../../VotingAPI/Models/VoteIntent";
 
 export class VoteCommandQueue {
   electionQueue: any;
