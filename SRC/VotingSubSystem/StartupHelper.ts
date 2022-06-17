@@ -1,12 +1,12 @@
 import { Query } from "./DataAccess/Query/Query";
 import { QueryQueue } from "./DataAccess/Query/QueryQueue";
 import { VoteEncryption } from "./VoteEncryption";
-import { VotingService } from "./VotingService";
+import { VotingService } from "./VotingAPI/VotingService";
 import { VoteCommandQueue } from "./DataAccess/Command/VoteCommandQueue";
 import { VoteCommand } from "./DataAccess/Command/VoteCommand";
 import { QueryCache } from "../Common/Redis/QueryCache";
 import Server from "./VotingAPI/Server";
-import { VoteIntent } from "./Models/VoteIntent";
+import { VoteIntent } from "./VotingAPI/Models/VoteIntent";
 
 import {SMSNotificationSender, INotificationSender} from "../Common/NotificationSender";
 

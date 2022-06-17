@@ -1,11 +1,11 @@
-import { Application, Request, Response, NextFunction } from "express";
-import { VoteIntentEncrypted } from "../Models/VoteIntentEncrypted";
-import { VotingService } from "../VotingService";
+import { Application, Request, Response } from "express";
+import { VoteIntentEncrypted } from "./Models/VoteIntentEncrypted";
+import { VotingService } from "./VotingService";
 const express = require("express");
 import config from "config";
-import { VoteEncryption } from "../VoteEncryption";
-import { VoteIntent } from "../Models/VoteIntent";
-import { TimeoutError } from "../Error/TimeOutError";
+import { TimeoutError } from "./Error/TimeOutError";
+import { checkJWTAndRole } from "./Middlewares/checkJWTAndRole";
+
 class Server {
   public app: Application;
   private service: VotingService;
@@ -29,16 +29,18 @@ class Server {
   }
 
   private routes(): void {
-    this.app.post("/votes", async (req: Request, res: Response) => {
+    this.app.post("/votes", checkJWTAndRole(["Voter"]), async (req: Request, res: Response) => {
       try {
+        console.log("entra");
         let converted = req.body;
+
         let voteIntent: VoteIntentEncrypted = converted as VoteIntentEncrypted;
         await this.service.handleVote(voteIntent);
         res.status(200).send("Voto procesado");
       } catch (e: any) {
-        if(e instanceof TimeoutError) {
+        if (e instanceof TimeoutError) {
           res.status(500).send(e.message);
-        }else{
+        } else {
           res.status(400).send(e.message);
         }
       }

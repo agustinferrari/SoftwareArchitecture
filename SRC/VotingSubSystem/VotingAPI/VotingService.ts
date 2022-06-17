@@ -1,11 +1,11 @@
 import { VoteIntentEncrypted } from "./Models/VoteIntentEncrypted";
 import { VoteIntent } from "./Models/VoteIntent";
-import { VoteEncryption } from "./VoteEncryption";
-import { Vote, ElectionInfo, Voter, VoteProof } from "../Common/Domain";
-import { VoteCommand } from "./DataAccess/Command/VoteCommand";
-import { Query } from "./DataAccess/Query/Query";
-import { ValidatorManager } from "./Validators/ValidatorManager";
-import { INotificationSender } from "../Common/NotificationSender";
+import { VoteEncryption } from "../VoteEncryption";
+import { Vote, ElectionInfo, Voter, VoteProof } from "../../Common/Domain";
+import { VoteCommand } from "../DataAccess/Command/VoteCommand";
+import { Query } from "../DataAccess/Query/Query";
+import { ValidatorManager } from "../Validators/ValidatorManager";
+import { INotificationSender } from "../../Common/NotificationSender";
 import { TimeoutError } from "./Error/TimeOutError";
 
 export class VotingService {

@@ -1,7 +1,7 @@
 import { Election, Vote } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
-import { VoteIntent } from "../Models/VoteIntent";
+import { VoteIntent } from "../VotingAPI/Models/VoteIntent";
 
 export class UniqueVoteFilter implements IFilter {
   voterCI: any;

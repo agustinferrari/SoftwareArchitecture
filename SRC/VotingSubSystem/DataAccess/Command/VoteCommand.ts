@@ -1,5 +1,5 @@
 import { VoteCommandQueue } from "./VoteCommandQueue";
-import { VoteIntent } from "../../Models/VoteIntent";
+import { VoteIntent } from "../../VotingAPI/Models/VoteIntent";
 import { Vote, ElectionMode } from "../../../Common/Domain";
 export class VoteCommand {
   voteCommandQueue: VoteCommandQueue;
