@@ -9,7 +9,7 @@ export class SuccessfulRequestLogger {
   constructor() {
     this.logger = createLogger({
       level: "info",
-      format: combine(label({ label: "Acitivity" }), timestamp(), prettyPrint()),
+      format: combine(label({ label: "Activity" }), timestamp(), prettyPrint()),
       transports: [
         new transports.File({ filename: "Logs/activity/successfulRequests.log", level: "info" }),
         new transports.File({ filename: "Logs/activity/combined.log", level: "info" }),

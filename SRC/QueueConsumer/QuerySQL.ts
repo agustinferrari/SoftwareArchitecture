@@ -78,8 +78,6 @@ export class QuerySQL {
     } else {
       return false;
     }
-    //TODO ver como manejar esto
-    throw new Error(`Error checking vote count for voter`);
   }
 
   public async getVoteDates(electionId: number, voterCI: string): Promise<string[]> {

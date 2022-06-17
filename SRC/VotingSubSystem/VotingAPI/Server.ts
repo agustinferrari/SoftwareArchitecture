@@ -5,16 +5,18 @@ const express = require("express");
 import config from "config";
 import { TimeoutError } from "./Error/TimeOutError";
 import { checkJWTAndRole } from "./Middlewares/checkJWTAndRole";
-
+import {LoggerFacade} from "../Logger/LoggerFacade"
 class Server {
   public app: Application;
   private service: VotingService;
+  private logger : LoggerFacade;
 
   constructor(votingService: VotingService) {
     this.app = express();
     this.service = votingService;
     this.config();
     this.routes();
+    this.logger = LoggerFacade.getLogger();
   }
 
   public start(): void {
@@ -31,7 +33,6 @@ class Server {
   private routes(): void {
     this.app.post("/votes", checkJWTAndRole(["Voter"]), async (req: Request, res: Response) => {
       try {
-        console.log("entra");
         let converted = req.body;
 
         let voteIntent: VoteIntentEncrypted = converted as VoteIntentEncrypted;
@@ -42,6 +43,7 @@ class Server {
           res.status(500).send(e.message);
         } else {
           res.status(400).send(e.message);
+          this.logger.logBadRequest(`Voting issue for ci ${req.body.voterCI}: ${e.message}`,req.originalUrl)
         }
       }
     });

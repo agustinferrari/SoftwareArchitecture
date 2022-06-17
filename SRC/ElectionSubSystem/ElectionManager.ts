@@ -56,7 +56,6 @@ export class ElectionManager {
   }
 
   public async endElection(election: Election, voterCount: number): Promise<void> {
-    //TODO validar
     await this.validatorManager.createPipeline(election, "endElection");
     try {
       await this.validatorManager.validate();

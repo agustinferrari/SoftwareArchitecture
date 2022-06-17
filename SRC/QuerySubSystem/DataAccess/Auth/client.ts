@@ -3,7 +3,7 @@ import { Client, credentials, Metadata, ServiceError } from "grpc";
 import { TokenClient } from "./proto/token/token_grpc_pb";
 import { TokenRequest, TokenResponse } from "./proto/token/token_pb";
 import { ClientService } from "./clientService";
-import { IUser, UserDTO } from "../../QueryAPI/Models/User";
+import { UserDTO } from "../../QueryAPI/Models/User";
 
 const clientService: ClientService = new ClientService();
 
