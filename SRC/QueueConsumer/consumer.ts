@@ -21,7 +21,7 @@ const queue = new Queue<QueueJob>("sqlqueue", {
 
 async function consumer() {
   console.log("Consumer started");
-  queue.process(async function (job, done) {
+  queue.process(100, async function (job, done) {
     let type = job.data.type;
     let input = job.data.input;
     console.log("Received job:", type);

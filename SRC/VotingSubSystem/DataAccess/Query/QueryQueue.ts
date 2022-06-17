@@ -15,6 +15,7 @@ export class QueryQueue {
     this.jobOptions = {
       removeOnComplete: true,
       removeOnFail: true,
+      attempts: 10
     };
   }
 
