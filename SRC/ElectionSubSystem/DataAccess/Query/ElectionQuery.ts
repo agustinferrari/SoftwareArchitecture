@@ -32,7 +32,11 @@ export class ElectionQuery {
 
   public async existsElection(electionId: number): Promise<boolean> {
     let result = await this.electionCache.existsElection(electionId);
-    return result != null;
+    if(result != null){
+      return result;
+    }else{
+      return false;
+    }
   }
 
   public async getElectionEmails(electionId: number): Promise<string[]> {

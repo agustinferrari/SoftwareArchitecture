@@ -101,6 +101,10 @@ export class QueueTypeHandler {
     );
   }
 
+  public async getElectionInfo(input: any): Promise<any[]> {
+    return await this.query.getElectionInfo(input.electionId);
+  }
+
   public async validateElectionVotesDate(input: any): Promise<boolean> {
     return await this.query.validateElectionVotesDate(input.electionId);
   }

@@ -1,14 +1,15 @@
 const axios = require("axios");
 const fs = require("fs");
+const autocannon= require("autocannon");
 const VoteUtils = require("./VoteUtils");
 const MetricsUtils = require("./MetricsUtils");
 const MongoAccess = require("../MongoUtilities/mongoAccess");
 const ESC = "\x1b"; // ASCII escape character
 const CSI = ESC + "["; // control sequence introducer
 
-const OnlyOneRequest = true;
-
-startRequests();
+let first = true;
+// startRequests();
+autoCannonRequests();
 
 async function startRequests() {
   let serverConfig = JSON.parse(
@@ -29,7 +30,7 @@ async function startRequests() {
 
   let isFinished = false;
 
-  let batchSize = 100000;
+  let batchSize = 20000;
   let batchCount = 10;
 
   metrics.totalAttempts = 0;
@@ -40,47 +41,99 @@ async function startRequests() {
     currentBatch++
   ) {
     let voters = await mongoAccess.getVoterInformation(currentBatch, batchSize);
+    console.log("Batch: ", currentBatch, " Voters: ", voters.length);
     if (batchSize != voters.length) {
       isFinished = true;
     }
-    for (let i = 0; i < voters.length; i++) {
+    let promises = [];
+    for (let i = 0; i < voters.length && !isFinished; i++) {
       let electionVoter = voters[i];
       let body = voteUtils.setupVote(electionVoter);
+
       let startTimestamp = new Date();
-      axios
-        .post(url + endpoint, body, {
-          headers: {
+
+      let options = {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        timeout: 60000,
+      };
+
+      promises.push(
+        axios
+          .post(url + endpoint, body, options)
+          .then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+              metrics.successfulAttempts++;
+            } else {
+              metrics.failedAttempts++;
+            }
+            metrics.incrementCode(response.status);
+          })
+          .catch((e) => {
+            metrics.failedAttempts++;
+            metrics.incrementCode(e.code);
+          })
+          .finally(() => {
+            metrics.totalAttempts++;
+            let responseTime = metrics.DateDiff(new Date(), startTimestamp);
+            metrics.responseTimes.push(responseTime);
+            // writeChangingLine(`Finished Writing ${i}`);
+          })
+      );
+    }
+    await Promise.allSettled(promises);
+    console.log("Skipeo promises")
+    metrics.calculate();
+    console.log(metrics);
+  }
+}
+
+
+async function autoCannonRequests(){
+  let serverConfig = JSON.parse(
+    fs.readFileSync("../../SRC/VotingSubSystem/config/development.json")
+  );
+  let appEvPublicKey = serverConfig.publicKey;
+  let mongoAccess = new MongoAccess();
+  let elections = await mongoAccess.getElections();
+  let voteUtils = new VoteUtils(elections, appEvPublicKey);
+
+  let apiHost = "localhost";
+  let endpoint = "/votes";
+  let apiPort = serverConfig.VOTING_API.port;
+  let url = "http://" + apiHost + ":" + apiPort;
+
+  let batchSize = 2000;
+  console.log("Starting vote simulator to url: " + url);
+
+  let voters = await mongoAccess.getVoterInformation(0, batchSize);
+  var i = 0;
+  autocannon(
+    {
+      url: url + endpoint,
+      method: "POST",
+      amount: batchSize,
+      connections: batchSize,
+      duration: 60000,
+      setupClient: (client) => {
+        let electionVoter = voters[i];
+        i++;
+        let body = voteUtils.setupVote(electionVoter);
+        client.setHeadersAndBody(
+          {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        })
-        .then((response) => {
-          if (response.code >= 200 && response.code <= 299) {
-            metrics.successfulAttempts++;
-          }
-          metrics.failedAttempts++;
-          let endTimeStamp = new Date();
-          let responseTime = metrics.DateDiff(endTimeStamp, startTimestamp);
-          metrics.responseTimes.push(responseTime);
-        })
-        .catch((e) => {
-          metrics.failedAttempts++;
-          let endTimeStamp = new Date();
-          let responseTime = metrics.DateDiff(endTimeStamp, startTimestamp);
-          metrics.responseTimes.push(responseTime);
-        })
-        .finally(() => {
-          metrics.totalAttempts++;
-        });
-      metrics.calculate();
-      writeChangingLine(JSON.stringify(metrics));
-      // if (i == batchCount - 1 || i == voters.length - 1) {
-      //   metrics.calculate();
-      //   console.log(metrics);
-      // }
-    }
-  }
+          JSON.stringify(body)
+        );
+      },
+    },
+    console.log
+  );
 }
+
 
 function writeChangingLine(name) {
   clearLastLine();

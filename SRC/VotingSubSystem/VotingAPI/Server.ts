@@ -5,6 +5,7 @@ const express = require("express");
 import config from "config";
 import { VoteEncryption } from "../VoteEncryption";
 import { VoteIntent } from "../Models/VoteIntent";
+import { TimeoutError } from "../Error/TimeOutError";
 class Server {
   public app: Application;
   private service: VotingService;
@@ -28,14 +29,18 @@ class Server {
   }
 
   private routes(): void {
-    this.app.post("/votes", (req: Request, res: Response) => {
+    this.app.post("/votes", async (req: Request, res: Response) => {
       try {
         let converted = req.body;
         let voteIntent: VoteIntentEncrypted = converted as VoteIntentEncrypted;
-        this.service.handleVote(voteIntent);
+        await this.service.handleVote(voteIntent);
         res.status(200).send("Voto procesado");
       } catch (e: any) {
-        res.status(400).send(e.message);
+        if(e instanceof TimeoutError) {
+          res.status(500).send(e.message);
+        }else{
+          res.status(400).send(e.message);
+        }
       }
     });
   }

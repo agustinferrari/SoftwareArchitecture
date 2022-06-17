@@ -37,7 +37,7 @@ async function producer() {
   let election: Election = new Election(JSON.parse(electionsJson));
   let queueJob = new QueueJob();
   queueJob.input = election;
-  queueJob.priority = QueueJobPriority.AddElection;
+  this.jobOptions.priority = QueueJobPriority.AddElection;
   queueJob.type = QueueJobType.AddElection;
   let jobOptions = {
     removeOnComplete: true,
@@ -53,7 +53,7 @@ async function validateUserElectionParty() {
 
   let queueJob = new QueueJob();
   queueJob.input = { voterCI: "10000246", electionId: 19014, circuitId: 14276 };
-  queueJob.priority = QueueJobPriority.ValidateVoterElectionCircuit;
+  this.jobOptions.priority = QueueJobPriority.ValidateVoterElectionCircuit;
   queueJob.type = QueueJobType.ValidateVoterElectionCircuit;
   let jobOptions = {
     removeOnComplete: true,

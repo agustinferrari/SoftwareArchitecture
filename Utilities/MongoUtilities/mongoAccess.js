@@ -97,14 +97,10 @@ class MongoAccess {
       console.log(`Voter batches processed ${currentBatch} / ${batchCount}`);
 
       await VotingInformationModel.insertMany(voters.slice(i, i + batchSize));
-      console.log(
-        `VotingInformation batches processed ${currentBatch} / ${batchCount}`
-      );
+      console.log(`VotingInformation batches processed ${currentBatch} / ${batchCount}`);
 
       await AuthenticationModel.insertMany(voters.slice(i, i + batchSize));
-      console.log(
-        `Authentication batches processed ${currentBatch} / ${batchCount}`
-      );
+      console.log(`Authentication batches processed ${currentBatch} / ${batchCount}`);
 
       currentBatch++;
     }
