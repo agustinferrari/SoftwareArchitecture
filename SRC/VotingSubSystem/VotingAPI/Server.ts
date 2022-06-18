@@ -52,6 +52,7 @@ class Server {
         let endResponse = new Date();
         let responseTime = endResponse.valueOf() - startResponse.valueOf();
         let timeout: number = config.get("VOTING_API.timeout");
+
         if (responseTime > timeout) {
           let message = `Timeout on vote for ci ${ci}`;
           this.logger.logServerError(message, "/votes");
@@ -72,13 +73,10 @@ class Server {
         } catch (e: any) {
           this.reqCountHelper.errorCount++;
           this.reqCountHelper.errorType.push(e.message);
-          if (e instanceof TimeoutError) {
-          } else {
-            this.logger.logBadRequest(
-              `Voting issue for ci ${req.body.voterCI}: ${e.message}`,
-              req.originalUrl
-            );
-          }
+          this.logger.logBadRequest(
+            `Voting issue for ci ${req.body.voterCI}: ${e.message}`,
+            req.originalUrl
+          );
         }
       }
     );

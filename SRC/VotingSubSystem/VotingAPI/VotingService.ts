@@ -32,16 +32,32 @@ export class VotingService {
     let voter: Voter = await this.voteQuery.getVoter(voteIntentEncrypted.voterCI);
 
     reqCountHelper.beforeEncryptionCount++;
-    let vote = await VoteEncryption.decryptVote(voteIntentEncrypted, voter);
+    let vote: Vote = new Vote();
+    try {
+      vote = await VoteEncryption.decryptVote(voteIntentEncrypted, voter);
+    } catch (error: any) {
+      this.notificationSender.sendNotification(`Could not decrypt vote:\n${error.message}`, [
+        voter.phone,
+      ]);
+      this.loggerFacade.logUnauthorizedAccess(
+        `Decrypting vote issue for ci ${voter.ci}: ${error.message}`,
+        "/votes"
+      );
+      return;
+    }
 
     reqCountHelper.beforeValidationCount++;
     await this.validatorManager.createPipeline(vote, "vote");
     try {
       await this.validatorManager.validate();
     } catch (error: any) {
-      this.notificationSender.sendNotification(`Could not validate vote:/n${error.message}`, [
+      this.notificationSender.sendNotification(`Could not validate vote:\n${error.message}`, [
         voter.phone,
       ]);
+      this.loggerFacade.logBadRequest(
+        `Voting validation issue for ci ${voter.ci}: ${error.message}`,
+        "/votes"
+      );
       return;
     }
 
