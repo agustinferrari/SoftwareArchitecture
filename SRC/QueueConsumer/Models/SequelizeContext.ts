@@ -32,7 +32,7 @@ export class SequelizeContext {
   }
 
   public async syncAllModels() {
-    await this.connection.query(`set global max_connections = 5000;`);
+    await this.connection.query(`set global max_connections = 15000;`);
     await ElectionSQL.sync({ alter: true });
     await PartySQL.sync({ alter: true });
     await CandidateSQL.sync({ alter: true });

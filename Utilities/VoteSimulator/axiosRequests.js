@@ -105,11 +105,12 @@ async function autoCannonRequests(){
   let apiPort = serverConfig.VOTING_API.port;
   let url = "http://" + apiHost + ":" + apiPort;
 
-  let batchSize = 1000;
+  let batchSize = 3000;
   console.log("Starting vote simulator to url: " + url);
 
   let voters = await mongoAccess.getVoterInformation(0, batchSize);
   var i = 0;
+  let checkAlreadyVoted = 
   autocannon(
     {
       url: url + endpoint,
