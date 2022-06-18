@@ -31,8 +31,6 @@ class Server {
   }
 
 
-
-
   public start(): void {
     this.app.listen(this.app.get("port"), () => {
       console.log("Server on port: " + this.app.get("port"));
@@ -59,7 +57,7 @@ class Server {
         let requestStatus = new RequestStatus(converted.ci, new Date());
 
         let voteIntent: VoteIntentEncrypted = converted as VoteIntentEncrypted;
-        await this.service.handleVote(voteIntent, requestStatus);
+        await this.service.handleVote(voteIntent);
       } catch (e: any) {
         this.reqCountHelper.errorCount++;
         this.reqCountHelper.errorType.push(e.message)

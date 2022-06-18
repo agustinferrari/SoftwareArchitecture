@@ -9,26 +9,27 @@ import { INotificationSender } from "../../Common/NotificationSender";
 import { TimeoutError } from "./Error/TimeOutError";
 import { RequestStatus } from "./Models/RequestStatus";
 import { RequestCountHelper } from "../RequestCountHelper";
-
+import { LoggerFacade } from "../Logger/LoggerFacade";
+import config from "config";
 export class VotingService {
-  //voteEncryption: VoteEncryption;
   voteCommand: VoteCommand;
   voteQuery: Query;
   validatorManager: ValidatorManager;
   voteProofSender : INotificationSender;
-  constructor(/*voteEncryption: VoteEncryption,*/ voteCommand: VoteCommand, voteQuery: Query, voteProofSender: INotificationSender) {
-    //this.voteEncryption = voteEncryption;
+  loggerFacade: LoggerFacade;
+  constructor(voteCommand: VoteCommand, voteQuery: Query, voteProofSender: INotificationSender) {
     this.voteCommand = voteCommand;
     this.voteQuery = voteQuery;
     this.voteProofSender = voteProofSender;
     this.validatorManager = new ValidatorManager(voteQuery);
+    this.loggerFacade = new LoggerFacade();
   }
 
-  async handleVote(voteIntentEncrypted: VoteIntentEncrypted, requestStatus : RequestStatus): Promise<void> {
+  async handleVote(voteIntentEncrypted: VoteIntentEncrypted): Promise<void> {
     let reqCountHelper = RequestCountHelper.getInstance();
 
 
-    let startTimestamp = requestStatus.startTimeStamp;
+    let startTimestamp = new Date();
     reqCountHelper.beforeGetVoter++;
     
     let voter : Voter = await this.voteQuery.getVoter(voteIntentEncrypted.voterCI);
@@ -44,9 +45,14 @@ export class VotingService {
     vote.endTimestamp = endTimestamp;
 
     let responseTime = endTimestamp.valueOf() - vote.startTimestamp.valueOf();
-    // if (responseTime > 2000) {
-    //   throw new TimeoutError();
-    // }
+
+    let timeout :number= config.get("VOTING_API.timeout");
+    if (responseTime > timeout) {
+      let message = `Timeout on vote for ci ${vote.voterCI} and election ${vote.electionId}`;
+      this.loggerFacade.logServerError(message, "/votes");
+      throw new TimeoutError();
+    }
+
     reqCountHelper.afterValidationCount++;
     this.afterValidation(vote, voter, startTimestamp);
     return;
