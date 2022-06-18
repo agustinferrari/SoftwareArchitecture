@@ -30,7 +30,6 @@ export class QueryQueue {
     if (!response.result) {
       throw new Error("Voter not found");
     }
-    console.log("result:", response.result.ci, " error:", response.error);
     let voter: Voter = new Voter(response.result);
     return voter;
   }
@@ -51,7 +50,6 @@ export class QueryQueue {
         `Voter ${voterCI} not registered for election ${electionId} in circuit ${circuitId}`
       );
     }
-    console.log("result:", response.result, " error:", response.error);
     return response.result;
   }
 

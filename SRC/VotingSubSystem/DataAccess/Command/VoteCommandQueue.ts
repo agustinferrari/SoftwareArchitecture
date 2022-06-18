@@ -32,6 +32,5 @@ export class VoteCommandQueue {
     let result: QueueResponse = await job.finished();
 
     reqCountHelper.afterCommandQueueCount++;
-    console.log("result:", result.result, " error:", result.error);
   }
 }

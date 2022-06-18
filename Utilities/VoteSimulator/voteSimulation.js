@@ -110,7 +110,6 @@ async function autoCannonRequests(){
 
   let voters = await mongoAccess.getVoterInformation(0, batchSize);
   var i = 0;
-  let checkAlreadyVoted = 
   autocannon(
     {
       url: url + endpoint,

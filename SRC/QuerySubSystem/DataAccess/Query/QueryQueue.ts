@@ -28,7 +28,6 @@ export class QueryQueue {
     if (!response.result) {
       throw new Error("Voter not found");
     }
-    console.log("result:", response.result.ci, " error:", response.error);
     let voter: Voter = new Voter(response.result);
     return voter;
   }
@@ -56,7 +55,6 @@ export class QueryQueue {
     if (!response.result) {
       throw new Error("The voter has not voted in this election");
     }
-    console.log("result:", response.result.id, " error:", response.error);
     return response.result;
   }
 
