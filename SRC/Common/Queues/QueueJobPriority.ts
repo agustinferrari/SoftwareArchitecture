@@ -18,6 +18,7 @@ export enum QueueQueryPriority {
 }
 
 export enum QueueCommandPriority {
+  DeleteVoterCandidateAssociation= 10,
   AddVoters = 10,
   AddElection = 9,
   AddVote = 8,

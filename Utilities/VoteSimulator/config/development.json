@@ -7,5 +7,7 @@
   "API": {
     "port": 3000,
     "verbose": true
-  }
+  },
+  "batchSize":5,
+  "batchCount":1
 }

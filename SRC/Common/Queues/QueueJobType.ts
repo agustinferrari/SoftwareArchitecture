@@ -18,6 +18,7 @@ export enum QueueQueryType {
 }
 
 export enum QueueCommandType {
+  DeleteVoterCandidateAssociation="deleteVoterCandidateAssociation",
   AddVoters = "addVoters",
   AddElection = "addElection",
   AddVote = "addVote",

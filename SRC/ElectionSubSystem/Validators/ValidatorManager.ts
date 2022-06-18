@@ -8,6 +8,8 @@ import { PartyFilter } from "./PartyFilter";
 import { ValueCategoryFilter } from "./ValueCategoryFilter";
 import { AbstractValidatorManager } from "../../Common/Validators/AbstractValidatorManager";
 import { CandidateFilter } from "./CandidateFilter";
+import { ElectionVoteDatesFilter } from "./ElectionVoteDatesFilter";
+import { ElectionVoteCountFilter } from "./ElectionVoteCountFilter";
 class ValidatorManager extends AbstractValidatorManager<Election> {
   constructor() {
     super();
@@ -17,6 +19,8 @@ class ValidatorManager extends AbstractValidatorManager<Election> {
       PartyFilter: PartyFilter,
       ValueCategoryFilter: ValueCategoryFilter,
       CandidateFilter: CandidateFilter,
+      ElectionVoteDatesFilter: ElectionVoteDatesFilter,
+      ElectionVoteCountFilter: ElectionVoteCountFilter
     };
     this.jsonConfig = require("./config.json");
   }

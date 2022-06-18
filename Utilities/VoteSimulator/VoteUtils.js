@@ -24,6 +24,10 @@ class VoteUtils {
 
     let startTimestamp = randomDate.toISOString();
 
+    // REAL TIMESTAMP
+    // startTimestamp = new Date().toISOString();
+
+
     let unencryptedVote = {
       electionId,
       circuitId,

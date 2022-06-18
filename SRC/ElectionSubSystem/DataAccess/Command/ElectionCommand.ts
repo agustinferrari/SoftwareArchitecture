@@ -23,4 +23,8 @@ export class ElectionCommand {
   public async addVoterCount(id: number, totalAdded: number): Promise<void> {
     this.electionCache.addVoterCount(id, totalAdded);
   }
+
+  public async deleteVoterCandidateAssociation(electionId: number): Promise<void>{
+    return this.electionQueueManager.deleteVoterCandidateAssociation(electionId);
+  }
 }

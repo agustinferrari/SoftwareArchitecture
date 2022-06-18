@@ -9,7 +9,7 @@ export abstract class AbstractAct {
     sender: INotificationSender
   ): Promise<void> {
     let information = await this.getActInformation(election, voterCount);
-    sender.sendNotification(information, emails);
+    await sender.sendNotification(information, emails);
   }
   abstract  getActInformation(Election: Election, voterCount: number): Promise<string>;
 }

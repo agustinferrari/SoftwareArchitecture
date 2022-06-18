@@ -61,15 +61,15 @@ export class ElectionManager {
       await this.validatorManager.validate();
     } catch (e: any) {
       let message = "ERROR ON ELECTION END:" + e.message;
-      this.emailSender.sendNotification(message, election.emails);
+      await this.emailSender.sendNotification(message, election.emails);
     }
-    //TODO: VOLVER ASYNC A GENERATE AND SENDACT PARA AWAIT Y LUEGO BORRAR DATOS ASOCIADOS A CANDIDATO EN VOTO
-    this.endAct.generateAndSendAct(
+    await this.endAct.generateAndSendAct(
       election,
       voterCount,
       await this.query.getElectionEmails(election.id),
       this.emailSender
     );
+    await this.command.deleteVoterCandidateAssociation(election.id);
   }
 
   private async handleElection(election: Election): Promise<void> {

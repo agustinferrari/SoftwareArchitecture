@@ -41,4 +41,15 @@ export class ElectionCommandQueue {
     console.log("result:", result.result, " error:", result.error);
     return lengthReceived;
   }
+
+  public async deleteVoterCandidateAssociation(electionId: number){
+    let queueJob = new QueueCommandJob();
+    queueJob.input = { electionId };
+    this.jobOptions.priority = QueueCommandPriority.DeleteVoterCandidateAssociation;
+    queueJob.type = QueueCommandType.DeleteVoterCandidateAssociation;
+    let job = await this.electionQueue.add(queueJob, this.jobOptions);
+    let result: QueueResponse = await job.finished();
+    console.log("result:", result.result, " error:", result.error);
+    return result.result;
+  }
 }

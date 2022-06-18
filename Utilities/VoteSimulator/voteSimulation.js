@@ -6,7 +6,7 @@ const MetricsUtils = require("./MetricsUtils");
 const MongoAccess = require("../MongoUtilities/mongoAccess");
 const ESC = "\x1b"; // ASCII escape character
 const CSI = ESC + "["; // control sequence introducer
-
+const config = require("config");
 let first = true;
 // startRequests();
 autoCannonRequests();
@@ -90,7 +90,6 @@ async function startRequests() {
   }
 }
 
-
 async function autoCannonRequests(){
   let serverConfig = JSON.parse(
     fs.readFileSync("../../SRC/VotingSubSystem/config/development.json")
@@ -105,7 +104,8 @@ async function autoCannonRequests(){
   let apiPort = serverConfig.VOTING_API.port;
   let url = "http://" + apiHost + ":" + apiPort;
 
-  let batchSize = 3000;
+  let batchSize = config.get("batchSize");
+  let batchCount =config.get("batchCount");
   console.log("Starting vote simulator to url: " + url);
 
   let voters = await mongoAccess.getVoterInformation(0, batchSize);
@@ -119,6 +119,9 @@ async function autoCannonRequests(){
       duration: 60000,
       setupClient: (client) => {
         let electionVoter = voters[i];
+        if(electionVoter == undefined){
+          console.log(i);
+        }
         i++;
         let body = voteUtils.setupVote(electionVoter);
         client.setHeadersAndBody(
