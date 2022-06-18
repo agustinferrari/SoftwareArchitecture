@@ -1,11 +1,8 @@
-export enum QueueJobType {
-  AddVoters = "addVoters",
-  AddElection = "addElection",
+export enum QueueQueryType {
   ValidateElectionVotesDate = "validateElectionVotesDate",
   ValidateElectionVotesCount = "validateElectionVotesCount",
   ValidateOneVote = "checkUniqueVote",
   ValidateRepeatedVote = "checkRepeatedVote",
-  AddVote = "addVote",
   GetElectionsInfo = "getElectionsInfo",
   ValidateVoterElectionCircuit = "voterElectionCircuit",
   GetVoter = "getVoter",
@@ -18,4 +15,10 @@ export enum QueueJobType {
   GetElectionInfoCountPerCircuit = "getElectionInfoCountPerCircuit",
   GetElectionInfoCountPerState = "getElectionInfoCountPerState",
   GetElectionInfo = "getElectionInfo",
+}
+
+export enum QueueCommandType {
+  AddVoters = "addVoters",
+  AddElection = "addElection",
+  AddVote = "addVote",
 }

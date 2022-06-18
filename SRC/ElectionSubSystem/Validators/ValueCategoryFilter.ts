@@ -1,7 +1,7 @@
 import { Election } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 
-class ValueCategoryFilter implements IFilter {
+class ValueCategoryFilter extends IFilter {
   value: string;
   categories: string[];
   key: any;
@@ -9,6 +9,7 @@ class ValueCategoryFilter implements IFilter {
   maxAttempts: number;
 
   constructor(parameters: any, election: Election) {
+    super();
     this.key = parameters["key"];
     this.categories = parameters["categories"];
     this.error = parameters["errorMessage"];
@@ -24,7 +25,7 @@ class ValueCategoryFilter implements IFilter {
     this.value = value;
   }
 
-  validate() {
+  async validate() {
     if (this.categories.indexOf(this.value) <= -1) {
       throw new Error(
         this.error + this.value + " no pertenece a [" + this.categories + "])"

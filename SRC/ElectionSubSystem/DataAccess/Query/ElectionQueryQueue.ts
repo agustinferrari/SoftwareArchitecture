@@ -1,6 +1,6 @@
 import { ElectionInfo } from "../../../Common/Domain";
 import Queue from "bull";
-import { QueueJob, QueueJobPriority, QueueJobType, QueueResponse } from "../../../Common/Queues";
+import { QueueQueryJob, QueueQueryPriority, QueueQueryType, QueueResponse } from "../../../Common/Queues";
 import config from "config";
 
 export class ElectionQueryQueue {
@@ -8,7 +8,7 @@ export class ElectionQueryQueue {
   jobOptions: any;
 
   constructor() {
-    this.electionQueue = new Queue<QueueJob>("sqlqueue", {
+    this.electionQueue = new Queue<QueueQueryJob>(config.get("REDIS.queryQueue"), {
       redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
     });
     this.jobOptions = {
@@ -18,30 +18,30 @@ export class ElectionQueryQueue {
   }
 
   public async getElectionsInfo(): Promise<ElectionInfo[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = {};
-    this.jobOptions.priority = QueueJobPriority.GetElectionsInfo;
-    queueJob.type = QueueJobType.GetElectionsInfo;
+    this.jobOptions.priority = QueueQueryPriority.GetElectionsInfo;
+    queueJob.type = QueueQueryType.GetElectionsInfo;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();
     return result.result;
   }
 
   public async getTotalVotes(electionId: number): Promise<number> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.GetTotalVotes;
-    queueJob.type = QueueJobType.GetTotalVotes;
+    this.jobOptions.priority = QueueQueryPriority.GetTotalVotes;
+    queueJob.type = QueueQueryType.GetTotalVotes;
     let job = await this.electionQueue.add(queueJob, this.jobOptions);
     let result: QueueResponse = await job.finished();
     return result.result;
   }
 
   public async getCandidatesResult(electionId: number): Promise<any[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.GetCandidatesResult;
-    queueJob.type = QueueJobType.GetCandidatesResult;
+    this.jobOptions.priority = QueueQueryPriority.GetCandidatesResult;
+    queueJob.type = QueueQueryType.GetCandidatesResult;
 
     let job = await this.electionQueue.add(queueJob);
     let result: QueueResponse = await job.finished();
@@ -49,10 +49,10 @@ export class ElectionQueryQueue {
   }
 
   public async getPartiesResult(electionId: number): Promise<any[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.GetPartiesResult;
-    queueJob.type = QueueJobType.GetPartiesResult;
+    this.jobOptions.priority = QueueQueryPriority.GetPartiesResult;
+    queueJob.type = QueueQueryType.GetPartiesResult;
 
     let job = await this.electionQueue.add(queueJob);
     let result: QueueResponse = await job.finished();
@@ -60,10 +60,10 @@ export class ElectionQueryQueue {
   }
 
   public async validateElectionVotesDate(electionId: number): Promise<boolean> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.ValidateElectionVotesDate;
-    queueJob.type = QueueJobType.ValidateElectionVotesDate;
+    this.jobOptions.priority = QueueQueryPriority.ValidateElectionVotesDate;
+    queueJob.type = QueueQueryType.ValidateElectionVotesDate;
 
     let job = await this.electionQueue.add(queueJob);
     let result: QueueResponse = await job.finished();
@@ -71,10 +71,10 @@ export class ElectionQueryQueue {
   }
 
   public async validateElectionVotesCount(electionId: number): Promise<boolean> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.ValidateElectionVotesCount;
-    queueJob.type = QueueJobType.ValidateElectionVotesCount;
+    this.jobOptions.priority = QueueQueryPriority.ValidateElectionVotesCount;
+    queueJob.type = QueueQueryType.ValidateElectionVotesCount;
 
     let job = await this.electionQueue.add(queueJob);
     let result: QueueResponse = await job.finished();

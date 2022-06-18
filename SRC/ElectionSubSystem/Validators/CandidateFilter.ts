@@ -1,7 +1,7 @@
 import { Candidate, Election, Party } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 
-class CandidateFilter implements IFilter {
+class CandidateFilter extends IFilter {
   parties: Party[];
   candidates: Candidate[];
   key1: any;
@@ -10,13 +10,14 @@ class CandidateFilter implements IFilter {
   maxAttempts: number;
 
   constructor(parameters: any, election: Election) {
+    super();
     this.maxAttempts = parameters["maxAttempts"];
     this.error = parameters["errorMessage"];
     this.parties = election.parties;
     this.candidates = election.candidates;
   }
 
-  validate() {
+  async validate() {
     for (let candidate of this.candidates) {
       let numberOfPartiesAsociated = this.parties.filter(
         (p) => p.id === candidate.partyId

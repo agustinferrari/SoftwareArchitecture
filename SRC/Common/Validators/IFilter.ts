@@ -1,5 +1,9 @@
-export interface IFilter {
+export class IFilter {
   error: string;
   maxAttempts: number;
-  validate(): void;
+  async validate(): Promise<void>{};
+  constructor(){
+    this.error = "";
+    this.maxAttempts = 1;
+  }
 }

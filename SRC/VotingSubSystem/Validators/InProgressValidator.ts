@@ -2,7 +2,7 @@ import { Vote } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
 
-export class InProgressValidator implements IFilter {
+export class InProgressValidator extends IFilter {
   startTimestamp: any;
   electionId: any;
   error: string;
@@ -10,6 +10,7 @@ export class InProgressValidator implements IFilter {
   voteQuery: Query;
 
   constructor(parameters: any, vote: Vote, voteQuery: Query) {
+    super();
     this.error = "The election is not in progress";
     this.maxAttempts =1;
     this.voteQuery = voteQuery;
