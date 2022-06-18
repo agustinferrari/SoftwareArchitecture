@@ -45,6 +45,7 @@ export class ValidatorManager extends AbstractValidatorManager<Vote> {
   }
 
   async validate() {
+    let errorMessages = "";
     let reqCountHelper = RequestCountHelper.getInstance();
     reqCountHelper.insideValidationCount++;
     for (let i = 0; i < this.pipeline.length; i++) {
@@ -60,19 +61,19 @@ export class ValidatorManager extends AbstractValidatorManager<Vote> {
             reqCountHelper.validationErrorCount++;
             reqCountHelper.validationErrorType.push(e.message);
             attempts++;
-            this.errorMessages += `Attempt: ${attempts}/${maxAttempts} | ` + e.message + "\n";
+            errorMessages += `Attempt: ${attempts}/${maxAttempts} | ` + e.message + "\n";
           }
         }
       }
     }
-    if (this.errorMessages != "") {
+    if (errorMessages != "") {
       
       if(!reqCountHelper.exampleErrorVote){
         reqCountHelper.exampleErrorVote = this.toValidate;
       }
       
-      let actualErrorMessages = this.errorMessages;
-      this.errorMessages = "";
+      let actualErrorMessages = errorMessages;
+      errorMessages = "";
       throw new Error(actualErrorMessages);
     }
   }

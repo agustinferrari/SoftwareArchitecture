@@ -96,7 +96,7 @@
     {
       "filters": [
         {
-          "class": "ElectionVoteDateFilter",
+          "class": "ElectionVoteDatesFilter",
           "parameters": {
             "maxAttempts": 1,
             "key": "electionId",

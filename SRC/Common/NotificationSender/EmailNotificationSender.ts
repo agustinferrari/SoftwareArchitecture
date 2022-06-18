@@ -1,16 +1,32 @@
 import { INotificationSender } from "./INotificationSender";
 
 export class EmailNotificationSender implements INotificationSender {
+  constructor() {}
 
+  async sendNotification(
+    messageContent: string,
+    destinations: string[]
+  ): Promise<void> {
+    let jsonMessage = null;
+    //TODO PASAR A QUE SI RECIBE UN STRING PARSEABLE A JSON SE IMPRIMA BIEN
 
-  constructor() {
-  }
+    try{
+      jsonMessage = JSON.parse(messageContent);
+    }catch(e:any){
 
-  sendNotification(messageContent: string, destinations: string[]): void {
+    }
+    
     let messageBody = { notification: messageContent };
 
-    destinations.forEach(destination => {
-      console.log("Email SENT to " + destination + " "+ JSON.stringify(messageBody));
+    if(jsonMessage){
+      messageBody = jsonMessage;
+    }
+
+
+    destinations.forEach((destination) => {
+      console.log(
+        "Email SENT to " + destination + " " + JSON.stringify(messageBody)
+      );
     });
   }
 }

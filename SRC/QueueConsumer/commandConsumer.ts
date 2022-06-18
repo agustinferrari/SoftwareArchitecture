@@ -12,7 +12,7 @@ let MySQLPort : string = config.get("SQL_DB.masterPort");
 
 let context: SequelizeContext = new SequelizeContext(MySQLPort);
 const query = new QuerySQL(context.connection);
-const command = new CommandSQL();
+const command = new CommandSQL(context.connection);
 const queueTypeHandler = new QueueTypeHandler(query, command);
 
 //Consumidor

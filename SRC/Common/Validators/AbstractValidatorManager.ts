@@ -27,6 +27,7 @@ abstract class AbstractValidatorManager<T> {
   }
 
   async validate() {
+    let errorMessages = "";
     for (let i = 0; i < this.pipeline.length; i++) {
       for (let j = 0; j < this.pipeline[i].length; j++) {
         let passedFilter: boolean = false;
@@ -38,14 +39,14 @@ abstract class AbstractValidatorManager<T> {
             passedFilter = true;
           } catch (e: any) {
             attempts++;
-            this.errorMessages += `Attempt: ${attempts}/${maxAttempts} | ` + e.message + "\n";
+            errorMessages += `Attempt: ${attempts}/${maxAttempts} | ` + e.message + "\n";
           }
         }
       }
     }
-    if (this.errorMessages != "") {
-      let actualErrorMessages = this.errorMessages;
-      this.errorMessages = "";
+    if (errorMessages != "") {
+      let actualErrorMessages = errorMessages;
+      errorMessages = "";
       throw new Error(actualErrorMessages);
     }
   }

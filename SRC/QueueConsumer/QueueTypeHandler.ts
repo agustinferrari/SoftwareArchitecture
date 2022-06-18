@@ -130,4 +130,9 @@ export class QueueTypeHandler {
   public async validateElectionVotesCount(electionId: number): Promise<boolean> {
     return await this.query.validateElectionVotesCount(electionId);
   }
+
+  public async deleteVoterCandidateAssociation(input: any){
+    await this.command.deleteVoterCandidateAssociation(input.electionId);
+    return "Delete associations successfully";
+  }
 }

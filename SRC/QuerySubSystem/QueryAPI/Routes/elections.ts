@@ -9,9 +9,9 @@ router.get(
   ElectionController.getConfig
 );
 router.post("/config", [checkJWTAndRole([Roles.Consultant])], ElectionController.setSettings);
-router.get("/vote-frequency", [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority])], ElectionController.getVoteFrequency);
-router.get("/circuit-info",  [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority])], ElectionController.getCircuitInfo);
-router.get("/state-info", [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority])], ElectionController.getStateInfo);
+router.get("/vote-frequency", [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority, Roles.QueryAgent])], ElectionController.getVoteFrequency);
+router.get("/circuit-info",  [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority, Roles.QueryAgent])], ElectionController.getCircuitInfo);
+router.get("/state-info", [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority, Roles.QueryAgent])], ElectionController.getStateInfo);
 router.get("/",  [checkJWTAndRole([Roles.ElectoralAuthority])], ElectionController.getElectionInfo);
 
 export default router;

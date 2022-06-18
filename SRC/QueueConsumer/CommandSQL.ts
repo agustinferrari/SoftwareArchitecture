@@ -1,6 +1,6 @@
 import { Console } from "console";
 import { Circuit, Election, Party, Voter, Candidate, Vote } from "../Common/Domain";
-
+import { Sequelize } from "sequelize-typescript";
 import {
   CandidateSQL,
   ElectionSQL,
@@ -13,8 +13,16 @@ import {
   VoteSQL,
   ElectionCandidateVoterSQL,
 } from "./Models";
+const { QueryTypes } = require("sequelize");
 
 export class CommandSQL {
+  sequelize: Sequelize;
+
+  constructor(sequelize: Sequelize){
+    this. sequelize = sequelize;
+  }
+
+
   public async addElection(election: Election): Promise<void> {
     let circuitPromises: Promise<void>[] = [];
     election.circuits.map(async (c: Circuit) => {
@@ -123,5 +131,12 @@ export class CommandSQL {
         voterCI: vote.voterCI,
       });
     }
+  }
+
+  public async deleteVoterCandidateAssociation(electionId: number){
+    let command = `DELETE FROM appEvDB.ElectionCandidateVoterSQLs WHERE electionId = ${electionId};`;
+    await this.sequelize.query(command, {
+      type: QueryTypes.DELETE,
+    });
   }
 }
