@@ -47,9 +47,9 @@ export class VotingService {
     }
 
     reqCountHelper.beforeValidationCount++;
-    await this.validatorManager.createPipeline(vote, "vote");
+    let pipeline = this.validatorManager.createPipeline(vote, "vote");
     try {
-      await this.validatorManager.validate();
+      await this.validatorManager.validate(pipeline);
     } catch (error: any) {
       this.notificationSender.sendNotification(`Could not validate vote:\n${error.message}`, [
         voter.phone,

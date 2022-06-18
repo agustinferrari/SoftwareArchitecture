@@ -56,9 +56,9 @@ export class ElectionManager {
   }
 
   public async endElection(election: Election, voterCount: number): Promise<void> {
-    await this.validatorManager.createPipeline(election, "endElection");
+    let pipeline = this.validatorManager.createPipeline(election, "endElection");
     try {
-      await this.validatorManager.validate();
+      await this.validatorManager.validate(pipeline);
     } catch (e: any) {
       let message = "ERROR ON ELECTION END:" + e.message;
       await this.emailSender.sendNotification(message, election.emails);
@@ -110,8 +110,8 @@ export class ElectionManager {
   }
 
   private async validateElection(election: Election): Promise<void> {
-    await this.validatorManager.createPipeline(election, "startElection");
-    await this.validatorManager.validate();
+    let pipeline = this.validatorManager.createPipeline(election, "startElection");
+    await this.validatorManager.validate(pipeline);
   }
 
   private async addVoters(idElection: number, pageNumber: number): Promise<number> {
