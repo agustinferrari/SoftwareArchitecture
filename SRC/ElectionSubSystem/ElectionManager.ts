@@ -63,6 +63,7 @@ export class ElectionManager {
       let message = "ERROR ON ELECTION END:" + e.message;
       this.emailSender.sendNotification(message, election.emails);
     }
+    //TODO: VOLVER ASYNC A GENERATE AND SENDACT PARA AWAIT Y LUEGO BORRAR DATOS ASOCIADOS A CANDIDATO EN VOTO
     this.endAct.generateAndSendAct(
       election,
       voterCount,
@@ -76,7 +77,6 @@ export class ElectionManager {
       await this.validateElection(election);
       console.log("Election validated: " + election.id);
     } catch (e: any) {
-      //TODO: Enviar mail a asignados
       //TODO: Enviar log de error
       let message = "Election is not valid, election id: " + election.id + " error: \n" + e.message;
       this.emailSender.sendNotification(message, election.emails);

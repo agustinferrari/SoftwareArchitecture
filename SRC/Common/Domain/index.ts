@@ -10,3 +10,4 @@ export * from "./INotificationSettings";
 export * from "./ElectionMode";
 export * from "./VoteProof";
 export * from "./ElectionResult";
+export * from "./Roles"

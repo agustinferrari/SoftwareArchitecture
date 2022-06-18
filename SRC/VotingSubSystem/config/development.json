@@ -11,6 +11,7 @@
     "port": 3008,
     "timeout": 2000
   },
+  "NOTIFICATION_HELPER": "SMS",
   "testing": false,
   "verbose":false,
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvFNwm13K8fpxe3NvA91T\n8pPqzi9AY56PDEeE0uExnrG2Ska9PXIhkx2V9YR+gqwwf6n7e5GHZ6RDja4CFhAm\ncDMuYT/dJo1ptolO1x8It++IRtk8LZdAuuxXw7Zfe8UH1jdDDoz3UioOI//MLbgg\nZBpi/Lra7z941C3+MA5EQcs5I9W/KFRXvhaJnCxBs7MPeYzI+s9IEFa7tUblT+jB\nxeS/TCBjXJITFiPi8Sb5fTKqEthBgk2IC7l+rpnM/uSDuepEZcaBNooMwwnQdwIs\n+QHRPyhuwGy6sDtuGluwENdZ3Zf/j1YxDf5PayRkkusizIWN1ikJ3WXYedr6PWzk\nmF0rGMyynksi7eNMZt2N0vo71OfCxGu8XGbLRpVCz3JgH2tz3tbVC20rgjf7o/zP\njd5f/vFObmUSdeY9oWqciaEI4cPDRFK/XN4d6uufuOJPgU/0jcr4lNOZoRzs/6gf\nOgeuiIKtyZYcV5/0R5CbPSDKo4goCbNiwkE20+sHroTMa6uZsiawaau21JPqG8Or\nxST++nLQs1A+o8GPvTSU8qfFErXb44oqyOL6MhWPAettL0xC94yVHzwBk/uzVJqU\nGMPvAw/WogehZw0sI0gH1ZpqIQhbX7/iJ6A+KJ3zE5Jn00/USFYEDz6tA++FnbAy\ntHNAObJ376lRDi57HcgHZqUCAwEAAQ==\n-----END PUBLIC KEY-----\n",

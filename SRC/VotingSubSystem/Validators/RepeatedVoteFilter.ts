@@ -1,6 +1,8 @@
-import { Election, Vote } from "../../Common/Domain";
+import { Election, ElectionInfo, Vote } from "../../Common/Domain";
+import { INotificationSender } from "../../Common/NotificationSender";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
+import { NotificationHelper } from "../VotingAPI/Helpers/NotificationHelper";
 import { VoteIntent } from "../VotingAPI/Models/VoteIntent";
 
 export class RepeatedVoteFilter extends IFilter {
@@ -31,7 +33,9 @@ export class RepeatedVoteFilter extends IFilter {
   async validate() {
     let isOverLimit = await this.voteQuery.checkRepeatedVote(this.voterCI, this.electionId);
     if(isOverLimit) {
-      //TODO: Notificar a emails predefinidos ALERT
+      let electionInfo : ElectionInfo = await this.voteQuery.getElection(this.electionId);
+      let alertSender : INotificationSender = NotificationHelper.getNotificationHelper().alertSender;
+      alertSender.sendNotification(`${this.voterCI} ${this.electionId} ${this.error}`, electionInfo.emails);
       throw new Error(this.voterCI + " " + this.electionId + " " + this.error);
     }
   }

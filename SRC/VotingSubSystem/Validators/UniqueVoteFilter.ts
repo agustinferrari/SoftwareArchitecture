@@ -1,6 +1,8 @@
-import { Election, Vote } from "../../Common/Domain";
+import { Election, ElectionInfo, Vote } from "../../Common/Domain";
+import { INotificationSender } from "../../Common/NotificationSender/INotificationSender";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { Query } from "../DataAccess/Query/Query";
+import { NotificationHelper } from "../VotingAPI/Helpers/NotificationHelper";
 import { VoteIntent } from "../VotingAPI/Models/VoteIntent";
 
 export class UniqueVoteFilter extends IFilter {
@@ -32,6 +34,9 @@ export class UniqueVoteFilter extends IFilter {
   async validate() {
     let voteAlreadyExists = await this.voteQuery.checkUniqueVote(this.voterCI, this.electionId);
     if(voteAlreadyExists) {
+      let electionInfo : ElectionInfo = await this.voteQuery.getElection(this.electionId);
+      let alertSender : INotificationSender = NotificationHelper.getNotificationHelper().alertSender;
+      alertSender.sendNotification(`${this.voterCI} ${this.electionId} ${this.error}`, electionInfo.emails);
       throw new Error(this.error);
     }
   }
