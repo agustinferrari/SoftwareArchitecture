@@ -4,7 +4,7 @@ import { VotingService } from "./VotingService";
 const express = require("express");
 import config from "config";
 import { TimeoutError } from "./Error/TimeOutError";
-import { checkJWTAndRole } from "./Middlewares/checkJWTAndRole";
+import { checkJWTAndRole } from "./Middlewares/CheckJWTAndRole";
 import { LoggerFacade } from "../Logger/LoggerFacade";
 import { RequestStatus } from "./Models/RequestStatus";
 import { scheduleJob, RecurrenceRule } from "node-schedule";

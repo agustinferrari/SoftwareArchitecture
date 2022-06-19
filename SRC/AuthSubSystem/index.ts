@@ -1,4 +1,4 @@
-import { startGRPCServer } from "./GRPC/handlers/server";
+import { startGRPCServer } from "./GRPC/handlers/Server";
 import Server from "./QueryAPI/Server";
 
 const server = new Server();

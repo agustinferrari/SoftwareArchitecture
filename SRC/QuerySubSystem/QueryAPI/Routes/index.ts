@@ -1,6 +1,6 @@
 import { Router } from "express";
-import votes from "./votes";
-import elections from "./elections";
+import votes from "./Votes";
+import elections from "./Elections";
 
 const routes = Router({ mergeParams: true });
 
