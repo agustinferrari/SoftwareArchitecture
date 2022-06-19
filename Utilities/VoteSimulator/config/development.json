@@ -9,8 +9,10 @@
     "verbose": true
   },
   "VoteOptions":{
-    "batchSize":5,
+    "batchSize":5000,
+    "pageOffset":2,
     "batchCount":1,
-    "fakeVoteDate": true
+    "fakeVoteDate": true,
+    "timeout": 60000
   }
 }

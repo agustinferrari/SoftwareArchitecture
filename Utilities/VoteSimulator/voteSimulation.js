@@ -27,11 +27,16 @@ async function autoCannonRequests(){
   let apiPort = serverConfig.VOTING_API.port;
   let url = "http://" + apiHost + ":" + apiPort;
 
+  let offset = voteOptions.pageOffset;
   let batchSize = voteOptions.batchSize;
   let batchCount =voteOptions.batchCount;
-  console.log("Starting vote simulator to url: " + url);
+  let timeout = voteOptions.timeout
+  console.log("Starting vote simulator to url: " + url + endpoint + " with options:");
+  console.log(voteOptions);
+  console.log("----------------------");
+  console.log("");
 
-  let voters = await mongoAccess.getVoterInformation(0, batchSize);
+  let voters = await mongoAccess.getVoterInformation(offset, batchSize);
   var i = 0;
 
   autocannon(
@@ -40,7 +45,7 @@ async function autoCannonRequests(){
       method: "POST",
       amount: batchSize,
       connections: batchSize,
-      duration: 60000,
+      duration: timeout,
       setupClient: (client) => {
         let electionVoter = voters[i];
         if(electionVoter == undefined){
