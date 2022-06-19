@@ -8,6 +8,11 @@
     "port": 3000,
     "verbose": true
   },
-  "batchSize":5,
-  "batchCount":1
+  "VoteOptions":{
+    "batchSize":5000,
+    "pageOffset":2,
+    "batchCount":1,
+    "fakeVoteDate": true,
+    "timeout": 60000
+  }
 }

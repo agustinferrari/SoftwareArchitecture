@@ -3,7 +3,7 @@ import Queue from "bull";
 import { QueueQueryJob, QueueQueryPriority, QueueQueryType, QueueResponse, QueueCommandPriority, QueueCommandJob, QueueCommandType } from "../../../Common/Queues";
 import config from "config";
 import { VoteIntent } from "../../VotingAPI/Models/VoteIntent";
-import { RequestCountHelper } from "../../RequestCountHelper";
+import { RequestCountHelper } from "../../Helpers/RequestCountHelper";
 
 export class VoteCommandQueue {
   electionQueue: any;

@@ -7,7 +7,7 @@ import { Query } from "../DataAccess/Query/Query";
 import { RepeatedVoteFilter } from "./RepeatedVoteFilter";
 import { Vote } from "../../Common/Domain";
 import { InProgressValidator } from "./InProgressValidator";
-import { RequestCountHelper } from "../RequestCountHelper";
+import { RequestCountHelper } from "../Helpers/RequestCountHelper";
 import { IFilter } from "../../Common/Validators/IFilter";
 
 export class ValidatorManager extends AbstractValidatorManager<Vote> {

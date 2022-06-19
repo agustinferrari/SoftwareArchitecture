@@ -1,6 +1,6 @@
 import { ElectionInfo, Vote } from "../Common/Domain";
-import { CommandSQL } from "./CommandSQL";
-import { QuerySQL } from "./QuerySQL";
+import { CommandSQL } from "./DataAccess/Command/CommandSQL";
+import { QuerySQL } from "./DataAccess/Query/QuerySQL";
 import { QueryCache } from "./../Common/Redis/";
 
 export class QueueTypeHandler {

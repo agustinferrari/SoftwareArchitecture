@@ -1,5 +1,5 @@
 import { Console } from "console";
-import { Circuit, Election, Party, Voter, Candidate, Vote } from "../Common/Domain";
+import { Circuit, Election, Party, Voter, Candidate, Vote } from "../../../Common/Domain";
 import { Sequelize } from "sequelize-typescript";
 import {
   CandidateSQL,
@@ -12,7 +12,7 @@ import {
   ElectionCandidateSQL,
   VoteSQL,
   ElectionCandidateVoterSQL,
-} from "./Models";
+} from "../../Models";
 const { QueryTypes } = require("sequelize");
 
 export class CommandSQL {

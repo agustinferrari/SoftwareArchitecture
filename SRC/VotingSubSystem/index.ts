@@ -1,5 +1,5 @@
 import Server from "./VotingAPI/Server";
-import { StartupHelper } from "./StartupHelper";
+import { StartupHelper } from "./Helpers/StartupHelper";
 let startupHelper: StartupHelper = new StartupHelper();
 
 startupHelper.startUp().then(() => {

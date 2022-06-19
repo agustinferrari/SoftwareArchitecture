@@ -3,8 +3,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,visualstudiocode,visualstudio,node,rider
 
 ## Archivos de prueba
-Utilities/APIAutoridadelectoral/private-public-keys.txt
-Utilities/APIAutoridadelectoral/private-public-keys.txt.zip
+Utilities/APIAutoridadElectoral/private-public-keys.txt
+Utilities/APIAutoridadElectoral/private-public-keys.txt.zip
 ### macOS ###
 # General
 .DS_Store
