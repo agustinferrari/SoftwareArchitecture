@@ -7,7 +7,7 @@ class VoteUtils {
     this.appEvPublicKey = appEvPublicKey;
   }
 
-  setupVote(voter) {
+  setupVote(voter, fakeVoteDate) {
     let electionId = voter.electionId;
     let circuitId = voter.circuitId;
 
@@ -15,18 +15,16 @@ class VoteUtils {
     let candidate = this.getRandomCandidate(election);
     let candidateCI = candidate.ci;
 
-    let startDate = this.formatDate(election.startDate);
-    let endDate = this.formatDate(election.endDate);
-
-    startDate.setDate(startDate.getDate() + 1);
-    endDate.setDate(endDate.getDate() - 1);
-    let randomDate = this.getRandomDate(startDate, endDate);
-
-    let startTimestamp = randomDate.toISOString();
-
-    // REAL TIMESTAMP
-    // startTimestamp = new Date().toISOString();
-
+    
+    let startTimestamp = new Date().toISOString();
+    if(fakeVoteDate) {
+      let startDate = this.formatDate(election.startDate);
+      let endDate = this.formatDate(election.endDate);
+      startDate.setDate(startDate.getDate() + 1);
+      endDate.setDate(endDate.getDate() - 1);
+      let randomValidDate = this.getRandomDate(startDate, endDate);
+      startTimestamp = randomValidDate.toISOString();
+    }
 
     let unencryptedVote = {
       electionId,

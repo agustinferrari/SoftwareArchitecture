@@ -3,9 +3,9 @@ import { SequelizeContext } from "./Models";
 import Queue from "bull";
 import config from "config";
 import { QueueQueryJob, QueueResponse } from "../Common/Queues";
-import { QuerySQL } from "./QuerySQL";
+import { QuerySQL } from "./DataAccess/Query/QuerySQL";
 import { QueueTypeHandler } from "./QueueTypeHandler";
-import { CommandSQL } from "./CommandSQL";
+import { CommandSQL } from "./DataAccess/Command/CommandSQL";
 
 
 let pm2id : string | undefined = process.env.pm_id ? process.env.pm_id : "0";

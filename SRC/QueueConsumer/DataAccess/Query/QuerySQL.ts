@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import { ElectionInfo, Vote, Voter } from "../Common/Domain";
-import { VoterSQL, VoteSQL } from "./Models";
+import { ElectionInfo, Vote, Voter } from "../../../Common/Domain";
+import { VoterSQL, VoteSQL } from "../../Models";
 
 const { QueryTypes } = require("sequelize");
 

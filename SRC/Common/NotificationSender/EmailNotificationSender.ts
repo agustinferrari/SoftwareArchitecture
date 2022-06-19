@@ -8,25 +8,23 @@ export class EmailNotificationSender implements INotificationSender {
     destinations: string[]
   ): Promise<void> {
     let jsonMessage = null;
-    //TODO PASAR A QUE SI RECIBE UN STRING PARSEABLE A JSON SE IMPRIMA BIEN
-
     try{
       jsonMessage = JSON.parse(messageContent);
     }catch(e:any){
 
     }
     
-    let messageBody = { notification: messageContent };
+    let messageBody = {type:"EMAIL", notification: messageContent };
 
     if(jsonMessage){
-      messageBody = jsonMessage;
+      messageBody.notification = jsonMessage;
     }
 
-
     destinations.forEach((destination) => {
-      console.log(
-        "Email SENT to " + destination + " " + JSON.stringify(messageBody)
-      );
+      console.log(messageBody);
+      // console.log(
+      //   "Email SENT to " + destination + " " + messageBody
+      // );
     });
   }
 }
