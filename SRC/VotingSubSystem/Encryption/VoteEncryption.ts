@@ -1,8 +1,8 @@
-import { Vote, Voter } from "../Common/Domain";
+import { Vote, Voter } from "../../Common/Domain";
 import config from "config";
 import crypto from "crypto";
-import { VoteIntent } from "./VotingAPI/Models/VoteIntent";
-import { VoteIntentEncrypted } from "./VotingAPI/Models/VoteIntentEncrypted";
+import { VoteIntent } from "../VotingAPI/Models/VoteIntent";
+import { VoteIntentEncrypted } from "../VotingAPI/Models/VoteIntentEncrypted";
 export class VoteEncryption {
 
   public static async decryptVote(

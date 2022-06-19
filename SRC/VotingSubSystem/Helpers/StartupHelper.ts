@@ -1,14 +1,13 @@
-import { Query } from "./DataAccess/Query/Query";
-import { QueryQueue } from "./DataAccess/Query/QueryQueue";
-import { VoteEncryption } from "./VoteEncryption";
-import { VotingService } from "./VotingAPI/VotingService";
-import { VoteCommandQueue } from "./DataAccess/Command/VoteCommandQueue";
-import { VoteCommand } from "./DataAccess/Command/VoteCommand";
-import { QueryCache } from "../Common/Redis/QueryCache";
-import Server from "./VotingAPI/Server";
-import { VoteIntent } from "./VotingAPI/Models/VoteIntent";
+import { Query } from "../DataAccess/Query/Query";
+import { QueryQueue } from "../DataAccess/Query/QueryQueue";
+import { VotingService } from "../VotingAPI/VotingService";
+import { VoteCommandQueue } from "../DataAccess/Command/VoteCommandQueue";
+import { VoteCommand } from "../DataAccess/Command/VoteCommand";
+import { QueryCache } from "../../Common/Redis";
+import Server from "../VotingAPI/Server";
+import { VoteIntent } from "../VotingAPI/Models/VoteIntent";
 
-import {SMSNotificationSender, INotificationSender} from "../Common/NotificationSender";
+import {SMSNotificationSender, INotificationSender} from "../../Common/NotificationSender";
 
 export class StartupHelper {
   query?: Query;
