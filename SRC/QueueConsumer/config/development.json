@@ -5,14 +5,14 @@
     "password": "111",
     "host": "192.168.0.106",
     "port": "4406",
-    "masterPort":"4406",
-    "ports": ["5506","5507","5508"]
+    "masterPort": "4406",
+    "ports": ["5506", "5507", "5508"]
   },
   "REDIS": {
     "host": "192.168.0.106",
     "port": "6379",
     "statusKey": "status",
-    "commandQueue":"commandQueue",
-    "queryQueue":"queryQueue"
+    "commandQueue": "commandQueue",
+    "queryQueue": "queryQueue"
   }
 }
