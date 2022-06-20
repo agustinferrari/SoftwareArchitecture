@@ -1,7 +1,7 @@
 {
   "SYS_NAME": "AuthSubSystem",
   "MONGO": {
-    "host": "192.168.0.106",
+    "host": "localhost",
     "port": "27017",
     "dbName": "electoralAPI"
   },
@@ -12,10 +12,5 @@
   "GRPC": {
     "host": "127.0.0.1",
     "port": 50051
-  },
-  "REDIS": {
-    "host": "192.168.0.106",
-    "port": "6379",
-    "statusKey": "status"
   }
 }
