@@ -6,6 +6,7 @@ import { ElectionInfo, VoteProof, Voter } from "../../../Common/Domain";
 import { NotificationHelper } from "../Helpers/NotificationHelper";
 import { INotificationSender } from "../../../Common/NotificationSender";
 import { Command } from "../../DataAccess/Command/Command";
+import { ElectionNotFound } from "../Errors/ElectionNotFound";
 
 export class VoteController {
   public static async getVote(req: Request, res: Response) {
@@ -25,9 +26,14 @@ export class VoteController {
       } else {
         res.status(200).send(result);
       }
-    } catch (err) {
-      logger.logBadRequest(`election ${electionId} does not exist`, req.originalUrl);
-      res.status(404).send("Election " + electionId + " does not exist");
+    } catch (err: any) {
+      if (err instanceof ElectionNotFound) {
+        logger.logBadRequest(`election ${electionId} does not exist`, req.originalUrl);
+        res.status(404).send("Election " + electionId + " does not exist");
+      } else {
+        logger.logBadRequest(err.message, req.originalUrl);
+        res.status(400).send(err.message);
+      }
     }
   }
 
