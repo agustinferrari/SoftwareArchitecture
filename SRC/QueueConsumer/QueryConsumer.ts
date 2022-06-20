@@ -10,9 +10,9 @@ import { CommandSQL } from "./DataAccess/Command/CommandSQL";
 
 let pm2id : string | undefined = process.env.pm_id ? process.env.pm_id : "0";
 let MySQLPort;
+let ports : string[] = config.get("SQL_DB.ports");
 if(pm2id) {
   let id = parseInt(pm2id)
-  let ports : string[] = config.get("SQL_DB.ports");
   let MySQLPort = ports[id%ports.length];
  console.log("MySQLPort:", MySQLPort);
 }
@@ -52,8 +52,15 @@ async function consumer() {
 
 (async () => {
   await context.addModels();
-  if (!pm2id) {
+  if (pm2id) {
+    let id = parseInt(pm2id);
+    if(id<ports.length){
+      console.log("Syncing models for port:", ports[id]);
+      await context.setMaxConnections();
+    }
+  }else{
     await context.syncAllModels();
+    await context.setMaxConnections();
   }
   consumer();
 })();

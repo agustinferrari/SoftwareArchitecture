@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import config from "config";
+const { QueryTypes } = require("sequelize");
 
 import { ElectionSQL, ElectionCandidateSQL, ElectionCircuitSQL, ElectionCircuitVoterSQL, PartySQL, CandidateSQL, VoterSQL, CircuitSQL, VoteSQL, ElectionCandidateVoterSQL } from "./";
 
@@ -31,8 +32,11 @@ export class SequelizeContext {
     this.connection.addModels([ElectionSQL, ElectionCandidateSQL, ElectionCircuitVoterSQL, ElectionCircuitSQL, CircuitSQL, PartySQL, VoterSQL, CandidateSQL, VoteSQL, ElectionCandidateVoterSQL]);
   }
 
+  public async setMaxConnections(){
+    await this.connection.query(`set global max_connections = 15000;`, { type: QueryTypes.SET });
+  }
+
   public async syncAllModels() {
-    await this.connection.query(`set global max_connections = 15000;`);
     await ElectionSQL.sync({ alter: true });
     await PartySQL.sync({ alter: true });
     await CandidateSQL.sync({ alter: true });

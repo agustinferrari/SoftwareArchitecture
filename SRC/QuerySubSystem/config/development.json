@@ -16,5 +16,6 @@
     "commandQueue":"commandQueue",
     "queryQueue":"queryQueue"
   },
+  "testing":true,
   "NOTIFICATION_HELPER": "EMAIL"
 }

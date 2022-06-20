@@ -4,13 +4,10 @@
     "port": "27017",
     "dbName": "electoralAPI"
   },
-  "API": {
-    "port": 3000,
-    "verbose": true
-  },
   "VoteOptions":{
-    "batchSize":5000,
-    "pageOffset":2,
+    "apiHost": "127.0.0.1",
+    "batchSize":10000,
+    "pageOffset":1,
     "batchCount":1,
     "fakeVoteDate": true,
     "timeout": 60000
