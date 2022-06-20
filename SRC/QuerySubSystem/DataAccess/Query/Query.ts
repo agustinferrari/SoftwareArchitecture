@@ -27,7 +27,6 @@ export class Query {
     return Query._instance;
   }
 
-
   public async getVotes(electionId: number, voterCI: string): Promise<ElectionVotesDTO> {
     let electionExists: boolean = await this.queryCache.existsElection(electionId);
     if (electionExists) {
@@ -63,12 +62,7 @@ export class Query {
 
   async getElectionConfig(id: number): Promise<NotificationSettingsDTO> {
     let electionInfo: any = await this.queryCache.getElection(id);
-    let settings = new NotificationSettingsDTO(
-      electionInfo.id,
-      electionInfo.maxVotesPerVoter,
-      electionInfo.maxVoteRecordRequestsPerVoter,
-      electionInfo.emails
-    );
+    let settings = new NotificationSettingsDTO(electionInfo.id, electionInfo.maxVotesPerVoter, electionInfo.maxVoteRecordRequestsPerVoter, electionInfo.emails);
     return settings;
   }
 
@@ -76,56 +70,27 @@ export class Query {
     let electionExists: boolean = await this.queryCache.existsElection(electionId);
     if (electionExists) {
       let queryResult: any[] = await this.queryQueue.getVoteFrequency(electionId);
-      let electionDateFrequencyDTO: ElectionDateFrequencyDTO = new ElectionDateFrequencyDTO(
-        electionId,
-        queryResult
-      );
+      let electionDateFrequencyDTO: ElectionDateFrequencyDTO = new ElectionDateFrequencyDTO(electionId, queryResult);
       return electionDateFrequencyDTO;
     }
     throw new Error(`Election ${electionId} does not exist`);
   }
 
-  public async getElectionInfoCountPerCircuit(
-    electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
-  ): Promise<ElectionInfoPerCircuitDTO> {
+  public async getElectionInfoCountPerCircuit(electionId: number, minAge: number, maxAge: number, rangeSpace: number): Promise<ElectionInfoPerCircuitDTO> {
     let electionExists: boolean = await this.queryCache.existsElection(electionId);
     if (electionExists) {
-      let response: any[] = await this.queryQueue.getElectionInfoCountPerCircuit(
-        electionId,
-        minAge,
-        maxAge,
-        gender
-      );
-      let electionCircuitInfoDTO: ElectionInfoPerCircuitDTO = new ElectionInfoPerCircuitDTO(
-        electionId,
-        response
-      );
+      let response: any[] = await this.queryQueue.getElectionInfoCountPerCircuit(electionId, minAge, maxAge);
+      let electionCircuitInfoDTO: ElectionInfoPerCircuitDTO = new ElectionInfoPerCircuitDTO(electionId, rangeSpace, response);
       return electionCircuitInfoDTO;
     }
     throw new Error(`Election ${electionId} does not exist`);
   }
 
-  public async getElectionInfoCountPerState(
-    electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
-  ): Promise<ElectionInfoPerStateDTO> {
+  public async getElectionInfoCountPerState(electionId: number, minAge: number, maxAge: number, rangeSpace: number): Promise<ElectionInfoPerStateDTO> {
     let electionExists: boolean = await this.queryCache.existsElection(electionId);
     if (electionExists) {
-      let response: any[] = await this.queryQueue.getElectionInfoCountPerState(
-        electionId,
-        minAge,
-        maxAge,
-        gender
-      );
-      let electionStateInfoDTO: ElectionInfoPerStateDTO = new ElectionInfoPerStateDTO(
-        electionId,
-        response
-      );
+      let response: any[] = await this.queryQueue.getElectionInfoCountPerState(electionId, minAge, maxAge);
+      let electionStateInfoDTO: ElectionInfoPerStateDTO = new ElectionInfoPerStateDTO(electionId, rangeSpace, response);
       return electionStateInfoDTO;
     }
     throw new Error(`Election ${electionId} does not exist`);
@@ -140,14 +105,7 @@ export class Query {
     if (electionCache != null) {
       let electionInfo: any[] = await this.queryQueue.getElectionInfo(electionId);
 
-      let electionStateInfoDTO: ElectionInfoDTO = new ElectionInfoDTO(
-        electionId,
-        electionCache?.voterCount,
-        electionInfo[0],
-        electionInfo[1],
-        electionInfo[2],
-        electionInfo[3]
-      );
+      let electionStateInfoDTO: ElectionInfoDTO = new ElectionInfoDTO(electionId, electionCache?.voterCount, electionInfo[0], electionInfo[1], electionInfo[2], electionInfo[3]);
       return electionStateInfoDTO;
     }
     throw new Error(`Election ${electionId} does not exist`);

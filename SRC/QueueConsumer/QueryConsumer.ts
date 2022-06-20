@@ -7,8 +7,7 @@ import { QuerySQL } from "./DataAccess/Query/QuerySQL";
 import { QueueTypeHandler } from "./QueueTypeHandler";
 import { CommandSQL } from "./DataAccess/Command/CommandSQL";
 
-
-let pm2id : string | undefined = process.env.pm_id ? process.env.pm_id : "0";
+let pm2id: string | undefined = process.env.pm_id ? process.env.pm_id : "0";
 let MySQLPort;
 let ports : string[] = config.get("SQL_DB.ports");
 if(pm2id) {

@@ -13,8 +13,12 @@
     "host": "localhost",
     "port": "6379",
     "statusKey": "status",
-    "commandQueue":"commandQueue",
-    "queryQueue":"queryQueue"
+    "commandQueue": "commandQueue",
+    "queryQueue": "queryQueue"
+  },
+  "AUTH": {
+    "host": "127.0.0.1",
+    "port": "50051"
   },
   "testing":true,
   "NOTIFICATION_HELPER": "EMAIL"
