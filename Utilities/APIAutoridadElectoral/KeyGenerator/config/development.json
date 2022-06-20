@@ -1,7 +1,7 @@
 {
   "Keys": {
-    "count": 50000,
+    "count": 300,
     "fileCount": 10,
-    "size": 4096
+    "size": 512
   }
 }

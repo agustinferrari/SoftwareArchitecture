@@ -7,14 +7,13 @@ import { QuerySQL } from "./DataAccess/Query/QuerySQL";
 import { QueueTypeHandler } from "./QueueTypeHandler";
 import { CommandSQL } from "./DataAccess/Command/CommandSQL";
 
-
-let pm2id : string | undefined = process.env.pm_id ? process.env.pm_id : "0";
+let pm2id: string | undefined = process.env.pm_id ? process.env.pm_id : "0";
 let MySQLPort;
-if(pm2id) {
-  let id = parseInt(pm2id)
-  let ports : string[] = config.get("SQL_DB.ports");
-  let MySQLPort = ports[id%ports.length];
- console.log("MySQLPort:", MySQLPort);
+if (pm2id) {
+  let id = parseInt(pm2id);
+  let ports: string[] = config.get("SQL_DB.ports");
+  let MySQLPort = ports[id % ports.length];
+  console.log("MySQLPort:", MySQLPort);
 }
 let context: SequelizeContext = new SequelizeContext(MySQLPort);
 
