@@ -1,7 +1,7 @@
 {
   "SYS_NAME": "ConfigSubSystem",
   "MONGO": {
-    "host": "127.0.0.1",
+    "host": "192.168.0.106",
     "port": "27017",
     "dbName": "appEv"
   },
@@ -9,12 +9,16 @@
     "port": 3003,
     "jwtSecret": "n03sC@nn0n"
   },
+  "AUTH": {
+    "host": "127.0.0.1",
+    "port": 50051
+  },
   "REDIS": {
     "host": "192.168.0.106",
     "port": "6379",
     "statusKey": "status",
-    "commandQueue":"commandQueue",
-    "queryQueue":"queryQueue"
+    "commandQueue": "commandQueue",
+    "queryQueue": "queryQueue"
   },
   "NOTIFICATION_HELPER": "EMAIL"
 }

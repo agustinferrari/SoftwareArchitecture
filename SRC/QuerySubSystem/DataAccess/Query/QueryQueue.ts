@@ -71,12 +71,7 @@ export class QueryQueue {
     return response.result;
   }
 
-  public async getElectionInfoCountPerCircuit(
-    electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
-  ): Promise<any[]> {
+  public async getElectionInfoCountPerCircuit(electionId: number, minAge: number, maxAge: number, gender: string): Promise<any[]> {
     let queueJob = new QueueQueryJob();
     queueJob.input = {
       electionId: electionId,
@@ -91,12 +86,7 @@ export class QueryQueue {
     return response.result;
   }
 
-  public async getElectionInfoCountPerState(
-    electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
-  ): Promise<any[]> {
+  public async getElectionInfoCountPerState(electionId: number, minAge: number, maxAge: number, gender: string): Promise<any[]> {
     let queueJob = new QueueQueryJob();
     queueJob.input = {
       electionId: electionId,

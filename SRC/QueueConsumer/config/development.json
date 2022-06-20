@@ -6,16 +6,16 @@
     "name": "appEvDB",
     "user": "root",
     "password": "111",
-    "host": "localhost",
+    "host": "192.168.0.106",
     "port": "4406",
-    "masterPort":"4406",
-    "ports": ["5506","5507","5508"]
+    "masterPort": "4406",
+    "ports": ["5506", "5507", "5508"]
   },
   "REDIS": {
-    "host": "127.0.0.1",
+    "host": "192.168.0.106",
     "port": "6379",
     "statusKey": "status",
-    "commandQueue":"commandQueue",
-    "queryQueue":"queryQueue"
+    "commandQueue": "commandQueue",
+    "queryQueue": "queryQueue"
   }
 }
