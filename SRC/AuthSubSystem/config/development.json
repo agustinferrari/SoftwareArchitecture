@@ -8,10 +8,5 @@
   "QUERY_API": {
     "port": 3004,
     "jwtSecret": "n03sC@nn0n"
-  },
-  "REDIS": {
-    "host": "192.168.0.106",
-    "port": "6379",
-    "statusKey": "status"
   }
 }

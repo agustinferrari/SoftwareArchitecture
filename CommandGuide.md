@@ -14,11 +14,16 @@ Además, se asume que se tiene instalado globalmente los paquetes de node:
 - pm2: Para correr multiples instancias de los subsistemas
   - Además se espera tener instalado con `pm2 install typescript` la capacidad de correr archivos .ts con pm2
 
+Se debe tomar en cuenta que la mayoría de las herramientas y subsistemas contienen configuraciones dentro de su directorio en una carpeta config con un archivo development.json. Se deja por defecto localhost para las ips y los puertos comúnes de redis y mongo.
+
 ---
 
 ## Índice <!-- omit in toc -->
 
 - [Resumen](#resumen)
+  - [Generadores](#generadores)
+  - [ElectoralAPI y Simuladores](#electoralapi-y-simuladores)
+  - [Subsistemas](#subsistemas)
 - [Instalación](#instalación)
   - [Dependencias de Node para todos los subsistemas](#dependencias-de-node-para-todos-los-subsistemas)
   - [Instalación de base de datos MySQL](#instalación-de-base-de-datos-mysql)
@@ -27,7 +32,7 @@ Además, se asume que se tiene instalado globalmente los paquetes de node:
   - [Generación de Votantes y Elecciones](#generación-de-votantes-y-elecciones)
 - [Autoridad Electoral](#autoridad-electoral)
 - [Simulación de votos en grandes cantidades](#simulación-de-votos-en-grandes-cantidades)
-- [Subsistemas](#subsistemas)
+- [Subsistemas](#subsistemas-1)
   - [QueueConsumer](#queueconsumer)
     - [Instancias únicas](#instancias-únicas)
     - [Instancias multiples con PM2](#instancias-multiples-con-pm2)
@@ -40,13 +45,52 @@ Además, se asume que se tiene instalado globalmente los paquetes de node:
 
 ## Resumen
 
-| Subsistema/Herramienta        | Configuración                                                    | Comandos                                                                         |
-| ----------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Dependencias                  | -                                                                | `npm run install:all`                                                            |
-| Base de datos MySQL           | -                                                                | <code> cd ./Utilities/MySQLDocker <br/> ./build.sh` </code>                      |
-| Generar claves servidor       | <code> Largo de Clave <br> Path a configuración de server</code> | `npm run serverKeyGenerator `                                                    |
-| Generar claves votantes       | <code> Largo de Clave <br> Cantidad de claves</code>             | `npm run voterKeyGenerator `                                                     |
-| Generar claves votantes PM2   | <code> Largo de Clave <br> Cantidad de claves</code>             | <code> npm run voterKeyGeneratorPM2 <br/> pm2 delete generateVoterKeys.js</code> |
+<br/>
+
+### Generadores
+
+| Herramienta                     | Configuración/Requerimientos                                                                                                               | Comandos                                                                         |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| Instalación de Dependencias     | -                                                                                                                                          | `npm run install:all`                                                            |
+| Base de datos MySQL distribuida | -                                                                                                                                          | <code> cd ./Utilities/MySQLDocker <br/> ./build.sh` </code>                      |
+| Generar claves servidor         | <code> Largo de Clave <br> Path a configuración de server</code>                                                                           | `npm run serverKeyGenerator `                                                    |
+| Generar claves votantes         | <code> Largo de Clave <br> Cantidad de claves</code>                                                                                       | `npm run voterKeyGenerator `                                                     |
+| Generar claves votantes PM2     | <code> Largo de Clave <br> Cantidad de claves</code>                                                                                       | <code> npm run voterKeyGeneratorPM2 <br/> pm2 delete generateVoterKeys.js</code> |
+| Generar votantes y elecciones   | <code> Se espera haber generado claves antes <br> Cantidad de claves de votantes >= Cantidad de votantes <br/> Conexión con MongoDB</code> | <code> npm run electionGenerator</code>                                          |
+
+<br/>
+
+---
+
+<br/>
+
+### ElectoralAPI y Simuladores
+
+| Herramienta         | Configuración/Requerimientos                          | Comandos                                |
+| ------------------- | ----------------------------------------------------- | --------------------------------------- |
+| Autoridad Electoral | <code> Conexión con Mongo <br> Puerto expuesto</code> | <code> npm run electoralAPI </code>     |
+| Simulador de votos  | <code> Cantidad de votos <br> Offset de votos</code>  | <code> npm run votingSimulation </code> |
+
+<br/>
+
+---
+
+<br/>
+
+### Subsistemas
+
+| Sistemas           | Configuración/Requerimientos                                                                                                                                  | Comandos                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| QueryConsumer      | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run queryConsumer </code>                    |
+| QueryConsumerPM2   | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run queryConsumerPM2 -- {cantidad} </code>   |
+| CommandConsumer    | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run commandConsumer </code>                  |
+| CommandConsumerPM2 | <code> Conexión de Redis <br> Conexión a MySQL</code>                                                                                                         | <code> npm run commandConsumer -- {cantidad} </code>    |
+| ElectionSubSystem  | <code> Conexión de Redis <br> Puerto de electoralAPI <br/> Batchsize de votantes <br/> Get Election Frecuency </code>                                         | <code> npm run electionSubSystem </code>                |
+| VotingSubSystem    | <code> Conexión de Redis <br> Puerto expuesto por WebAPI <br/> Timeout de Req <br/> Tipo de Notificador <br/> Flag de testing <br/> Verbose flag</code>       | <code> npm run votingSubSystem </code>                  |
+| VotingSubSystemPM2 | <code> Conexión de Redis <br> Puerto expuesto por WebAPI <br/> Timeout de Req <br/> Tipo de Notificador <br/> Flag de testing <br/> Verbose flag</code>       | <code> npm run votingSubSystemPM2 -- {cantidad} </code> |
+| QuerySubSystem     | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run querySubSystem </code>                   |
+| QuerySubSystemPM2  | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run querySubSystemPM2 -- {cantidad} </code>  |
+| AuthSubSystem      | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run authSubSystem </code>                    |
 
 ---
 
@@ -150,6 +194,7 @@ Se debe asignar adecuadamente la dirección IP y puerto de la base de datos de m
 En esta terminal se visualiza las requests recibidas
 
 ---
+
 ## Simulación de votos en grandes cantidades
 
 Para configurar las cantidades y el offset de votos a enviar, se debe hacer uso del archivo de configuración en ./Utilities/VoteSimulator/config.
@@ -201,6 +246,7 @@ npm run queryConsumerPM2 -- {cantidad}
 ```
 
 Ejemplo de 3 queryConsumers:
+
 ```bash
 npm run queryConsumerPM2 -- 3
 ```
@@ -290,7 +336,6 @@ A este subsistema se le puede configurar:
 - La conexión con MongoDB
 - El puerto que expone la WebAPI
 - El secreto de JWT
-- La conexión con Redis
 
 ```bash
 npm run authSubSystem
