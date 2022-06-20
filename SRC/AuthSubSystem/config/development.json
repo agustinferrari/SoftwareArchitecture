@@ -13,6 +13,5 @@
     "host": "192.168.0.106",
     "port": "6379",
     "statusKey": "status"
-  },
-  "NOTIFICATION_HELPER": "EMAIL"
+  }
 }

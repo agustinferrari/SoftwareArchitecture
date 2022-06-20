@@ -16,6 +16,7 @@
     "bull": "^4.8.3",
     "config": "^3.3.7",
     "mysql2": "^2.3.3",
+    "project-root": "file:../..",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.19.0",
     "sequelize-cli": "^6.4.1",

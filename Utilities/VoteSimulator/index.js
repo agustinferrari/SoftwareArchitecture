@@ -20,7 +20,7 @@ async function autoCannonRequests() {
   let elections = await mongoAccess.getElections();
   let voteUtils = new VoteUtils(elections, appEvPublicKey);
 
-  let apiHost = "127.0.0.1";
+  let apiHost = voteOptions.apiHost;
   let endpoint = "/votes";
   let apiPort = serverConfig.VOTING_API.port;
   let url = "http://" + apiHost + ":" + apiPort;

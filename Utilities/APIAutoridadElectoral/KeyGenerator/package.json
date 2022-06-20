@@ -14,6 +14,7 @@
   "dependencies": {
     "config": "^3.3.7",
     "crypto-js": "^4.1.1",
+    "project-root": "file:../../..",
     "prompt-sync": "^4.2.0"
   }
 }

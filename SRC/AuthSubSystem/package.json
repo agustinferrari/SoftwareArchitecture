@@ -23,6 +23,7 @@
     "grpc-tools": "^1.11.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.6",
+    "project-root": "file:../..",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

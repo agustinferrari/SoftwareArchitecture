@@ -2,10 +2,21 @@ import { Request, Response, NextFunction } from "express";
 import { UserDTO } from "../Models/User";
 import { LoggerFacade } from "../../Logger/LoggerFacade";
 import { validateToken } from "../../DataAccess/Auth/Client";
+import  config  from "config";
+
+var isTesting :any;
+if(isTesting == undefined){
+    isTesting = config.get("testing");
+}
 
 export const checkJWTAndRole = (roles: Array<string>) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const logger = LoggerFacade.getLogger();
+    if (isTesting) {
+      res.locals.userDTO = new UserDTO("testing", "testing", "testing");
+      next();
+      return;
+    }
     try {
       const token = <string>req.headers["auth"];
       let user: UserDTO = await validateToken(token);

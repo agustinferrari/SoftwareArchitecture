@@ -16,6 +16,7 @@
     "crypto-js": "^4.1.1",
     "mongoose": "^6.3.8",
     "n-readlines": "^1.0.1",
+    "project-root": "file:../../..",
     "prompt-sync": "^4.2.0"
   }
 }

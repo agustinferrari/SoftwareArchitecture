@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "config": "^3.3.7",
+    "project-root": "file:../..",
     "redis": "^4.1.0",
     "reflect-metadata": "^0.1.13"
   },
