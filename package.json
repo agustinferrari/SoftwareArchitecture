@@ -8,7 +8,7 @@
     "install:Utilities": "(npm install --prefix ./Utilities/VoteSimulator) && (npm install --prefix ./Utilities/MongoElectoralAPI) && (npm install --prefix ./Utilities/MongoUtilities) && (npm install --prefix ./Utilities/APIAutoridadElectoral/KeyGenerator) && (npm install --prefix ./Utilities/APIAutoridadElectoral/VoterGenerator)",
     "install:all":"npm run install:SRC && npm run install:Utilities",
     "electoralAPI": "cd ./Utilities/MongoElectoralAPI && node index",
-    "electoralAPIPM2": "cd ./Utilities/MongoElectoralAPI && pm2 start index.ts -i",
+    "electoralAPIPM2": "cd ./Utilities/MongoElectoralAPI && pm2 start index.js -i",
     "electionGenerator": "cd ./Utilities/APIAutoridadElectoral/VoterGenerator && node index.js",
     "voterKeyGenerator": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && node generateVoterKeys.js && node mergeKeys.js",
     "voterKeyGeneratorPM2": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && pm2 start generateVoterKeys.js -i 10 && node mergeKeys.js",
