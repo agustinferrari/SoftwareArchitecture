@@ -1,0 +1,25 @@
+{
+  "name": "votergenerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "VoterGenerator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.1.0"
+  },
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "autocannon": "^7.9.0",
+    "axios": "^0.27.2",
+    "config": "^3.3.7",
+    "crypto-js": "^4.1.1",
+    "n-readlines": "^1.0.1",
+    "project-root": "file:../..",
+    "prompt-sync": "^4.2.0",
+    "unirest": "^0.6.0"
+  }
+}

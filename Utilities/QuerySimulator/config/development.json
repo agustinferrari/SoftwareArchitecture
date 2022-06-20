@@ -1,0 +1,110 @@
+{
+  "MONGO": {
+    "host": "localhost",
+    "port": "27017",
+    "dbName": "electoralAPI"
+  },
+  "QueryOptions": {
+    "apiHost": "localhost",
+    "apiPort": 3003,
+    "batchSize": 1,
+    "voterPageOffset": 1,
+    "timeout": 60000,
+    "routes": [
+      {
+        "root": "votes",
+        "electionId": false,
+        "endpoints": [
+          {
+            "endpoint": "",
+            "method": "get",
+            "REQ": 8,
+            "params": {
+              "electionId": true,
+              "voterCI": true
+            }
+          }
+        ]
+      },
+      {
+        "root": "elections",
+        "electionId": true,
+        "endpoints": [
+          {
+            "endpoint": "",
+            "method": "get",
+            "REQ": 9
+          },
+          {
+            "endpoint": "config",
+            "method": "get",
+            "REQ": 10
+          },
+          {
+            "endpoint": "vote-frequency",
+            "method": "get",
+            "REQ": 11
+          },
+          {
+            "endpoint": "circuit-info",
+            "method": "get",
+            "REQ": 12
+          },
+          {
+            "endpoint": "state-info",
+            "method": "get",
+            "REQ": 13
+          }
+        ]
+      }
+    ],
+    "routesDefault": [
+      {
+        "root": "votes",
+        "electionId": false,
+        "endpoints": [
+          {
+            "endpoint": "",
+            "method": "get",
+            "REQ": 8,
+            "params": {
+              "electionId": true,
+              "voterCI": true
+            }
+          }
+        ]
+      },
+      {
+        "root": "elections",
+        "electionId": true,
+        "endpoints": [
+          {
+            "endpoint": "",
+            "method": "get",
+            "REQ": 9
+          },
+          {
+            "endpoint": "config",
+            "method": "get",
+            "REQ": 10
+          },
+          {
+            "endpoint": "vote-frequency",
+            "method": "get",
+            "REQ": 11
+          },
+          {
+            "endpoint": "circuit-info",
+            "method": "get",
+            "REQ": 12
+          },
+          {
+            "endpoint": "state-info",
+            "method": "get",
+            "REQ": 13
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -24,6 +24,7 @@ Se debe tomar en cuenta que la mayoría de las herramientas y subsistemas contie
   - [Generadores](#generadores)
   - [ElectoralAPI y Simuladores](#electoralapi-y-simuladores)
   - [Subsistemas](#subsistemas)
+  - [Subsistemas pm2](#subsistemas-pm2)
 - [Instalación](#instalación)
   - [Dependencias de Node para todos los subsistemas](#dependencias-de-node-para-todos-los-subsistemas)
   - [Instalación de base de datos MySQL](#instalación-de-base-de-datos-mysql)
@@ -31,7 +32,9 @@ Se debe tomar en cuenta que la mayoría de las herramientas y subsistemas contie
   - [Generación de pares de claves](#generación-de-pares-de-claves)
   - [Generación de Votantes y Elecciones](#generación-de-votantes-y-elecciones)
 - [Autoridad Electoral](#autoridad-electoral)
-- [Simulación de votos en grandes cantidades](#simulación-de-votos-en-grandes-cantidades)
+- [Simulaciones de votos y queries](#simulaciones-de-votos-y-queries)
+  - [Simulación de votos en grandes cantidades](#simulación-de-votos-en-grandes-cantidades)
+  - [Simulación de queries en grandes cantidades](#simulación-de-queries-en-grandes-cantidades)
 - [Subsistemas](#subsistemas-1)
   - [QueueConsumer](#queueconsumer)
     - [Instancias únicas](#instancias-únicas)
@@ -66,10 +69,12 @@ Se debe tomar en cuenta que la mayoría de las herramientas y subsistemas contie
 
 ### ElectoralAPI y Simuladores
 
-| Herramienta         | Configuración/Requerimientos                          | Comandos                                |
-| ------------------- | ----------------------------------------------------- | --------------------------------------- |
-| Autoridad Electoral | <code> Conexión con Mongo <br> Puerto expuesto</code> | <code> npm run electoralAPI </code>     |
-| Simulador de votos  | <code> Cantidad de votos <br> Offset de votos</code>  | <code> npm run votingSimulation </code> |
+| Herramienta             | Configuración/Requerimientos                                                                                                                                                                                         | Comandos                                             |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Autoridad Electoral     | <code> Conexión con Mongo <br> Puerto expuesto</code>                                                                                                                                                                | <code> npm run electoralAPI </code>                  |
+| Autoridad Electoral PM2 | <code> Conexión con Mongo <br> Puerto expuesto</code>                                                                                                                                                                | <code> npm run electoralAPIPM2 -- {cantidad} </code> |
+| Simulador de votos      | <code> Cantidad de votos <br> Offset de votos</code>                                                                                                                                                                 | <code> npm run votingSimulation </code>              |
+| Simulador de queries    | <code>Url y puerto de API <br> Cantidad de requests por endpoint <br> Offset de pagina de votante <br> Timeout de las requests <br> Routes a los que hacer requests <br> Routes Default para usar de ejemplo </code> | <code> npm run votingSimulation </code>              |
 
 <br/>
 
@@ -79,18 +84,38 @@ Se debe tomar en cuenta que la mayoría de las herramientas y subsistemas contie
 
 ### Subsistemas
 
-| Sistemas           | Configuración/Requerimientos                                                                                                                                  | Comandos                                                |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| QueryConsumer      | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run queryConsumer </code>                    |
-| QueryConsumerPM2   | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run queryConsumerPM2 -- {cantidad} </code>   |
-| CommandConsumer    | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run commandConsumer </code>                  |
-| CommandConsumerPM2 | <code> Conexión de Redis <br> Conexión a MySQL</code>                                                                                                         | <code> npm run commandConsumer -- {cantidad} </code>    |
-| ElectionSubSystem  | <code> Conexión de Redis <br> Puerto de electoralAPI <br/> Batchsize de votantes <br/> Get Election Frecuency </code>                                         | <code> npm run electionSubSystem </code>                |
-| VotingSubSystem    | <code> Conexión de Redis <br> Puerto expuesto por WebAPI <br/> Timeout de Req <br/> Tipo de Notificador <br/> Flag de testing <br/> Verbose flag</code>       | <code> npm run votingSubSystem </code>                  |
-| VotingSubSystemPM2 | <code> Conexión de Redis <br> Puerto expuesto por WebAPI <br/> Timeout de Req <br/> Tipo de Notificador <br/> Flag de testing <br/> Verbose flag</code>       | <code> npm run votingSubSystemPM2 -- {cantidad} </code> |
-| QuerySubSystem     | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run querySubSystem </code>                   |
-| QuerySubSystemPM2  | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run querySubSystemPM2 -- {cantidad} </code>  |
-| AuthSubSystem      | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run authSubSystem </code>                    |
+| Sistemas          | Configuración/Requerimientos                                                                                                                                  | Comandos                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| QueryConsumer     | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run queryConsumer </code>     |
+| CommandConsumer   | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run commandConsumer </code>   |
+| ElectionSubSystem | <code> Conexión de Redis <br> Puerto de electoralAPI <br/> Batchsize de votantes <br/> Get Election Frecuency </code>                                         | <code> npm run electionSubSystem </code> |
+| VotingSubSystem   | <code> Conexión de Redis <br> Puerto expuesto por WebAPI <br/> Timeout de Req <br/> Tipo de Notificador <br/> Flag de testing <br/> Verbose flag</code>       | <code> npm run votingSubSystem </code>   |
+| QuerySubSystem    | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run querySubSystem </code>    |
+| AuthSubSystem     | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run authSubSystem </code>     |
+
+<br/>
+
+---
+
+<br/>
+
+### Subsistemas pm2
+
+Para correr todos los sistemas en el modo predeterminado en vista de pm2 con 3 instancias para todo subsistema excepto electionSubSystem, authSubSystem y la electoralAPI.
+
+```bash
+npm run pm2:all
+```
+<br/>
+
+| Sistemas                                                 | Configuración/Requerimientos                                                                                                                                  | Comandos                                                |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| QueryConsumerPM2                                         | <code> Conexión de Redis <br> Conexiones a MySQL</code>                                                                                                       | <code> npm run queryConsumerPM2 -- {cantidad} </code>   |
+| CommandConsumerPM2                                       | <code> Conexión de Redis <br> Conexión a MySQL</code>                                                                                                         | <code> npm run commandConsumer -- {cantidad} </code>    |
+| ElectionSubSystemPM2 (Solo deberia usarse una instancia) | <code> Conexión de Redis <br> Puerto de electoralAPI <br/> Batchsize de votantes <br/> Get Election Frecuency </code>                                         | <code> npm run electionSubSystemPM2 </code>             |
+| VotingSubSystemPM2                                       | <code> Conexión de Redis <br> Puerto expuesto por WebAPI <br/> Timeout de Req <br/> Tipo de Notificador <br/> Flag de testing <br/> Verbose flag</code>       | <code> npm run votingSubSystemPM2 -- {cantidad} </code> |
+| QuerySubSystemPM2                                        | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run querySubSystemPM2 -- {cantidad} </code>  |
+| AuthSubSystemPM2                                         | <code> Conexión de Redis <br> Conexión de MongoDB <br> Puerto expuesto por WebAPI <br/> Secreto de JWT <br/> Tipo de Notificador <br/> Flag de testing</code> | <code> npm run authSubSystemPM2 -- {cantidad} </code>   |
 
 ---
 
@@ -185,8 +210,16 @@ El resultado se guarda en MongoDB en una base de datos "electoralAPI" configurad
 
 Para levantar la API de autoridad electoral, se debe haber generado los votantes y ejecutar el comando:
 
+**Instancia única**
+
 ```bash
 npm run electoralAPI
+```
+
+**Multiples instancias con PM2**
+
+```bash
+npm run electoralAPIPM2 -- {cantidad}
 ```
 
 Se debe asignar adecuadamente la dirección IP y puerto de la base de datos de mongoDB, de la cual se extrae la información sobre elecciones y votantes, en el archivo de configuración en ./Utilities/MongoElectoralAPI/config.
@@ -195,7 +228,9 @@ En esta terminal se visualiza las requests recibidas
 
 ---
 
-## Simulación de votos en grandes cantidades
+## Simulaciones de votos y queries
+
+### Simulación de votos en grandes cantidades
 
 Para configurar las cantidades y el offset de votos a enviar, se debe hacer uso del archivo de configuración en ./Utilities/VoteSimulator/config.
 
@@ -207,13 +242,25 @@ npm run votingSimulation
 
 ---
 
+### Simulación de queries en grandes cantidades
+
+Para configurar las cantidades, el offset de votante a enviar, y los endpoints a los cuales hacerles requests (si se elimina uno del atributo routes, no se hace request a ese endpoint. RoutesDefault sirve de ejemplo de a los que se puede hacer request) se debe hacer uso del archivo de configuración en ./Utilities/QuerySimulator/config.
+
+Se debe asignar adecuadamente la dirección IP y puerto de la base de datos de mongoDB.
+
+```bash
+npm run querySimulation
+```
+
+---
+
 ## Subsistemas
 
 ### QueueConsumer
 
 Para separar siguiendo CQRS (Command and Query Responsability Separation) se tiene un consumidor de queries y un consumidor de commands.
 Es necesario tener por lo menos una instancia corriendo de commandConsumer y queryConsumer para que funcionen el resto de los subsistemas.
-Se puede configurar en el archivo ./SRC/QueueConsumer/config/development.json:
+Se puede configurar en el archivo ./SRC/QueueConsumer/Consumers/config/development.json:
 
 - La conexión de redis para cache y bull
 - La conexión a las bases de datos MySQL
