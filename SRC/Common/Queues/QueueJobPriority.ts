@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-export enum QueueJobPriority {
-  AddVoters = 1,
-  GetVote = 1,
-  AddElection = 2,
-  ValidateElectionVotesDate = 2,
-  ValidateElectionVotesCount = 3,
-  AddVote = 3,
-  GetElectionsInfo = 4,
-  ValidateOneVote = 5,
-  ValidateRepeatedVote = 5,
-  ValidateVoterElectionCircuit = 5,
-  GetElectionInfoCountPerCircuit = 5,
-  GetElectionInfoCountPerState = 5,
-  GetVoter = 6,
-  GetVoteDates = 6,
-  GetVoteFrequency = 6,
-  GetTotalVotes = 4,
-  GetPartiesResult = 6,
-  GetCandidatesResult = 6,
-  GetElectionInfo = 10,
-  GetElectionCandidates = 10,
-  GetElectionParties = 10
-=======
 export enum QueueQueryPriority {
   GetVote = 10,
   ValidateElectionVotesDate = 9,
@@ -39,6 +15,8 @@ export enum QueueQueryPriority {
   GetPartiesResult = 5,
   GetCandidatesResult = 5,
   GetElectionInfo = 1,
+  GetElectionCandidates = 1,
+  GetElectionParties = 1
 }
 
 export enum QueueCommandPriority {
@@ -46,5 +24,4 @@ export enum QueueCommandPriority {
   AddVoters = 10,
   AddElection = 9,
   AddVote = 8,
->>>>>>> develop
 }

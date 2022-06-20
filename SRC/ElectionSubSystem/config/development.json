@@ -6,7 +6,6 @@
     "electionsVoterPageLimit": 1,
     "votersPageLimit": 100000
   },
-<<<<<<< HEAD
   "SQL_DB": {
     "name": "appEvDB",
     "user": "root",
@@ -16,10 +15,6 @@
   },
   "REDIS": {
     "host": "localhost",
-=======
-  "REDIS": {
-    "host": "127.0.0.1",
->>>>>>> develop
     "port": "6379",
     "statusKey": "status",
     "commandQueue":"commandQueue",

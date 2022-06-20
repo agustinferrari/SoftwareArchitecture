@@ -18,7 +18,7 @@ export class Election {
   circuits: Circuit[];
   emails: string[];
 
-  parseElection(electionInfo: ElectionInfo): Election {
+  static parseElection(electionInfo: ElectionInfo): Election {
     return new Election({
       name: electionInfo.name,
       id: electionInfo.id,

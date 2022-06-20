@@ -15,12 +15,12 @@ export enum QueueQueryType {
   GetElectionInfoCountPerCircuit = "getElectionInfoCountPerCircuit",
   GetElectionInfoCountPerState = "getElectionInfoCountPerState",
   GetElectionInfo = "getElectionInfo",
-  GetElectionCandidates = "GetElectionCandidates",
-  GetElectionParties = "GetElectionParties"
+  GetElectionCandidates = "getElectionCandidates",
+  GetElectionParties = "getElectionParties",
 }
 
 export enum QueueCommandType {
-  DeleteVoterCandidateAssociation="deleteVoterCandidateAssociation",
+  DeleteVoterCandidateAssociation = "deleteVoterCandidateAssociation",
   AddVoters = "addVoters",
   AddElection = "addElection",
   AddVote = "addVote",

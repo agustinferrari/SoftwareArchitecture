@@ -1,4 +1,4 @@
-import { ElectionInfo, Vote } from "../Common/Domain";
+import { Candidate, ElectionInfo, Party, Vote } from "../Common/Domain";
 import { CommandSQL } from "./DataAccess/Command/CommandSQL";
 import { QuerySQL } from "./DataAccess/Query/QuerySQL";
 import { QueryCache } from "./../Common/Redis/";
@@ -134,5 +134,15 @@ export class QueueTypeHandler {
   public async deleteVoterCandidateAssociation(input: any){
     await this.command.deleteVoterCandidateAssociation(input.electionId);
     return "Delete associations successfully";
+  }
+
+  public async getElectionCandidates(electionId: number) : Promise<Candidate[]>{
+    const candidates = await this.query.getElectionCandidates(electionId) as Candidate[];
+    return candidates;
+  }
+
+  public async getElectionParties(electionId: number) : Promise<Party[]>{
+    const parties = await this.query.getElectionParties(electionId) as Party[];
+    return parties;
   }
 }

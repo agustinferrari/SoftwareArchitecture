@@ -1,7 +1,4 @@
-import {
-  EmailNotificationSender,
-  INotificationSender,
-} from "../Common/NotificationSender";
+import { EmailNotificationSender, INotificationSender } from "../Common/NotificationSender";
 import { Election } from "../Common/Domain";
 import { AbstractValidatorManager } from "../Common/Validators/AbstractValidatorManager";
 import { AbstractAct, EndAct, StartAct } from "./Acts/";
@@ -13,8 +10,6 @@ import { IConsumer } from "./ElectoralConsumer/IConsumer";
 import { Parameter } from "./ElectoralConsumer/Parameter";
 import { ValidatorManager } from "./Validators/ValidatorManager";
 import { CommandCache } from "../Common/Redis/CommandCache";
-import { ElectionQueryQueue } from "./DataAccess/Query/ElectionQueryQueue";
-import { QueryCache } from "../Common/Redis/QueryCache";
 import { ElectionCommandQueue } from "./DataAccess/Command/ElectionCommandQueue";
 import { QueryMongo } from "./DataAccess/Query/QueryMongo";
 import { ElectionScheduler } from "./EventSchedulers/ElectionScheduler";
@@ -28,6 +23,7 @@ export class StartupHelper {
   public async startUp() {
     await this.ConfigureDBServices();
     await this.ConfigureServices();
+    await this.StateResynchronization();
   }
 
   private async ConfigureServices(): Promise<void> {
@@ -66,37 +62,40 @@ export class StartupHelper {
     this.query = query;
   }
 
-  private async StateResynchronization(){
-    let query: ElectionQuery = new ElectionQuery());
-    let elections = await query.getElectionsInfo()
+  private async StateResynchronization() {
+    console.log("StateResynchronization");
+    let query: ElectionQuery = new ElectionQuery();
+    let elections = await query.getElectionsInfo();
+    console.log(elections)
     let cacheCommand: CommandCache = new CommandCache();
     let today = new Date();
-    let scheduler : ElectionScheduler;
-    if(this.electionManager){
-     scheduler = new ElectionScheduler(this.electionManager)
+    let scheduler: ElectionScheduler;
+    if (this.electionManager) {
+      scheduler = new ElectionScheduler(this.electionManager);
     }
 
-
-    elections.forEach(async election=>{
-
-      if(!query.existsElection(election.id)){
+    elections.forEach(async (election) => {
+      if (!query.existsElection(election.id)) {
         cacheCommand.addElection(election);
-        try{
+        try {
           let settings = await QueryMongo.getSettings(election.id);
           cacheCommand.addNotificationSettings(settings);
-        }
-        catch(e){
+        } catch (e) {}
+      }
+      let electionObj = Election.parseElection(election);
+      electionObj.parties = await query.getElectionParties(election.id);
+      electionObj.candidates = await query.getElectionCandidates(election.id);
+      if (this.parseDate(election.startDate) > today) {
+        scheduler.scheduleStartElection(electionObj, election.voterCount);
+        scheduler.scheduleEndElection(electionObj, election.voterCount);
+      } else {
+        if (this.parseDate(election.endDate) > today) {
+          scheduler.scheduleEndElection(electionObj, election.voterCount);
         }
       }
-      if(this.parseDate(election.startDate) > today){
-        scheduler.scheduleStartElection(election, election.voterCount);
-
-      }else if(this.parseDate(election.endDate) > today){
-
-      }
-    })
-
+    });
   }
+
   private parseDate(myDateStr: string): Date {
     const dateStr = myDateStr;
     const [dateComponents, timeComponents] = dateStr.split(" ");

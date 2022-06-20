@@ -83,10 +83,10 @@ export class ElectionQueryQueue {
   }
 
   public async getElectionParties(electionId: number): Promise<Party[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.GetElectionParties;
-    queueJob.type = QueueJobType.GetElectionParties;
+    this.jobOptions.priority = QueueQueryPriority.GetElectionParties;
+    queueJob.type = QueueQueryType.GetElectionParties;
 
     let job = await this.electionQueue.add(queueJob);
     let result: QueueResponse = await job.finished();
@@ -94,12 +94,13 @@ export class ElectionQueryQueue {
     }
 
     public async getElectionCandidates(electionId: number): Promise<Candidate[]> {
-    let queueJob = new QueueJob();
+    let queueJob = new QueueQueryJob();
     queueJob.input = { electionId: electionId };
-    this.jobOptions.priority = QueueJobPriority.GetElectionCandidates;
-    queueJob.type = QueueJobType.GetElectionCandidates;
+    this.jobOptions.priority = QueueQueryPriority.GetElectionCandidates;
+    queueJob.type = QueueQueryType.GetElectionCandidates;
 
     let job = await this.electionQueue.add(queueJob);
     let result: QueueResponse = await job.finished();
-    return result.result;  }
+    return result.result; 
+  }
 }

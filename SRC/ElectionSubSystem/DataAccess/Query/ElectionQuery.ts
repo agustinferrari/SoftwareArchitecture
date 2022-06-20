@@ -1,4 +1,4 @@
-import { ElectionInfo, Party } from "../../../Common/Domain";
+import { Candidate, ElectionInfo, Party } from "../../../Common/Domain";
 import { QueryCache } from "../../../Common/Redis/QueryCache";
 import { ElectionQueryQueue } from "./ElectionQueryQueue";
 
@@ -18,7 +18,6 @@ export class ElectionQuery {
     return ElectionQuery.instance;
   }
 
-
   public async existsElection(electionId: number): Promise<boolean> {
     let result = await this.electionCache.existsElection(electionId);
     if (result != null) {
@@ -28,12 +27,11 @@ export class ElectionQuery {
     }
   }
 
-  public async getElectionParties(electionId: number): Promise<Party[]>{
+  public async getElectionParties(electionId: number): Promise<Party[]> {
     return await this.electionQueryQueue.getElectionParties(electionId);
   }
 
-  
-  public async getElectionCandidates(electionId: number): Promise<Candidate[]>{
+  public async getElectionCandidates(electionId: number): Promise<Candidate[]> {
     return await this.electionQueryQueue.getElectionCandidates(electionId);
   }
 

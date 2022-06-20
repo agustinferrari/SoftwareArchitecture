@@ -23,9 +23,11 @@ export class QuerySQL {
     let found = await this.sequelize.query("SELECT * FROM appEvDB.ElectionSQLs;", {
       type: QueryTypes.SELECT,
     });
+    console.log("found[i]");
     let result: ElectionInfo[] = [];
     if (found) {
       for (let i = 0; i < found.length; i++) {
+        console.log(found[i]);
         let obj = { id: found[i] };
         let election: ElectionInfo = new ElectionInfo(obj);
         result.push(election);
@@ -252,5 +254,28 @@ export class QuerySQL {
       type: QueryTypes.SELECT,
     });
     return found[0] == 1;
+  }
+
+  public async getElectionCandidates(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT C.name, C.ci, C.lastName, C.birthday, C.gender, C.partyId 
+                                FROM appEvDB.CandidateSQLs C, appEvDB.ElectionCandidateSQLs EC
+                                WHERE EC.electionId = ${electionId} AND C.ci = EC.candidateCI
+                                `;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    return found;
+  }
+
+  public async getElectionParties(electionId: number): Promise<any[]> {
+    let queryString: string = ` SELECT P.id, P.name 
+                                FROM appEvDB.PartySQLs P, appEvDB.ElectionCandidateSQLs EC, appEvDB.CandidateSQLs C
+                                WHERE P.id = C.partyId AND EC.candidateCI = C.ci AND EC.electionId = ${electionId}
+                                GROUP BY P.id, P.Name;
+                                `;
+    let found = await this.sequelize.query(queryString, {
+      type: QueryTypes.SELECT,
+    });
+    return found;
   }
 }
