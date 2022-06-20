@@ -46,8 +46,16 @@ async function consumer() {
 (async () => {
   await context.addModels();
   let pm2id = process.env.pm_id;
-  if (!pm2id) {
+  if (pm2id) {
+    let id = parseInt(pm2id);
+    if(id == 0){
+      console.log("Syncing models for port:", MySQLPort);
+      await context.syncAllModels();
+      await context.setMaxConnections();
+    }
+  }else{
     await context.syncAllModels();
+    await context.setMaxConnections();
   }
   consumer();
 })();

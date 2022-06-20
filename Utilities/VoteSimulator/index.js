@@ -1,19 +1,17 @@
 const axios = require("axios");
 const fs = require("fs");
-const autocannon= require("autocannon");
+const autocannon = require("autocannon");
 const VoteUtils = require("./VoteUtils");
 const MetricsUtils = require("./MetricsUtils");
 const MongoAccess = require("../MongoUtilities/mongoAccess");
 const ESC = "\x1b"; // ASCII escape character
 const CSI = ESC + "["; // control sequence introducer
 const config = require("config");
-const voteOptions = config.get("VoteOptions");	
+const voteOptions = config.get("VoteOptions");
 // startRequests();
 autoCannonRequests();
 
-
-
-async function autoCannonRequests(){
+async function autoCannonRequests() {
   let serverConfig = JSON.parse(
     fs.readFileSync("../../SRC/VotingSubSystem/config/development.json")
   );
@@ -22,15 +20,15 @@ async function autoCannonRequests(){
   let elections = await mongoAccess.getElections();
   let voteUtils = new VoteUtils(elections, appEvPublicKey);
 
-  let apiHost = "localhost";
+  let apiHost = voteOptions.apiHost;
   let endpoint = "/votes";
   let apiPort = serverConfig.VOTING_API.port;
   let url = "http://" + apiHost + ":" + apiPort;
 
   let offset = voteOptions.pageOffset;
   let batchSize = voteOptions.batchSize;
-  let batchCount =voteOptions.batchCount;
-  let timeout = voteOptions.timeout
+  let batchCount = voteOptions.batchCount;
+  let timeout = voteOptions.timeout;
   console.log("Starting vote simulator to url: " + url + endpoint + " with options:");
   console.log(voteOptions);
   console.log("----------------------");
@@ -48,7 +46,7 @@ async function autoCannonRequests(){
       duration: timeout,
       setupClient: (client) => {
         let electionVoter = voters[i];
-        if(electionVoter == undefined){
+        if (electionVoter == undefined) {
           console.log(i);
         }
         i++;
@@ -64,10 +62,7 @@ async function autoCannonRequests(){
     },
     console.log
   );
-
-
 }
-
 
 async function startAxiosRequests() {
   let serverConfig = JSON.parse(
@@ -79,7 +74,7 @@ async function startAxiosRequests() {
   let voteUtils = new VoteUtils(elections, appEvPublicKey);
   let metrics = new MetricsUtils();
 
-  let apiHost = "localhost";
+  let apiHost = "192.168.0.106";
   let endpoint = "/votes";
   let apiPort = serverConfig.VOTING_API.port;
   let url = "http://" + apiHost + ":" + apiPort;
@@ -93,11 +88,7 @@ async function startAxiosRequests() {
 
   metrics.totalAttempts = 0;
 
-  for (
-    let currentBatch = 0;
-    currentBatch < batchCount && !isFinished;
-    currentBatch++
-  ) {
+  for (let currentBatch = 0; currentBatch < batchCount && !isFinished; currentBatch++) {
     let voters = await mongoAccess.getVoterInformation(currentBatch, batchSize);
     console.log("Batch: ", currentBatch, " Voters: ", voters.length);
     if (batchSize != voters.length) {
@@ -142,7 +133,7 @@ async function startAxiosRequests() {
       );
     }
     await Promise.allSettled(promises);
-    console.log("Skipeo promises")
+    console.log("Skipeo promises");
     metrics.calculate();
     console.log(metrics);
   }

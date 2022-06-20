@@ -17,20 +17,10 @@ export class ElectionController {
     if (await query.existsElection(parseInt(req.params.id))) {
       let settings = await query.getElectionConfig(parseInt(req.params.id));
 
-      logger.logSuccessfulRequest(
-        "User asked for election " + req.params.id + " notification settings",
-        req.originalUrl,
-        user
-      );
+      logger.logSuccessfulRequest("User asked for election " + req.params.id + " notification settings", req.originalUrl, user);
       res.status(200).send(settings);
     } else {
-      logger.logBadRequest(
-        "User asked for election " +
-          req.params.id +
-          " notification settings || Election does not exists",
-        req.originalUrl,
-        user
-      );
+      logger.logBadRequest("User asked for election " + req.params.id + " notification settings || Election does not exists", req.originalUrl, user);
       res.status(404).send("Election " + req.params.id + " does not exists");
     }
   }
@@ -65,10 +55,10 @@ export class ElectionController {
   public static async getCircuitInfo(req: Request, res: Response) {
     const logger = LoggerFacade.getLogger();
     let id = parseInt(req.params.id);
-    let { minAge, maxAge, gender } = req.body;
+    let { minAge, maxAge, rangeSpace } = req.body;
     let query = Query.getQuery();
     try {
-      let result = await query.getElectionInfoCountPerCircuit(id, minAge, maxAge, gender);
+      let result = await query.getElectionInfoCountPerCircuit(id, minAge, maxAge, rangeSpace);
       res.status(200).send(result);
     } catch (err) {
       logger.logBadRequest(`election ${id} does not exist`, req.originalUrl);
@@ -79,10 +69,10 @@ export class ElectionController {
   public static async getStateInfo(req: Request, res: Response) {
     const logger = LoggerFacade.getLogger();
     let id = parseInt(req.params.id);
-    let { minAge, maxAge, gender } = req.body;
+    let { minAge, maxAge, rangeSpace } = req.body;
     let query = Query.getQuery();
     try {
-      let result = await query.getElectionInfoCountPerState(id, minAge, maxAge, gender);
+      let result = await query.getElectionInfoCountPerState(id, minAge, maxAge, rangeSpace);
       res.status(200).send(result);
     } catch (err) {
       logger.logBadRequest(`election ${id} does not exist`, req.originalUrl);
@@ -109,24 +99,13 @@ export class ElectionController {
       settings.electionId = parseInt(req.params.id);
       const updated = await Command.getCommand().updateNotificationSettings(settings);
 
-      res
-        .status(200)
-        .send(
-          "Notification settings for election " +
-            settings.electionId +
-            " updated: " +
-            JSON.stringify(updated)
-        );
+      res.status(200).send("Notification settings for election " + settings.electionId + " updated: " + JSON.stringify(updated));
     } catch (error: any) {
       if (error instanceof ElectionNotFound) {
         res.status(404).send(error.message);
       } else {
         console.log(error.message);
-        res
-          .status(400)
-          .send(
-            "Invalid request: Incorrect format. Format: {maxVotesPerVoter: number, maxVoteReportRequestsPerVoter: number, emailsSubscribed: string[]}"
-          );
+        res.status(400).send("Invalid request: Incorrect format. Format: {maxVotesPerVoter: number, maxVoteReportRequestsPerVoter: number, emailsSubscribed: string[]}");
       }
       return;
     }

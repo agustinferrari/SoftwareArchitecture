@@ -7,7 +7,7 @@ import { Query } from "../../DataAccess/Query/Query";
 export async function getUserInSession(token: string): Promise<UserDTO | null> {
   try {
     let jwtPayload = <any>jwt.verify(token, config.get("QUERY_API.jwtSecret"));
-
+    console.log(jwtPayload);
     let user: IUser;
     let userRepo = Query.getQuery();
     try {

@@ -14,11 +14,12 @@
     "port": 50051
   },
   "REDIS": {
-    "host": "192.168.0.106",
+    "host": "localhost",
     "port": "6379",
     "statusKey": "status",
     "commandQueue": "commandQueue",
     "queryQueue": "queryQueue"
-  },
+  }
+  "testing":true,
   "NOTIFICATION_HELPER": "EMAIL"
 }
