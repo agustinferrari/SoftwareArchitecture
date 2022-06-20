@@ -10,7 +10,16 @@ export class QuerySQL {
     this.sequelize = sequelize;
   }
 
+  private validateString(value: string) {
+    let regex = /^[a-zA-Z0-9 ]*$/;
+    if (regex.test(value)) {
+      return;
+    }
+    throw new Error("Invalid string characters");
+  }
+
   public async getVoter(ci: string): Promise<Voter> {
+    this.validateString(ci);
     let found = await VoterSQL.findByPk(ci);
     if (!found) {
       throw new Error("Voter not found");
@@ -35,6 +44,7 @@ export class QuerySQL {
   }
 
   public async voterElectionCircuit(voterCI: string, electionId: number, circuitId: number): Promise<boolean> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.ElectionCircuitVoterSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionCircuitId = '${electionId}_${circuitId}';`;
     let found = await this.sequelize.query(queryString, {
@@ -47,6 +57,7 @@ export class QuerySQL {
   }
 
   public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
     let found = await this.sequelize.query(queryString, {
@@ -59,6 +70,7 @@ export class QuerySQL {
   }
 
   public async checkRepeatedVote(voterCI: string, electionId: number, maxVotesPerVoter: number): Promise<boolean> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT Count(*) as 'VoteCount' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
     let found = await this.sequelize.query(queryString, {
@@ -73,6 +85,7 @@ export class QuerySQL {
   }
 
   public async getVoteDates(electionId: number, voterCI: string): Promise<string[]> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT startTimestamp FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
     let found: any = await this.sequelize.query(queryString, {
@@ -87,6 +100,8 @@ export class QuerySQL {
   }
 
   public async getVote(voteId: string, voterCI: string): Promise<Vote> {
+    this.validateString(voterCI);
+    this.validateString(voteId);
     let queryString: string = `SELECT * FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND id = '${voteId}';`;
     let found: any = await this.sequelize.query(queryString, {
@@ -107,7 +122,7 @@ export class QuerySQL {
     }
   }
 
-  public async getVoteFrequency(electionId: number, voterCI: string): Promise<any[]> {
+  public async getVoteFrequency(electionId: number): Promise<any[]> {
     let queryString: string = `SELECT hour(startTimestamp) AS 'hour', Count(*) AS 'totalVotes' FROM appEvDB.VoteSQLs WHERE electionId = '${electionId}'
                                   GROUP BY hour(startTimestamp) ORDER BY Count(*) DESC LIMIT 10;`;
     let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
