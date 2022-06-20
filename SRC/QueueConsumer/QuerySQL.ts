@@ -20,7 +20,7 @@ export class QuerySQL {
   }
 
   public async getElectionsInfo(): Promise<ElectionInfo[]> {
-    let found = await this.sequelize.query("SELECT id FROM appEvDB.ElectionSQLs;", {
+    let found = await this.sequelize.query("SELECT * FROM appEvDB.ElectionSQLs;", {
       type: QueryTypes.SELECT,
     });
     let result: ElectionInfo[] = [];

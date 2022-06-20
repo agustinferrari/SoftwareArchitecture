@@ -1,16 +1,15 @@
 {
   "SYS_NAME": "ConfigSubSystem",
   "MONGO": {
-    "host": "192.168.0.106",
+    "host": "localhost",
     "port": "27017",
     "dbName": "appEv"
   },
   "QUERY_API": {
-    "port": 3003,
-    "jwtSecret": "n03sC@nn0n"
+    "port": 3003
   },
   "REDIS": {
-    "host": "192.168.0.106",
+    "host": "localhost",
     "port": "6379",
     "statusKey": "status"
   },

@@ -4,3 +4,4 @@ export interface INotificationSettings {
     maxVoteReportRequestsPerVoter: number;
     emailsSubscribed: string[];
 }
+

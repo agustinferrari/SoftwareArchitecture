@@ -1,4 +1,5 @@
 import { Candidate } from "./Candidate";
+import { Election } from "./Election";
 import { ElectionMode } from "./ElectionMode";
 
 export class ElectionInfo {
@@ -48,4 +49,5 @@ export class ElectionInfo {
   setEmails(emails: string[]) {
     this.emails = emails;
   }
+
 }

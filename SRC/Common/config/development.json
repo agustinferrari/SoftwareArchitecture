@@ -15,7 +15,7 @@
     "name": "appEvDB",
     "user": "root",
     "password": "secret",
-    "host": "192.168.0.106",
+    "host": "localhost",
     "port": "3306"
   }
 }

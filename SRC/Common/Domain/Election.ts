@@ -3,6 +3,7 @@ import { Candidate } from "./Candidate";
 import { Party } from "./Party";
 import { Circuit } from "./Circuit";
 import { ElectionMode } from "./ElectionMode";
+import { ElectionInfo } from "./ElectionInfo";
 
 export class Election {
   name: string;
@@ -16,6 +17,21 @@ export class Election {
   parties: Party[];
   circuits: Circuit[];
   emails: string[];
+
+  parseElection(electionInfo: ElectionInfo): Election {
+    return new Election({
+      name: electionInfo.name,
+      id: electionInfo.id,
+      startDate: electionInfo.startDate,
+      endDate: electionInfo.endDate,
+      mode: electionInfo.mode,
+      voters: [],
+      emails: electionInfo.emails,
+      candidates: [],
+      parties: [],
+      circuits: [],
+    });
+  }
 
   constructor(inputJson: any) {
     this.name = inputJson.name;
