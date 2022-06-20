@@ -11,7 +11,9 @@
   "REDIS": {
     "host": "localhost",
     "port": "6379",
-    "statusKey": "status"
+    "statusKey": "status",
+    "commandQueue": "commandQueue",
+    "queryQueue": "queryQueue"
   },
   "NOTIFICATION_HELPER": "EMAIL"
 }

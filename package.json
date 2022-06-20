@@ -12,7 +12,7 @@
     "buildCommon": "cd ./SRC/Common/ && npm install && tsc -b && cp package*.json ../dist/Common/ && cp -R ./config  ../dist/Common/ && cp -R ./Validators/config.json ../dist/Common/Validators && cd ../dist/Common/ && npm ci --production",
     "buildAll": "npm run buildCommon && npm run buildElectionSubSystem && npm run buildQuerySubSystem && npm run buildVotingSubSystem && npm run buildQueueConsumer && cd ./SRC && tsc -b",
     "electoralAPI": "cd ./Utilities/MongoElectoralAPI && node index",
-    "electionGenerator": "cd ./Utilities/APIAutoridadElectoral/VoterGenerator && NODE_OPTIONS='--max-old-space-size=8192' node indexMongo.js",
+    "electionGenerator": "cd ./Utilities/APIAutoridadElectoral/VoterGenerator && node indexMongo.js",
     "keyGenerator": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && node index.js",
     "electionSubSystem": "cd ./SRC/ElectionSubSystem/ && npm run dev",
     "all": "npm run electoralAPI & npm run electionSubSystem",

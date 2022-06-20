@@ -2,7 +2,7 @@ import { Election, Vote } from "../../Common/Domain";
 import { IFilter } from "../../Common/Validators/IFilter";
 import { ElectionQuery } from "../DataAccess/Query/ElectionQuery";
 
-export class ElectionVoteCountFilter implements IFilter {
+export class ElectionVoteCountFilter extends IFilter {
   electionId: any;
   key: any;
   error: string;
@@ -10,6 +10,7 @@ export class ElectionVoteCountFilter implements IFilter {
   electionQuery: ElectionQuery;
 
   constructor(parameters: any, election: Election) {
+    super();
     this.key = parameters["key"];
     this.error = parameters["errorMessage"];
     this.maxAttempts = parameters["maxAttempts"];

@@ -4,11 +4,9 @@ import { ElectionQueryQueue } from "../DataAccess/Query/ElectionQueryQueue";
 
 export class EndAct extends AbstractAct {
   async getActInformation(election: Election, voterCount: number): Promise<string> {
-    //TODO: FALTA CANTIDAD DE VOTOS Y GANADOR
-
     let query = new ElectionQueryQueue();
     let electionResult: ElectionResult;
-
+    //TODO: POSIBLE REFACTOR PARA CALCULAR FUERA LOS DATOS
     let parties = await query.getPartiesResult(election.id);
     let candidates = await query.getCandidatesResult(election.id);
 
@@ -17,7 +15,7 @@ export class EndAct extends AbstractAct {
 
     let electionId: string = `[Elección ${election.id}: ${election.name}] \n `;
     let startDate: string = `[Fecha de inicio: ${election.startDate.toString()}] \n `;
-    let endDate: string = `[Fecha de fin: ${election.startDate.toString()}] \n `;
+    let endDate: string = `[Fecha de fin: ${election.endDate.toString()}] \n `;
     let currentVoters: string = `[Cantidad de habilitados a votar ${voterCount}] \n `;
     let totalVotesStr: string = `[Cantidad total de votos ${totalVotes}] \n `;
     let votingMode: string = `[Modalidad de votación: ${election.mode}] \n `;
@@ -27,7 +25,7 @@ export class EndAct extends AbstractAct {
       "\t"
     )}] \n `;
 
-    return (
+    let message  = (
       electionId +
       startDate +
       endDate +
@@ -36,5 +34,17 @@ export class EndAct extends AbstractAct {
       totalVotesStr +
       electionResultStr
     );
+
+    let result = {
+      election: `${election.id}: ${election.name}`,
+      startDate: `${election.startDate.toString()}`,
+      endDate: `${election.endDate.toString()}`,
+      currentVoters: `${voterCount}`,
+      totalVotes: `${totalVotes}`,
+      votingMode: `${election.mode}`,
+      electionResult: electionResult,
+    }
+  
+    return JSON.stringify(result);
   }
 }

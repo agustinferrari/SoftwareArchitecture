@@ -6,10 +6,28 @@ export class SMSNotificationSender implements INotificationSender {
   constructor() {
   }
 
-  sendNotification(messageContent: string, destinations: string[]): void {
-    let messageBody = { notification: messageContent };
-    for (let i = 0; i< destinations.length ; i++) {
-      console.log("SMS SENT to " + destinations[i] + JSON.stringify(messageBody));
+  async sendNotification(messageContent: string, destinations: string[]): Promise<void> {
+    let jsonMessage = null;
+
+    try{
+      jsonMessage = JSON.parse(messageContent);
+    }catch(e:any){
+
     }
+    
+    let messageBody : any = { type: "SMS", notification: messageContent };
+
+    if(jsonMessage){
+      messageBody.notification = jsonMessage;
+    }
+
+
+    destinations.forEach((destination) => {
+      messageBody.destination = destination;
+      console.log(messageBody);
+      // console.log(
+      //   "SMS SENT to " + destination + " " + messageBody
+      // );
+    });
   }
 }

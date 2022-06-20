@@ -1,9 +1,9 @@
 {
-  "SYS_NAME": "ConfigSubSystem",
+  "SYS_NAME": "AuthSubSystem",
   "MONGO": {
     "host": "localhost",
     "port": "27017",
-    "dbName": "appEv"
+    "dbName": "electoralAPI"
   },
   "QUERY_API": {
     "port": 3004,

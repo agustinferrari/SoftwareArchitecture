@@ -5,8 +5,6 @@ import { LoggerFacade } from "../../Logger/LoggerFacade";
 import { ElectionInfo, VoteProof, Voter } from "../../../Common/Domain";
 import { NotificationHelper } from "../Helpers/NotificationHelper";
 import { INotificationSender } from "../../../Common/NotificationSender";
-import { QueryMongo } from "../../DataAccess/Query/QueryMongo";
-import { CommandMongo } from "../../DataAccess/Command/CommandMongo";
 import { Command } from "../../DataAccess/Command/Command";
 
 export class VoteController {
@@ -23,8 +21,7 @@ export class VoteController {
     try {
       let result = await query.getVotes(electionId, voterCI);
       if (result.voteDates == []) {
-        //TODO ver si 200 esta bien
-        res.status(200).send("The voter has not voted yet");
+        res.status(404).send("The voter has not voted yet");
       } else {
         res.status(200).send(result);
       }

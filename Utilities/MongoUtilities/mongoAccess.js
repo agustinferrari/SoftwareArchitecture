@@ -28,6 +28,7 @@ const Election = new Schema({
 
 const Voter = new Schema({
   ci: String,
+  credential: String,
   name: String,
   lastName: String,
   gender: String,

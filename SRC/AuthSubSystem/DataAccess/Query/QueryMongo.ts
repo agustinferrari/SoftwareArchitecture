@@ -5,7 +5,7 @@ import config from "config";
 
 export class QueryMongo {
   static async findByEmailOrFail(email: string): Promise<IUser> {
-    const User = model<IUser>("User", userSchema);
+    const User = model<IUser>("authentications", userSchema);
     await mongoose.connect(
       `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
         "MONGO.dbName"
