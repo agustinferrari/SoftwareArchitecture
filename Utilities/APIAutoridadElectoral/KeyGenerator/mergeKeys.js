@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-let finalFile = "../private-public-keysPM2.txt";
+let finalFile = "../private-public-keys.txt";
 
 function readFiles(dirname) {
   fs.readdir(dirname, function (err, filenames) {

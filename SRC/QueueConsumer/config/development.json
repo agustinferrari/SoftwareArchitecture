@@ -1,7 +1,4 @@
 {
-  "API": {
-    "port": 3001
-  },
   "SQL_DB": {
     "name": "appEvDB",
     "user": "root",

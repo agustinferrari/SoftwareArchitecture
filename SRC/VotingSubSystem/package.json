@@ -19,6 +19,7 @@
     "google-protobuf": "^3.20.1",
     "grpc": "^1.24.11",
     "node-schedule": "^2.1.0",
+    "project-root": "file:../..",
     "reflect-metadata": "^0.1.13",
     "winston": "^3.7.2"
   },
