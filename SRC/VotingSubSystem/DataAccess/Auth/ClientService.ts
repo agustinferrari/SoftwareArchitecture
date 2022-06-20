@@ -10,7 +10,7 @@ import { TokenRequest, TokenResponse } from "./proto/token/token_pb";
  */
 export class ClientService {
   private readonly client: TokenClient = new TokenClient(
-    "localhost:50051",
+    "192.168.0.106:50051",
     credentials.createInsecure()
   );
 

@@ -7,7 +7,7 @@ import { UserDTO } from "../../QueryAPI/Models/User";
 
 const clientService: ClientService = new ClientService();
 
-console.log("gRPC:GreeterClient", new Date().toLocaleString());
+console.log("gRPC:TokenServer", new Date().toLocaleString());
 
 export async function validateToken(token: string): Promise<UserDTO> {
   const param: TokenRequest = new TokenRequest();
@@ -15,11 +15,7 @@ export async function validateToken(token: string): Promise<UserDTO> {
   const tokenResponse = await clientService.validate(param);
 
   if (tokenResponse.getCi()) {
-    let user: UserDTO = new UserDTO(
-      tokenResponse.getEmail(),
-      tokenResponse.getCi(),
-      tokenResponse.getRole()
-    );
+    let user: UserDTO = new UserDTO(tokenResponse.getEmail(), tokenResponse.getCi(), tokenResponse.getRole());
     return user;
   }
 

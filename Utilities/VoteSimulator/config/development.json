@@ -1,6 +1,6 @@
 {
   "MONGO": {
-    "host": "127.0.0.1",
+    "host": "192.168.0.106",
     "port": "27017",
     "dbName": "electoralAPI"
   },
@@ -8,10 +8,10 @@
     "port": 3000,
     "verbose": true
   },
-  "VoteOptions":{
-    "batchSize":5000,
-    "pageOffset":2,
-    "batchCount":1,
+  "VoteOptions": {
+    "batchSize": 300,
+    "pageOffset": 0,
+    "batchCount": 1,
     "fakeVoteDate": true,
     "timeout": 60000
   }
