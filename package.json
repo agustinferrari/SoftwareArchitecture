@@ -11,7 +11,8 @@
     "electoralAPIPM2": "cd ./Utilities/MongoElectoralAPI && pm2 start index.js --name ElectoralAPI -i",
     "electionGenerator": "cd ./Utilities/APIAutoridadElectoral/VoterGenerator && node index.js",
     "voterKeyGenerator": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && node generateVoterKeys.js && node mergeKeys.js",
-    "voterKeyGeneratorPM2": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && pm2 start generateVoterKeys.js -i 10 && node mergeKeys.js",
+    "voterKeyGeneratorPM2": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && pm2 start generateVoterKeys.js -i 10",
+    "mergeVoterKeys": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && node mergeKeys.js",
     "serverKeyGenerator": "cd ./Utilities/APIAutoridadelectoral/KeyGenerator && node generateServerKeys.js",
     "votingSimulation": "cd ./Utilities/VoteSimulator && node index.js",
     "querySimulation": "cd ./Utilities/QuerySimulator && node index.js",
@@ -27,7 +28,7 @@
     "commandConsumer": "cd ./SRC/QueueConsumer/Consumers && ts-node CommandConsumer.ts",
     "queryConsumerPM2": "cd ./SRC/QueueConsumer/Consumers && pm2 start QueryConsumer.ts -i ",
     "commandConsumerPM2": "cd ./SRC/QueueConsumer/Consumers && pm2 start  CommandConsumer.ts -i ",
-    "pm2:all": "cd ./ && npm run electoralAPIPM2 1 && npm run electionSubSystemPM2 && npm run votingSubSystemPM2 3 && npm run querySubSystemPM2 3 && npm run authSubSystemPM2 1 && npm run queryConsumerPM2 3 && npm run commandConsumerPM2 3"
+    "pm2:all": "npm run queryConsumerPM2 3 && npm run commandConsumerPM2 3 && npm run electoralAPIPM2 1 && npm run electionSubSystemPM2 && npm run votingSubSystemPM2 3 && npm run querySubSystemPM2 3 && npm run authSubSystemPM2 1"
   },
   "repository": {
     "type": "git",

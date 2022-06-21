@@ -123,7 +123,7 @@ npm run pm2:all
 
 ### Dependencias de Node para todos los subsistemas
 
-Para instalar todas las dependencias se debe ejecutar el comando siguiente en la raíz del proyecto:
+Para instalar todas las dependencias se puede ejecutar el comando siguiente en la raíz del proyecto, que equivale a ejecutar en cada subsistema o directorio del proyecto que contenga un archivo `package.json` el comando `npm install`:
 
 ```bash
 npm run install:all
@@ -178,11 +178,16 @@ Se hacen 10 instancias con pm2:
 npm run voterKeyGeneratorPM2
 ```
 
-Una vez termine se debe eliminar las instancias con pm2:
+Una vez termine se debe eliminar las instancias con pm2 y mergear las keys con el siguiente comando.
 
 ```bash
 pm2 delete generateVoterKeys.js
+npm run mergeVoterKeys
 ```
+
+Los archivos temporales del nombre `private-public-keys[numero].txt` en el directorio ./Utilities/APIAutoridadElectoral/KeyGenerator/Keys pueden ser eliminados, siempre y cuando se deje el archivo private-public-keys.txt en el directorio APIAutoridadElectoral.
+
+---
 
 ### Generación de Votantes y Elecciones
 

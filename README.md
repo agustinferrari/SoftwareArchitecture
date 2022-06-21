@@ -6,22 +6,7 @@
 - Graziano Pascale 186821
 
 ## Comandos:
-En root:
-
-### Build a todos los proyectos
-```bash
-npm run buildAll
-```
-
-### Correr electionSubSystem
-```bash
-npm run electionSubSystem
-```
-
-### Correr electoralAPI
-```bash
-npm run electoralAPI
-```
+En el documento [CommandGuide.md](./CommandGuide.md) se encuentran los scripts del proyecto con una descripción de uso.
 
 ## Dependencias
 
