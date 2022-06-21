@@ -18,7 +18,6 @@ export class Query {
 
   public async getElection(electionId: number): Promise<ElectionInfo> {
     let result: ElectionInfo | null = await this.queryCache.getElection(electionId);
-    console.log("Busco " + electionId + " en cache");
     if (!result) {
       throw new Error("Election not found");
     }

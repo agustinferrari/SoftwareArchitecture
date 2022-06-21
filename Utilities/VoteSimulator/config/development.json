@@ -6,8 +6,8 @@
   },
   "VoteOptions":{
     "apiHost": "localhost",
-    "batchSize":10000,
-    "pageOffset":1,
+    "batchSize":3000,
+    "pageOffset":2,
     "fakeVoteDate": true,
     "timeout": 60000
   }

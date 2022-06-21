@@ -28,7 +28,9 @@
     "commandConsumer": "cd ./SRC/QueueConsumer/Consumers && ts-node CommandConsumer.ts",
     "queryConsumerPM2": "cd ./SRC/QueueConsumer/Consumers && pm2 start QueryConsumer.ts -i ",
     "commandConsumerPM2": "cd ./SRC/QueueConsumer/Consumers && pm2 start  CommandConsumer.ts -i ",
-    "pm2:all": "npm run queryConsumerPM2 3 && npm run commandConsumerPM2 3 && npm run electoralAPIPM2 1 && npm run electionSubSystemPM2 && npm run votingSubSystemPM2 3 && npm run querySubSystemPM2 3 && npm run authSubSystemPM2 1"
+    "pm2:all": "npm run queryConsumerPM2 9 && npm run commandConsumerPM2 6 && npm run electoralAPIPM2 1 && npm run votingSubSystemPM2 6 && npm run querySubSystemPM2 6 && npm run authSubSystemPM2 1 && npm run electionSubSystemPM2",
+    "pm2:testing": "npm run electoralAPIPM2 1 && npm run votingSubSystemPM2 6 && npm run querySubSystemPM2 6 && npm run electionSubSystemPM2",
+    "pm2:consumers": "npm run queryConsumerPM2 9 && npm run commandConsumerPM2 6"
   },
   "repository": {
     "type": "git",

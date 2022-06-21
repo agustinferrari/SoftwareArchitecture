@@ -10,7 +10,7 @@
     "jwtSecret": "n03sC@nn0n"
   },
   "AUTH": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "port": 50051
   },
   "REDIS": {
