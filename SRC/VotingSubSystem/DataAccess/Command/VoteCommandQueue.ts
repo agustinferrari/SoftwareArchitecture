@@ -50,20 +50,20 @@ export class VoteCommandQueue {
     let foundJob = await this.electionQueue.getJob(options.jobId);
 
     if (foundJob) {
-      foundJob.remove();
+      // foundJob.remove();
       throw new DuplicateBullIdError();
     }
 
     let job = await this.electionQueue.add(queueJob, options);
     let result: QueueResponse = await job.finished();
 
-    // let maximumMSInQueue = 2000;
-    // let removePromise = new Promise((resolve) =>
-    //   setTimeout(() => {
-    //     job.remove();
-    //     resolve(null);
-    //   }, maximumMSInQueue)
-    // );
+    let maximumMSInQueue = 2000;
+    let removePromise = new Promise((resolve) =>
+      setTimeout(() => {
+        job.remove();
+        resolve(null);
+      }, maximumMSInQueue)
+    );
 
     reqCountHelper.afterCommandQueueCount++;
   }
