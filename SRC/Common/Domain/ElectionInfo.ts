@@ -39,7 +39,11 @@ export class ElectionInfo {
 
     this.startDate = obj.startDate;
     this.endDate = obj.endDate;
-    this.voterCount = 0;
+    if(obj.voterCount){
+      this.voterCount = obj.voterCount;
+    }else{
+      this.voterCount = 0;
+    }
   }
 
   setMaxVotes(maxVotesPerVoter: number) {

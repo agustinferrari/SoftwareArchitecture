@@ -15,21 +15,21 @@ export class QueryMongo {
       notificationSettingsSchema
     );
     await mongoose.connect(
-      `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
-        "MONGO.dbName"
-      )}`
+      `mongodb://${config.get("MONGO.host")}:${config.get(
+        "MONGO.port"
+      )}/${config.get("MONGO.dbName")}`
     );
 
-    const settings = await NotificationSettings.findOne({ electionId: electionId }).exec();
+    const settings = await NotificationSettings.findOne({
+      electionId: electionId,
+    }).exec();
 
     if (settings) {
       return settings;
     } else {
       throw new Error("Settings not found");
     }
-
   }
-
 
   static async getElectionInfos(): Promise<ElectionInfo[]> {
     const electionInfoModel = model<ElectionInfo>(
@@ -37,11 +37,20 @@ export class QueryMongo {
       electionInfoSchema
     );
     await mongoose.connect(
-      `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
-        "MONGO.dbName"
-      )}`
+      `mongodb://${config.get("MONGO.host")}:${config.get(
+        "MONGO.port"
+      )}/${config.get("MONGO.dbName")}`
     );
 
-    return await electionInfoModel.find().exec();
+    let found = await electionInfoModel.find().exec();
+
+    let result: ElectionInfo[] = [];
+
+    found.forEach(element => {
+      let electionInfo  : ElectionInfo = new ElectionInfo(element);
+      result.push(electionInfo);
+    });
+
+    return result;
   }
 }

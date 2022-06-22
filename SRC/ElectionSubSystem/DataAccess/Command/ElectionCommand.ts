@@ -31,7 +31,7 @@ export class ElectionCommand {
 
   public async addVoterCount(id: number, totalAdded: number): Promise<void> {
     await this.commandMongo.updateElectionInfo(id, totalAdded);
-    this.electionCache.addVoterCount(id, totalAdded);
+    await this.electionCache.addVoterCount(id, totalAdded);
   }
 
   public async deleteVoterCandidateAssociation(

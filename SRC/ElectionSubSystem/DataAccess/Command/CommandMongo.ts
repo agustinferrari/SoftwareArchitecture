@@ -9,6 +9,8 @@ import {
 import { Election, ElectionInfo } from "../../../Common/Domain";
 import { electionInfoSchema } from "../../Models/ElectionInfoMongo";
 
+
+
 export class CommandMongo {
   async addSettings(election: Election): Promise<void> {
     const modelNotificationSettings = model<INotificationSettings>(
@@ -58,11 +60,12 @@ export class CommandMongo {
       )}/${config.get("MONGO.dbName")}`
     );
 
-    let electionInfo : ElectionInfo | null = await electionInfoModel.findOne({where:{id:electionId}});
+    let electionInfo : ElectionInfo | null = await electionInfoModel.findOne({id:electionId});
+
     if(!electionInfo){
       throw new Error("ElectionInfo does not exit");
     }
     electionInfo.voterCount = voterCount;
-    await electionInfoModel.updateOne({where:{id: electionId}}, electionInfo);
+    await electionInfoModel.updateOne({id: electionId}, electionInfo);
   }
 }

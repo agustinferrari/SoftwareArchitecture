@@ -69,7 +69,6 @@ export class StartupHelper {
     console.log("StateResynchronization");
     let query: ElectionQuery = new ElectionQuery();
     let elections = await query.getElectionsInfo();
-    console.log(elections)
     let cacheCommand: CommandCache = new CommandCache();
     let today = new Date();
     let scheduler: ElectionScheduler;
