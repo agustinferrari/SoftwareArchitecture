@@ -6,9 +6,9 @@
   },
   "VoteOptions":{
     "apiHost": "localhost",
-    "batchSize":3000,
-    "pageOffset":2,
+    "batchSize":1000,
+    "pageOffset":0,
     "fakeVoteDate": true,
-    "timeout": 60000
+    "timeout": 10
   }
 }

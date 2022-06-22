@@ -6,7 +6,7 @@
     "host": "localhost",
     "port": "4406",
     "masterPort": "4406",
-    "ports": ["4406"],
+    "ports":["5506", "5507", "5508"],
     "portsAvailable": ["5506", "5507", "5508"]
 
   },

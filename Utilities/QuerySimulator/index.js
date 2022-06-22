@@ -26,7 +26,7 @@ async function autoCannonRequests() {
 
   for (let i = 0; i < routes.length; i++) {
     let route = routes[i];
-    let currentUrl = baseUrl + route.root;
+    let currentUrl = baseUrl + "/" + route.root;
 
     if(route.electionId){
       currentUrl += "/" + getRandomElection(elections).id + "/";
@@ -46,13 +46,13 @@ async function autoCannonRequests() {
         }
       }
       currentUrl+= endpoint.endpoint;
-      console.log(currentUrl);
       sendAutoCannonRequest(currentUrl, endpoint.method, batchSize, body, timeout);
     }
   }
 }
 
 async function sendAutoCannonRequest(url, method, count, body, timeout) {
+  console.log(`Starting ${count} requests to: ${method} ${url}`);
   autocannon(
     {
       url: url,

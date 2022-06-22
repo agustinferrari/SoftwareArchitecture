@@ -13,8 +13,8 @@ export class QueryQueue {
       redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
     });
     this.jobOptions = {
-      removeOnComplete: true,
-      removeOnFail: true,
+      // removeOnComplete: true,
+      // removeOnFail: true,
     };
   }
 
