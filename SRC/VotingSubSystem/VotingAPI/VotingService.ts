@@ -7,6 +7,8 @@ import { ValidatorManager } from "../Validators/ValidatorManager";
 import { INotificationSender } from "../../Common/NotificationSender";
 import { RequestCountHelper } from "../Helpers/RequestCountHelper";
 import { LoggerFacade } from "../Logger/LoggerFacade";
+import { DuplicateBullIdError } from "./Error/DuplicateBullIdError";
+
 export class VotingService {
   voteCommand: VoteCommand;
   voteQuery: Query;
@@ -25,8 +27,7 @@ export class VotingService {
   async handleVote(voteIntentEncrypted: VoteIntentEncrypted): Promise<void> {
     let reqCountHelper = RequestCountHelper.getInstance();
 
-    //TODO ver que era esto
-    let startTimestamp = new Date(); //req.noseque
+    let receptionTimestamp = new Date(); 
     reqCountHelper.beforeGetVoter++;
 
     let voter: Voter = await this.voteQuery.getVoter(voteIntentEncrypted.voterCI);
@@ -62,24 +63,33 @@ export class VotingService {
     }
 
     reqCountHelper.afterValidationCount++;
-    this.afterValidation(vote, voter, startTimestamp);
+    this.afterValidation(vote, voter, receptionTimestamp);
     return;
   }
 
-  private async afterValidation(vote: Vote, voter: Voter, startTimestamp: Date) {
+  private async afterValidation(vote: Vote, voter: Voter, receptionTimestamp: Date) {
     let election: ElectionInfo = await this.voteQuery.getElection(vote.electionId);
     vote.randomizeAndSetId();
     let reqCountHelper = RequestCountHelper.getInstance();
 
     reqCountHelper.beforeAddVoteCount++;
-    await this.addVote(vote, election, startTimestamp);
-    reqCountHelper.afterAddVoteCount++;
-    this.sendVoteProof(vote, voter, election);
+    try{
+      await this.addVote(vote, election, receptionTimestamp);
+      reqCountHelper.afterAddVoteCount++;
+      this.sendVoteProof(vote, voter, election);
+    }catch(e:any){
+      if(e instanceof DuplicateBullIdError){
+        this.notificationSender.sendNotification(e.message, [voter.phone]);
+      }
+    }
   }
 
   private async addVote(vote: Vote, election: ElectionInfo, startTimestamp: Date) {
-    let responseTime = vote.endTimestamp.valueOf() - startTimestamp.valueOf();
+    let endTimestamp = new Date();
+    let responseTime = endTimestamp.valueOf() - startTimestamp.valueOf();
+    let resultingEndTimestamp = new Date(responseTime + vote.startTimestamp.valueOf());
     vote.responseTime = responseTime;
+    vote.endTimestamp= resultingEndTimestamp;
 
     return this.voteCommand.addVote(vote, election.mode);
   }

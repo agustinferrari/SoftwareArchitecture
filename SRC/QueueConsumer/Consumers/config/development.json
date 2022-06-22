@@ -6,9 +6,7 @@
     "host": "localhost",
     "port": "4406",
     "masterPort": "4406",
-    "ports":["5506", "5507", "5508"],
-    "portsAvailable": ["5506", "5507", "5508"]
-
+    "ports": ["5506", "5507", "5508"]
   },
   "REDIS": {
     "host": "localhost",

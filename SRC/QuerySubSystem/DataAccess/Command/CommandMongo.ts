@@ -15,7 +15,7 @@ export class CommandMongo {
     electionId: number,
     wasRejected: boolean
   ): Promise<void> {
-    const VoteProofLog = model<IVoteProofLog>("VoteProofLoog", voteProofSchema);
+    const VoteProofLog = model<IVoteProofLog>("VoteProofLog", voteProofSchema);
 
     await mongoose.connect(
       `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
@@ -30,17 +30,6 @@ export class CommandMongo {
       statusRejected: wasRejected,
     });
     await voteProofLog.save();
-    console.log(
-      "VoteProof Log " +
-        voterCI +
-        " " +
-        timestamp +
-        " " +
-        electionId +
-        " with statusRejected " +
-        wasRejected +
-        " saved to database"
-    );
 
     return;
   }
@@ -49,7 +38,7 @@ export class CommandMongo {
     settings: INotificationSettings
   ): Promise<INotificationSettings> {
     await mongoose.connect(
-      `mongodb://192.168.0.106:${config.get("MONGO.port")}/${config.get("MONGO.dbName")}`
+      `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get("MONGO.dbName")}`
     );
 
     const NotificationSettings = model<INotificationSettings>(

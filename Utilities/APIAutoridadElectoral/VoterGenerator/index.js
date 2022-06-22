@@ -5,7 +5,7 @@ const prompt = require("prompt-sync")({ sigint: true });
 
 console.log("Generating election in mongo");
 
-const electionNumber = prompt("Cuantos elecciones desea generar? ");
+const electionNumber = prompt("Cuantas elecciones desea generar? ");
 const circuitNumber = prompt("Cuantos circuitos? ");
 const partyNumber = prompt("Cuantos partidos? ");
 const candidateNumber = prompt("Cuantos candidatos? ");
