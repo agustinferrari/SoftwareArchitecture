@@ -9,6 +9,12 @@
     "port": 3004,
     "jwtSecret": "n03sC@nn0n"
   },
+  "REDIS": {
+    "host": "localhost",
+    "port": "6379",
+    "statusKey": "status"
+  },
+  "NOTIFICATION_HELPER": "EMAIL",
   "GRPC": {
     "host": "127.0.0.1",
     "port": 50051

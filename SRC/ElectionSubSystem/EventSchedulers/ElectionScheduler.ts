@@ -24,6 +24,9 @@ export class ElectionScheduler {
   }
 
   private parseDate(myDateStr: string): Date {
+    if(myDateStr.includes("T") && myDateStr.charAt(myDateStr.length-1)){
+      return new Date(myDateStr);
+    }
     const dateStr = myDateStr;
     const [dateComponents, timeComponents] = dateStr.split(" ");
 

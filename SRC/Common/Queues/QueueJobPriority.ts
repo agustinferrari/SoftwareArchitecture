@@ -15,6 +15,8 @@ export enum QueueQueryPriority {
   GetPartiesResult = 5,
   GetCandidatesResult = 5,
   GetElectionInfo = 1,
+  GetElectionCandidates = 1,
+  GetElectionParties = 1
 }
 
 export enum QueueCommandPriority {

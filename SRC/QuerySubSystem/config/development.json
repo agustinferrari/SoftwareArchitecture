@@ -6,8 +6,7 @@
     "dbName": "appEv"
   },
   "QUERY_API": {
-    "port": 3003,
-    "jwtSecret": "n03sC@nn0n"
+    "port": 3003
   },
   "AUTH": {
     "host": "localhost",

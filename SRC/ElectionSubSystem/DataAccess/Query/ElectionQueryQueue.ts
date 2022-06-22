@@ -1,9 +1,10 @@
-import { ElectionInfo } from "../../../Common/Domain";
+import { Candidate, ElectionInfo, Party } from "../../../Common/Domain";
 import Queue from "bull";
 import { QueueQueryJob, QueueQueryPriority, QueueQueryType, QueueResponse } from "../../../Common/Queues";
 import config from "config";
 
 export class ElectionQueryQueue {
+
   electionQueue: any;
   jobOptions: any;
 
@@ -81,14 +82,25 @@ export class ElectionQueryQueue {
     return result.result;
   }
 
-  // public async getElectionResult(electionId: number): Promise<ElectionResult> {
-  //   let queueJob = new QueueJob();
-  //   queueJob.input = { electionId: electionId };
-  //   this.jobOptions.priority = QueueJobPriority.GetElectionResult;
-  //   queueJob.type = QueueJobType.GetElectionResult;
-  //   let job = await this.electionQueue.add(queueJob, this.jobOptions);
-  //   let result: QueueResponse = await job.finished();
-  //   console.log("result:", result.result, " error:", result.error);
-  //   return result.result;
-  // }
+  public async getElectionParties(electionId: number): Promise<Party[]> {
+    let queueJob = new QueueQueryJob();
+    queueJob.input = { electionId: electionId };
+    this.jobOptions.priority = QueueQueryPriority.GetElectionParties;
+    queueJob.type = QueueQueryType.GetElectionParties;
+
+    let job = await this.electionQueue.add(queueJob);
+    let result: QueueResponse = await job.finished();
+    return result.result;
+    }
+
+    public async getElectionCandidates(electionId: number): Promise<Candidate[]> {
+    let queueJob = new QueueQueryJob();
+    queueJob.input = { electionId: electionId };
+    this.jobOptions.priority = QueueQueryPriority.GetElectionCandidates;
+    queueJob.type = QueueQueryType.GetElectionCandidates;
+
+    let job = await this.electionQueue.add(queueJob);
+    let result: QueueResponse = await job.finished();
+    return result.result; 
+  }
 }

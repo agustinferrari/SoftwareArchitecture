@@ -6,6 +6,18 @@
     "electionsVoterPageLimit": 1,
     "votersPageLimit": 100000
   },
+  "SQL_DB": {
+    "name": "appEvDB",
+    "user": "root",
+    "password": "secret",
+    "host": "localhost",
+    "port": "3306"
+  },
+  "MONGO": {
+    "host": "localhost",
+    "port": "27017",
+    "dbName": "appEv"
+  },
   "REDIS": {
     "host": "localhost",
     "port": "6379",
