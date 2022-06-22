@@ -1,7 +1,4 @@
-import { Request, Response, NextFunction } from "express";
-import { UserDTO } from "../Models/User";
-import { LoggerFacade } from "../../Logger/LoggerFacade";
-import { validateToken } from "../../DataAccess/Auth/Client";
+import { Request, Response } from "express";
 import config from "config";
 import { TimeStampHelper } from "../Helpers/TimeStampHelper";
 

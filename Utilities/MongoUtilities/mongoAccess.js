@@ -23,7 +23,7 @@ const Election = new Schema({
       partyId: Number,
     },
   ],
-  emails: [{ type: Array, default: [] }],
+  emails: [{ type: String, default: [] }],
 });
 
 const Voter = new Schema({

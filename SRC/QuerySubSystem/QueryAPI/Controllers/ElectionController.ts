@@ -120,19 +120,28 @@ export class ElectionController {
     }
   }
 
-  static setSettings = async (req: Request, res: Response) => {
+  static setSettings = async (req: Request, res: Response, next : NextFunction) => {
+    let requestTimeStamp : Date = new Date();
     try {
       const settings: INotificationSettings = req.body;
       settings.electionId = parseInt(req.params.id);
       const updated = await Command.getCommand().updateNotificationSettings(settings);
 
-      res.status(200).send("Notification settings for election " + settings.electionId + " updated: " + JSON.stringify(updated));
+      let message = "Notification settings for election " + settings.electionId + " updated: " + JSON.stringify(updated);
+
+      res.locals.timeStampHelper =  new TimeStampHelper(message, 200, requestTimeStamp, new Date());
+      next();
     } catch (error: any) {
       if (error instanceof ElectionNotFound) {
-        res.status(404).send(error.message);
+
+        res.locals.timeStampHelper =  new TimeStampHelper(error.message, 404, requestTimeStamp, new Date());
+        next();
+        
       } else {
         console.log(error.message);
-        res.status(400).send("Invalid request: Incorrect format. Format: {maxVotesPerVoter: number, maxVoteReportRequestsPerVoter: number, emailsSubscribed: string[]}");
+        let errorMessage = "Invalid request: Incorrect format. Format: {maxVotesPerVoter: number, maxVoteReportRequestsPerVoter: number, emailsSubscribed: string[]}";
+        res.locals.timeStampHelper =  new TimeStampHelper(errorMessage, 400, requestTimeStamp, new Date());
+        next();
       }
       return;
     }
