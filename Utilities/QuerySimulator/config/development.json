@@ -12,17 +12,13 @@
     "timeout": 60000,
     "routes": [
       {
-        "root": "votes",
-        "electionId": false,
+        "root": "elections",
+        "electionId": true,
         "endpoints": [
           {
             "endpoint": "",
             "method": "get",
-            "REQ": 8,
-            "params": {
-              "electionId": true,
-              "voterCI": true
-            }
+            "REQ": 9
           }
         ]
       }

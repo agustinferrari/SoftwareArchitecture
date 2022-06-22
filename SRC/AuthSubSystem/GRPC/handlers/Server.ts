@@ -3,8 +3,8 @@ import "dotenv/config";
 import config from "config";
 import { TokenRequest, TokenResponse } from "../proto/token/token_pb";
 import { TokenService, ITokenServer } from "../proto/token/token_grpc_pb";
-import { getUserInSession } from "../../QueryAPI/Helpers/JwtHelper";
-import { UserDTO } from "../../QueryAPI/Models/User";
+import { getUserInSession } from "../../AuthAPI/Helpers/JwtHelper";
+import { UserDTO } from "../../AuthAPI/Models/User";
 
 class TokenHandler implements ITokenServer {
   validate = async (call: grpc.ServerUnaryCall<TokenRequest>, callback: grpc.sendUnaryData<TokenResponse>): Promise<void> => {

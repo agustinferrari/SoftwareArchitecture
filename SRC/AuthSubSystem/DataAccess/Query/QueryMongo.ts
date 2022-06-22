@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { model } from "mongoose";
-import { IUser, userSchema } from "../../QueryAPI/Models/User";
+import { IUser, userSchema } from "../../AuthAPI/Models/User";
 import config from "config";
 
 export class QueryMongo {
