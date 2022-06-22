@@ -1,6 +1,6 @@
 {
   "MONGO": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "port": "27017",
     "dbName": "electoralAPI",
     "batchSize": 100000

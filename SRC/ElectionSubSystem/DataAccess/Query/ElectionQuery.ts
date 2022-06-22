@@ -55,7 +55,7 @@ export class ElectionQuery {
   public async validateElectionVotesCount(electionId: number): Promise<boolean> {
     let result = await this.electionCache.existsElection(electionId);
     if (result) {
-      return this.electionQueryQueue.validateElectionVotesDate(electionId);
+      return this.electionQueryQueue.validateElectionVotesCount(electionId);
     }
     throw Error("Election " + electionId + "not found");
   }

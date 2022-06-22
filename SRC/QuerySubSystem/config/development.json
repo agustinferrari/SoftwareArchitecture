@@ -8,6 +8,10 @@
   "QUERY_API": {
     "port": 3003
   },
+  "AUTH": {
+    "host": "localhost",
+    "port": 50051
+  },
   "REDIS": {
     "host": "localhost",
     "port": "6379",
@@ -15,5 +19,6 @@
     "commandQueue": "commandQueue",
     "queryQueue": "queryQueue"
   },
+  "testing": true,
   "NOTIFICATION_HELPER": "EMAIL"
 }

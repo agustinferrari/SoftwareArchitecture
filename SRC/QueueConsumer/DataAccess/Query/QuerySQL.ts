@@ -10,7 +10,16 @@ export class QuerySQL {
     this.sequelize = sequelize;
   }
 
+  private validateString(value: string) {
+    let regex = /^[a-zA-Z0-9 ]*$/;
+    if (regex.test(value)) {
+      return;
+    }
+    throw new Error("Invalid string characters");
+  }
+
   public async getVoter(ci: string): Promise<Voter> {
+    this.validateString(ci);
     let found = await VoterSQL.findByPk(ci);
     if (!found) {
       throw new Error("Voter not found");
@@ -35,11 +44,8 @@ export class QuerySQL {
     return result;
   }
 
-  public async voterElectionCircuit(
-    voterCI: string,
-    electionId: number,
-    circuitId: number
-  ): Promise<boolean> {
+  public async voterElectionCircuit(voterCI: string, electionId: number, circuitId: number): Promise<boolean> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.ElectionCircuitVoterSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionCircuitId = '${electionId}_${circuitId}';`;
     let found = await this.sequelize.query(queryString, {
@@ -52,6 +58,7 @@ export class QuerySQL {
   }
 
   public async checkUniqueVote(voterCI: string, electionId: number): Promise<boolean> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT Count(*) as 'Exists' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
     let found = await this.sequelize.query(queryString, {
@@ -63,11 +70,8 @@ export class QuerySQL {
     return false;
   }
 
-  public async checkRepeatedVote(
-    voterCI: string,
-    electionId: number,
-    maxVotesPerVoter: number
-  ): Promise<boolean> {
+  public async checkRepeatedVote(voterCI: string, electionId: number, maxVotesPerVoter: number): Promise<boolean> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT Count(*) as 'VoteCount' FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
     let found = await this.sequelize.query(queryString, {
@@ -82,6 +86,7 @@ export class QuerySQL {
   }
 
   public async getVoteDates(electionId: number, voterCI: string): Promise<string[]> {
+    this.validateString(voterCI);
     let queryString: string = `SELECT startTimestamp FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND electionId = '${electionId}';`;
     let found: any = await this.sequelize.query(queryString, {
@@ -96,6 +101,8 @@ export class QuerySQL {
   }
 
   public async getVote(voteId: string, voterCI: string): Promise<Vote> {
+    this.validateString(voterCI);
+    this.validateString(voteId);
     let queryString: string = `SELECT * FROM appEvDB.VoteSQLs WHERE voterCI = '${voterCI}' 
                                     AND id = '${voteId}';`;
     let found: any = await this.sequelize.query(queryString, {
@@ -116,7 +123,7 @@ export class QuerySQL {
     }
   }
 
-  public async getVoteFrequency(electionId: number, voterCI: string): Promise<any[]> {
+  public async getVoteFrequency(electionId: number): Promise<any[]> {
     let queryString: string = `SELECT hour(startTimestamp) AS 'hour', Count(*) AS 'totalVotes' FROM appEvDB.VoteSQLs WHERE electionId = '${electionId}'
                                   GROUP BY hour(startTimestamp) ORDER BY Count(*) DESC LIMIT 10;`;
     let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
@@ -171,53 +178,41 @@ export class QuerySQL {
     return found;
   }
 
-  public async getElectionInfoCountPerCircuit(
-    electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
-  ): Promise<any[]> {
+  public async getElectionInfoCountPerCircuit(electionId: number, minAge: number, maxAge: number): Promise<any[]> {
     let minAgeFilter = minAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) > ${minAge}` : ``;
     let maxAgeFilter = maxAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) < ${maxAge}` : ``;
-    let genderFilter = gender ? `AND V.gender = '${gender}'` : ``;
     let queryString: string = `
-    SELECT  Q1.circuitId, voters, votes
+    SELECT  Q1.circuitId, voters, votes, Q1.age, Q1.gender
     FROM
-    (SELECT ECV.circuitId, Count(V.ci) as voters
+    (SELECT ECV.circuitId, Count(V.ci) as voters, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) as age, V.gender
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.VoterSQLs V 
-      WHERE ECV.electionId = ${electionId} AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
-    GROUP BY circuitId ORDER BY ECV.circuitId ASC) Q1,
-    (SELECT ECV.circuitId, Count(V.ci) as votes
+      WHERE ECV.electionId = ${electionId} AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter}
+    GROUP BY circuitId, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()), V.gender ORDER BY ECV.circuitId ASC, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) ASC) Q1,
+    (SELECT ECV.circuitId, Count(V.ci) as votes, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) as age, V.gender
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.VoterSQLs V, appEvDB.VoteSQLs Vo
-      WHERE ECV.electionId = ${electionId} AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
-    GROUP BY circuitId ORDER BY ECV.circuitId ASC) Q2
-    WHERE Q1.circuitId = Q2.circuitId
+      WHERE ECV.electionId = ${electionId} AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter}
+      GROUP BY circuitId, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()), V.gender ORDER BY ECV.circuitId ASC, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) ASC) Q2
+      WHERE Q1.circuitId = Q2.circuitId AND Q1.age = Q2.age AND Q1.gender = Q2.gender
     `;
     let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
     return found;
   }
 
-  public async getElectionInfoCountPerState(
-    electionId: number,
-    minAge: number | undefined,
-    maxAge: number | undefined,
-    gender: string | undefined
-  ): Promise<any[]> {
+  public async getElectionInfoCountPerState(electionId: number, minAge: number | undefined, maxAge: number | undefined): Promise<any[]> {
     let minAgeFilter = minAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) > ${minAge}` : ``;
     let maxAgeFilter = maxAge ? `AND TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) < ${maxAge}` : ``;
-    let genderFilter = gender ? `AND V.gender = '${gender}'` : ``;
     let queryString: string = `
-    SELECT  Q1.state, voters, votes
+    SELECT  Q1.state as stateName, voters, votes, Q1.age, Q1.gender
     FROM
-    (SELECT C.state, Count(*) as voters
+    (SELECT C.state, Count(*) as voters, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) as age, V.gender
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.CircuitSQLs C, appEvDB.VoterSQLs V
-      WHERE ECV.electionId = ${electionId} AND ECV.circuitId = C.id AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
-    GROUP BY C.state ORDER BY C.state ASC) Q1,
-    (SELECT C.state, Count(*) as votes
+      WHERE ECV.electionId = ${electionId} AND ECV.circuitId = C.id AND ECV.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter}
+    GROUP BY C.state, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()), V.gender ORDER BY C.state ASC, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) ASC) Q1,
+    (SELECT C.state, Count(*) as votes, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) as age, V.gender
       FROM appEvDB.ElectionCircuitVoterSQLs ECV, appEvDB.CircuitSQLs C, appEvDB.VoteSQLs Vo, appEvDB.VoterSQLs V
-      WHERE ECV.electionId = ${electionId} AND ECV.circuitId = C.id AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter} ${genderFilter}
-    GROUP BY C.state ORDER BY C.state ASC) Q2
-    WHERE Q1.state = Q2.state
+      WHERE ECV.electionId = ${electionId} AND ECV.circuitId = C.id AND ECV.voterCI = V.ci AND Vo.voterCI = V.ci ${minAgeFilter} ${maxAgeFilter}
+    GROUP BY C.state, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()), V.gender ORDER BY C.state ASC, TIMESTAMPDIFF(YEAR, V.birthday, CURDATE()) ASC) Q2
+    WHERE Q1.state = Q2.state AND Q1.age = Q2.age AND Q1.gender = Q2.gender
     `;
     let found: any = await this.sequelize.query(queryString, { type: QueryTypes.SELECT });
     return found;
@@ -227,12 +222,7 @@ export class QuerySQL {
     let candidates = await this.getCandidatesResult(electionId);
     let parties = await this.getPartiesResult(electionId);
     let totalVotes = await this.getTotalVotes(electionId);
-    let responseState = await this.getElectionInfoCountPerState(
-      electionId,
-      undefined,
-      undefined,
-      undefined
-    );
+    let responseState = await this.getElectionInfoCountPerState(electionId, undefined, undefined);
     return [totalVotes, candidates, parties, responseState];
   }
 

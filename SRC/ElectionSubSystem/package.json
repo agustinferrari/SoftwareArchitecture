@@ -21,6 +21,7 @@
     "mongoose": "^6.4.0",
     "mysql2": "^2.3.3",
     "node-schedule": "^2.1.0",
+    "project-root": "file:../..",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

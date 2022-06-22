@@ -6,6 +6,8 @@
     "moduleResolution": "node",
     "strict": true,
     "noImplicitReturns": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "noFallthroughCasesInSwitch": true,
     "composite": true
   }

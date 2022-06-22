@@ -2,16 +2,16 @@ import { Router } from "express";
 import { ElectionController } from "../Controllers/ElectionController";
 import { checkJWTAndRole } from "../Middlewares/CheckJWTAndRole";
 import {Roles} from "../../../Common/Domain";
+import { responseWrapper } from "../Middlewares/ResponseWrapper";
 const router = Router({ mergeParams: true });
-router.get(
-  "/config",
-  [checkJWTAndRole([Roles.Consultant, Roles.ElectoralAuthority])],
-  ElectionController.getConfig
-);
-router.post("/config", [checkJWTAndRole([Roles.Consultant])], ElectionController.setSettings);
-router.get("/vote-frequency", [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority, Roles.QueryAgent])], ElectionController.getVoteFrequency);
-router.get("/circuit-info",  [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority, Roles.QueryAgent])], ElectionController.getCircuitInfo);
-router.get("/state-info", [checkJWTAndRole([Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority, Roles.QueryAgent])], ElectionController.getStateInfo);
-router.get("/",  [checkJWTAndRole([Roles.ElectoralAuthority])], ElectionController.getElectionInfo);
+
+let allRoles = [Roles.Consultant, Roles.Voter, Roles.ElectoralAuthority, Roles.QueryAgent]
+
+router.get("/config",[checkJWTAndRole([Roles.Consultant, Roles.ElectoralAuthority])],ElectionController.getConfig, [responseWrapper()]);
+router.post("/config", [checkJWTAndRole([Roles.Consultant])], ElectionController.setSettings, [responseWrapper()]);
+router.get("/vote-frequency", [checkJWTAndRole(allRoles)], ElectionController.getVoteFrequency, [responseWrapper()]);
+router.get("/circuit-info",  [checkJWTAndRole(allRoles)], ElectionController.getCircuitInfo, [responseWrapper()]);
+router.get("/state-info", [checkJWTAndRole(allRoles)], ElectionController.getStateInfo, [responseWrapper()]);
+router.get("/",  [checkJWTAndRole([Roles.ElectoralAuthority])], ElectionController.getElectionInfo, [responseWrapper()]);
 
 export default router;

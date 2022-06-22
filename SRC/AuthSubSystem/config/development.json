@@ -14,5 +14,9 @@
     "port": "6379",
     "statusKey": "status"
   },
-  "NOTIFICATION_HELPER": "EMAIL"
+  "NOTIFICATION_HELPER": "EMAIL",
+  "GRPC": {
+    "host": "127.0.0.1",
+    "port": 50051
+  }
 }

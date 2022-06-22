@@ -13,8 +13,8 @@ export class QueryQueue {
       redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
     });
     this.jobOptions = {
-      removeOnComplete: true,
-      removeOnFail: true,
+      // removeOnComplete: true,
+      // removeOnFail: true,
     };
   }
 
@@ -71,18 +71,12 @@ export class QueryQueue {
     return response.result;
   }
 
-  public async getElectionInfoCountPerCircuit(
-    electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
-  ): Promise<any[]> {
+  public async getElectionInfoCountPerCircuit(electionId: number, minAge: number, maxAge: number): Promise<any[]> {
     let queueJob = new QueueQueryJob();
     queueJob.input = {
       electionId: electionId,
       minAge: minAge,
       maxAge: maxAge,
-      gender: gender,
     };
     this.jobOptions.priority = QueueQueryPriority.GetElectionInfoCountPerCircuit;
     queueJob.type = QueueQueryType.GetElectionInfoCountPerCircuit;
@@ -91,18 +85,12 @@ export class QueryQueue {
     return response.result;
   }
 
-  public async getElectionInfoCountPerState(
-    electionId: number,
-    minAge: number,
-    maxAge: number,
-    gender: string
-  ): Promise<any[]> {
+  public async getElectionInfoCountPerState(electionId: number, minAge: number, maxAge: number): Promise<any[]> {
     let queueJob = new QueueQueryJob();
     queueJob.input = {
       electionId: electionId,
       minAge: minAge,
       maxAge: maxAge,
-      gender: gender,
     };
     this.jobOptions.priority = QueueQueryPriority.GetElectionInfoCountPerState;
     queueJob.type = QueueQueryType.GetElectionInfoCountPerState;

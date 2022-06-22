@@ -1,6 +1,6 @@
 {
   "API": {
-    "route": "http://localhost:3000",
+    "route": "http://127.0.0.1:3000",
     "key": "",
     "fetchDate": { "date": "27", "hour": "17", "minute": "38" },
     "electionsVoterPageLimit": 1,
@@ -22,7 +22,7 @@
     "host": "localhost",
     "port": "6379",
     "statusKey": "status",
-    "commandQueue":"commandQueue",
-    "queryQueue":"queryQueue"
+    "commandQueue": "commandQueue",
+    "queryQueue": "queryQueue"
   }
 }

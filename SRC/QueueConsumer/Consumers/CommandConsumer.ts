@@ -1,36 +1,29 @@
-import {} from "../Common/Domain";
-import { SequelizeContext } from "./Models";
+import {} from "../../Common/Domain";
+import { SequelizeContext } from "../Models";
 import Queue from "bull";
 import config from "config";
-import { QueueQueryJob, QueueResponse } from "../Common/Queues";
-import { QuerySQL } from "./DataAccess/Query/QuerySQL";
-import { QueueTypeHandler } from "./QueueTypeHandler";
-import { CommandSQL } from "./DataAccess/Command/CommandSQL";
+import { QueueCommandJob, QueueQueryJob, QueueResponse } from "../../Common/Queues";
+import { QuerySQL } from "../DataAccess/Query/QuerySQL";
+import { QueueTypeHandler } from "../DataAccess/QueueTypeHandler";
+import { CommandSQL } from "../DataAccess/Command/CommandSQL";
 
 
-let pm2id : string | undefined = process.env.pm_id ? process.env.pm_id : "0";
-let MySQLPort;
-if(pm2id) {
-  let id = parseInt(pm2id)
-  let ports : string[] = config.get("SQL_DB.ports");
-  let MySQLPort = ports[id%ports.length];
- console.log("MySQLPort:", MySQLPort);
-}
+let MySQLPort : string = config.get("SQL_DB.masterPort");
+
 let context: SequelizeContext = new SequelizeContext(MySQLPort);
-
 const query = new QuerySQL(context.connection);
 const command = new CommandSQL(context.connection);
 const queueTypeHandler = new QueueTypeHandler(query, command);
 
 //Consumidor
 
-const queue = new Queue<QueueQueryJob>(config.get("REDIS.queryQueue"), {
+const queue = new Queue<QueueCommandJob>(config.get("REDIS.commandQueue"), {
   redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
 });
 
 async function consumer() {
   console.log("Consumer started");
-  queue.process(1000, async function (job, done) {
+  queue.process(100, async function (job, done) {
     let type = job.data.type;
     let input = job.data.input;
     console.log("Received job:", type);
@@ -52,8 +45,17 @@ async function consumer() {
 
 (async () => {
   await context.addModels();
-  if (!pm2id) {
+  let pm2id = process.env.pm_id;
+  if (pm2id) {
+    let id = parseInt(pm2id);
+    if(id == 0){
+      console.log("Syncing models for port:", MySQLPort);
+      await context.syncAllModels();
+      await context.setMaxConnections();
+    }
+  }else{
     await context.syncAllModels();
+    await context.setMaxConnections();
   }
   consumer();
 })();

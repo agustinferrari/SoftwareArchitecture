@@ -49,6 +49,8 @@ class Server {
     this.app.post(
       "/votes",
       (req: Request, res: Response, next: NextFunction) => {
+        let startResponse = new Date();
+          res.locals.startDate = startResponse;
         this.isTesting ? next() : checkJWTAndRole(req, res, next, ["Voter"]);
       },
       async (req: Request, res: Response, next: NextFunction) => {
@@ -65,7 +67,7 @@ class Server {
     res: Response,
     next: NextFunction
   ) {
-    let startResponse = new Date();
+    let startResponse = res.locals.startDate;
     let ci = req.body.ci;
     req.setTimeout(0);
     this.reqCountHelper.expressCount++;

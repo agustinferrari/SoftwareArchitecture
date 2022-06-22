@@ -1,7 +1,7 @@
-import { Candidate, ElectionInfo, Party, Vote } from "../Common/Domain";
-import { CommandSQL } from "./DataAccess/Command/CommandSQL";
-import { QuerySQL } from "./DataAccess/Query/QuerySQL";
-import { QueryCache } from "./../Common/Redis/";
+import { Candidate, ElectionInfo, Party, Vote } from "../../Common/Domain";
+import { CommandSQL } from "./Command/CommandSQL";
+import { QuerySQL } from "./Query/QuerySQL";
+import { QueryCache } from "../../Common/Redis";
 
 export class QueueTypeHandler {
   query: QuerySQL;
@@ -14,24 +14,24 @@ export class QueueTypeHandler {
 
   public async voterElectionCircuit(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
-    if(input.voterCI == undefined || input.electionId == undefined || input.circuitId == undefined) {
-     console.log("VoterElectionCircuit: ", input);
+    if (input.voterCI == undefined || input.electionId == undefined || input.circuitId == undefined) {
+      console.log("VoterElectionCircuit: ", input);
     }
     return await this.query.voterElectionCircuit(input.voterCI, input.electionId, input.circuitId);
   }
 
   public async getVoter(input: any) {
     //TODO ver si validar que sea ci
-    if(input.ci == undefined) {
-     console.log("getVoter: ", input);
+    if (input.ci == undefined) {
+      console.log("getVoter: ", input);
     }
     return await this.query.getVoter(input.ci);
   }
 
   public async getElectionsInfo(input: any): Promise<ElectionInfo[]> {
     //TODO ver si validar que no esten vacios
-    if(input == undefined) {
-     console.log("ElectionsInfo: ", input);
+    if (input == undefined) {
+      console.log("ElectionsInfo: ", input);
     }
     return await this.query.getElectionsInfo();
   }
@@ -50,8 +50,8 @@ export class QueueTypeHandler {
 
   public async addVote(input: any): Promise<string> {
     //TODO ver si validar que no esten vacios
-    if(input.vote == undefined || input.mode == undefined) {
-     console.log("AddVote: ", input);
+    if (input.vote == undefined || input.mode == undefined) {
+      console.log("AddVote: ", input);
     }
     await this.command.addVote(input.vote, input.mode);
     return "Added sucessfully";
@@ -59,22 +59,18 @@ export class QueueTypeHandler {
 
   public async checkUniqueVote(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
-    if(input.voterCI == undefined) {
-     console.log("UniqueVote: ", input);
+    if (input.voterCI == undefined) {
+      console.log("UniqueVote: ", input);
     }
     return await this.query.checkUniqueVote(input.voterCI, input.electionId);
   }
 
   public async checkRepeatedVote(input: any): Promise<boolean> {
     //TODO ver si validar que no esten vacios
-    if(input.voterCI == undefined || input.electionId == undefined || input.maxVotesPerVoter == undefined) { 
-     console.log("RepeatedVote: ", input);
+    if (input.voterCI == undefined || input.electionId == undefined || input.maxVotesPerVoter == undefined) {
+      console.log("RepeatedVote: ", input);
     }
-    return await this.query.checkRepeatedVote(
-      input.voterCI,
-      input.electionId,
-      input.maxVotesPerVoter
-    );
+    return await this.query.checkRepeatedVote(input.voterCI, input.electionId, input.maxVotesPerVoter);
   }
 
   public async getVoteDates(input: any): Promise<string[]> {
@@ -86,7 +82,7 @@ export class QueueTypeHandler {
   }
 
   public async getVoteFrequency(input: any): Promise<any[]> {
-    return await this.query.getVoteFrequency(input.electionId, input.voterCI);
+    return await this.query.getVoteFrequency(input.electionId);
   }
 
   public async getTotalVotes(input: any): Promise<number> {
@@ -102,21 +98,11 @@ export class QueueTypeHandler {
   }
 
   public async getElectionInfoCountPerCircuit(input: any): Promise<any[]> {
-    return await this.query.getElectionInfoCountPerCircuit(
-      input.electionId,
-      input.minAge,
-      input.maxAge,
-      input.gender
-    );
+    return await this.query.getElectionInfoCountPerCircuit(input.electionId, input.minAge, input.maxAge);
   }
 
   public async getElectionInfoCountPerState(input: any): Promise<any[]> {
-    return await this.query.getElectionInfoCountPerState(
-      input.electionId,
-      input.minAge,
-      input.maxAge,
-      input.gender
-    );
+    return await this.query.getElectionInfoCountPerState(input.electionId, input.minAge, input.maxAge);
   }
 
   public async getElectionInfo(input: any): Promise<any[]> {
@@ -127,22 +113,22 @@ export class QueueTypeHandler {
     return await this.query.validateElectionVotesDate(input.electionId);
   }
 
-  public async validateElectionVotesCount(electionId: number): Promise<boolean> {
-    return await this.query.validateElectionVotesCount(electionId);
+  public async validateElectionVotesCount(input: any): Promise<boolean> {
+    return await this.query.validateElectionVotesCount(input.electionId);
   }
 
-  public async deleteVoterCandidateAssociation(input: any){
+  public async deleteVoterCandidateAssociation(input: any) {
     await this.command.deleteVoterCandidateAssociation(input.electionId);
     return "Delete associations successfully";
   }
 
-  public async getElectionCandidates(electionId: number) : Promise<Candidate[]>{
-    const candidates = await this.query.getElectionCandidates(electionId) as Candidate[];
+  public async getElectionCandidates(input: any) : Promise<Candidate[]>{
+    const candidates = await this.query.getElectionCandidates(input.electionId) as Candidate[];
     return candidates;
   }
 
-  public async getElectionParties(electionId: number) : Promise<Party[]>{
-    const parties = await this.query.getElectionParties(electionId) as Party[];
+  public async getElectionParties(input: any) : Promise<Party[]>{
+    const parties = await this.query.getElectionParties(input.electionId) as Party[];
     return parties;
   }
 }
