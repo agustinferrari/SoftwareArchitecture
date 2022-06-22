@@ -1,6 +1,7 @@
 import { Candidate, ElectionInfo, Party } from "../../../Common/Domain";
 import { QueryCache } from "../../../Common/Redis/QueryCache";
 import { ElectionQueryQueue } from "./ElectionQueryQueue";
+import { QueryMongo } from "./QueryMongo";
 
 export class ElectionQuery {
   electionCache: QueryCache;
@@ -19,12 +20,7 @@ export class ElectionQuery {
   }
 
   public async existsElection(electionId: number): Promise<boolean> {
-    let result = await this.electionCache.existsElection(electionId);
-    if (result != null) {
-      return result;
-    } else {
-      return false;
-    }
+    return await this.electionCache.existsElection(electionId);
   }
 
   public async getElectionParties(electionId: number): Promise<Party[]> {
@@ -36,7 +32,7 @@ export class ElectionQuery {
   }
 
   public async getElectionsInfo(): Promise<ElectionInfo[]> {
-    return await this.electionQueryQueue.getElectionsInfo();
+    return await QueryMongo.getElectionInfos();
   }
 
   public async getElectionEmails(electionId: number): Promise<string[]> {

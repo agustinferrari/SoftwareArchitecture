@@ -13,6 +13,7 @@ import { CommandCache } from "../Common/Redis/CommandCache";
 import { ElectionCommandQueue } from "./DataAccess/Command/ElectionCommandQueue";
 import { QueryMongo } from "./DataAccess/Query/QueryMongo";
 import { ElectionScheduler } from "./EventSchedulers/ElectionScheduler";
+import { CommandMongo } from "./DataAccess/Command/CommandMongo";
 
 export class StartupHelper {
   apiConsumer?: IConsumer;
@@ -55,7 +56,9 @@ export class StartupHelper {
 
     let cacheCommand: CommandCache = new CommandCache();
 
-    let command: ElectionCommand = new ElectionCommand(electionQueueManager, cacheCommand);
+    let commandMongo : CommandMongo = new CommandMongo()
+
+    let command: ElectionCommand = new ElectionCommand(electionQueueManager, cacheCommand, commandMongo);
     this.command = command;
 
     let query: ElectionQuery = new ElectionQuery();
@@ -75,7 +78,8 @@ export class StartupHelper {
     }
 
     elections.forEach(async (election) => {
-      if (!query.existsElection(election.id)) {
+      let electionExists = await query.existsElection(election.id);
+      if (!electionExists) {
         cacheCommand.addElection(election);
         try {
           let settings = await QueryMongo.getSettings(election.id);
@@ -85,6 +89,7 @@ export class StartupHelper {
       let electionObj = Election.parseElection(election);
       electionObj.parties = await query.getElectionParties(election.id);
       electionObj.candidates = await query.getElectionCandidates(election.id);
+      
       if (this.parseDate(election.startDate) > today) {
         scheduler.scheduleStartElection(electionObj, election.voterCount);
         scheduler.scheduleEndElection(electionObj, election.voterCount);
@@ -97,6 +102,9 @@ export class StartupHelper {
   }
 
   private parseDate(myDateStr: string): Date {
+    if(myDateStr.includes("T") && myDateStr.charAt(myDateStr.length-1)){
+      return new Date(myDateStr);
+    }
     const dateStr = myDateStr;
     const [dateComponents, timeComponents] = dateStr.split(" ");
 

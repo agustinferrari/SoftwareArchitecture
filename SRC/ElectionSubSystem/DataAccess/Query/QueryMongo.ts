@@ -5,6 +5,8 @@ import {
   notificationSettingsSchema,
   INotificationSettings,
 } from "../../Models/NotificationSettings";
+import { Election, ElectionInfo } from "../../../Common/Domain";
+import { electionInfoSchema } from "../../Models/ElectionInfoMongo";
 
 export class QueryMongo {
   static async getSettings(electionId: number): Promise<INotificationSettings> {
@@ -26,5 +28,20 @@ export class QueryMongo {
       throw new Error("Settings not found");
     }
 
+  }
+
+
+  static async getElectionInfos(): Promise<ElectionInfo[]> {
+    const electionInfoModel = model<ElectionInfo>(
+      "ElectionInfo",
+      electionInfoSchema
+    );
+    await mongoose.connect(
+      `mongodb://${config.get("MONGO.host")}:${config.get("MONGO.port")}/${config.get(
+        "MONGO.dbName"
+      )}`
+    );
+
+    return await electionInfoModel.find().exec();
   }
 }

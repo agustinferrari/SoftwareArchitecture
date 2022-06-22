@@ -27,8 +27,7 @@ export class QuerySQL {
     let result: ElectionInfo[] = [];
     if (found) {
       for (let i = 0; i < found.length; i++) {
-        console.log(found[i]);
-        let obj = { id: found[i] };
+        let obj = found[i] ;
         let election: ElectionInfo = new ElectionInfo(obj);
         result.push(election);
       }
