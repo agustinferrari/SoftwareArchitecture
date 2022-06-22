@@ -76,6 +76,7 @@ npm run electionGenerator
 
 Una vez se muestre `Finished saving voters in mongoose` se puede detener con `CTRL + C`.
 
+
 ### 6) Levantar todos los sistemas
 Pueden levantarse individualmente siguiendo los comandos del archivo [CommandGuide.md](./CommandGuide.md) o ejecutando el comando:
 
@@ -83,11 +84,4 @@ Pueden levantarse individualmente siguiendo los comandos del archivo [CommandGui
 npm run pm2:all
 ```
 
-### 7) Levantar todos los sistemas
-Pueden levantarse individualmente siguiendo los comandos del archivo [CommandGuide.md](./CommandGuide.md) o ejecutando el comando:
-
-```
-npm run pm2:all
-```
-
-Va a aparecer en la consola de pm2 de electionSubSystem el progreso de agregar las elecciones, hasta que no se indique que el inicio y fin de la última elección fue "scheduled", no se van a haber agregado los votantes ni elecciones.
+Va a aparecer en la consola de pm2 de electionSubSystem el progreso de agregar las elecciones, hasta que no se indique que el inicio y fin de la última elección fue "scheduled", no se van a haber terminado de agregar a los votantes ni elecciones.
