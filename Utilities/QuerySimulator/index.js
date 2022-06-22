@@ -23,6 +23,8 @@ async function autoCannonRequests() {
   let batchSize = queryOptions.batchSize;
   let timeout = queryOptions.timeout;
   let routes = queryOptions.routes;
+  let byTimeout = queryOptions.byTimeout;
+
 
   for (let i = 0; i < routes.length; i++) {
     let route = routes[i];
@@ -45,19 +47,45 @@ async function autoCannonRequests() {
           }
         }
       }
-      currentUrl+= endpoint.endpoint;
-      sendAutoCannonRequest(currentUrl, endpoint.method, batchSize, body, timeout);
+      if(!byTimeout){
+        sendAutoCannonRequestByAmount(currentUrl + endpoint.endpoint, endpoint.method, batchSize, body, timeout);
+      }else{
+        sendAutoCannonRequestByTimeout(currentUrl + endpoint.endpoint, endpoint.method, batchSize, body, timeout);
+      }
     }
   }
 }
 
-async function sendAutoCannonRequest(url, method, count, body, timeout) {
+async function sendAutoCannonRequestByAmount(url, method, count, body, timeout) {
   console.log(`Starting ${count} requests to: ${method} ${url}`);
   autocannon(
     {
       url: url,
       method: method.toUpperCase(),
       amount: count,
+      connections: count,
+      duration: timeout,
+      timeout: timeout,
+      setupClient: (client) => {
+        client.setHeadersAndBody(
+          {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          JSON.stringify(body)
+        );
+      },
+    },
+    console.log
+  );
+}
+
+async function sendAutoCannonRequestByTimeout(url, method, count, body, timeout) {
+  console.log(`Starting ${count} requests to: ${method} ${url}`);
+  autocannon(
+    {
+      url: url,
+      method: method.toUpperCase(),
       connections: count,
       duration: timeout,
       setupClient: (client) => {

@@ -7,10 +7,26 @@
   "QueryOptions": {
     "apiHost": "localhost",
     "apiPort": 3003,
-    "batchSize": 500,
+    "batchSize": 20,
     "voterPageOffset": 0,
-    "timeout": 60000,
+    "timeout": 9,
+    "byTimeout":true,
     "routes": [
+      {
+        "root": "votes",
+        "electionId": false,
+        "endpoints": [
+          {
+            "endpoint": "",
+            "method": "get",
+            "REQ": 8,
+            "params": {
+              "electionId": true,
+              "voterCI": true
+            }
+          }
+        ]
+      },
       {
         "root": "elections",
         "electionId": true,
@@ -19,6 +35,26 @@
             "endpoint": "",
             "method": "get",
             "REQ": 9
+          },
+          {
+            "endpoint": "config",
+            "method": "get",
+            "REQ": 10
+          },
+          {
+            "endpoint": "vote-frequency",
+            "method": "get",
+            "REQ": 11
+          },
+          {
+            "endpoint": "circuit-info",
+            "method": "get",
+            "REQ": 12
+          },
+          {
+            "endpoint": "state-info",
+            "method": "get",
+            "REQ": 13
           }
         ]
       }
