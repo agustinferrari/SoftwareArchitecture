@@ -1,6 +1,6 @@
 import { QueryMongo } from "./QueryMongo";
 import { QueryCache } from "../../../Common/Redis/QueryCache";
-import { IUser } from "../../QueryAPI/Models/User";
+import { IUser } from "../../AuthAPI/Models/User";
 
 export class Query {
   static _instance: Query;

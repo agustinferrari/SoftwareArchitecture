@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "install:SRC": "(npm install --prefix ./SRC/AuthSubSystem) && (npm install --prefix ./SRC/Common) && (npm install --prefix ./SRC/ElectionSubSystem) && (npm install --prefix ./SRC/QuerySubSystem) && (npm install --prefix ./SRC/QueueConsumer) && (npm install --prefix ./SRC/VotingSubSystem)",
-    "install:Utilities": "(npm install --prefix ./Utilities/VoteSimulator) && (npm install --prefix ./Utilities/MongoElectoralAPI) && (npm install --prefix ./Utilities/MongoUtilities) && (npm install --prefix ./Utilities/APIAutoridadElectoral/KeyGenerator) && (npm install --prefix ./Utilities/APIAutoridadElectoral/VoterGenerator)",
+    "install:Utilities": "(npm install --prefix ./Utilities/QuerySimulator) && (npm install --prefix ./Utilities/VoteSimulator) && (npm install --prefix ./Utilities/MongoElectoralAPI) && (npm install --prefix ./Utilities/MongoUtilities) && (npm install --prefix ./Utilities/APIAutoridadElectoral/KeyGenerator) && (npm install --prefix ./Utilities/APIAutoridadElectoral/VoterGenerator)",
     "install:all":"npm run install:SRC && npm run install:Utilities",
     "electoralAPI": "cd ./Utilities/MongoElectoralAPI && node index",
     "electoralAPIPM2": "cd ./Utilities/MongoElectoralAPI && pm2 start index.js --name ElectoralAPI -i",
@@ -28,8 +28,8 @@
     "commandConsumer": "cd ./SRC/QueueConsumer/Consumers && ts-node CommandConsumer.ts",
     "queryConsumerPM2": "cd ./SRC/QueueConsumer/Consumers && pm2 start QueryConsumer.ts -i ",
     "commandConsumerPM2": "cd ./SRC/QueueConsumer/Consumers && pm2 start  CommandConsumer.ts -i ",
-    "pm2:all": "npm run electoralAPIPM2 1 && npm run votingSubSystemPM2 5 && npm run querySubSystemPM2 4 && npm run authSubSystemPM2 1 && npm run electionSubSystemPM2",
-    "pm2:testing": "npm run electoralAPIPM2 1 && npm run votingSubSystemPM2 5 && npm run querySubSystemPM2 4 && npm run electionSubSystemPM2",
+    "pm2:all": "npm run electoralAPIPM2 1 && npm run votingSubSystemPM2 5 && npm run querySubSystemPM2 5 && npm run authSubSystemPM2 1 && npm run electionSubSystemPM2",
+    "pm2:testing": "npm run electoralAPIPM2 1 && npm run votingSubSystemPM2 5 && npm run querySubSystemPM2 5 && npm run electionSubSystemPM2",
     "pm2:consumers": "npm run queryConsumerPM2 6 && npm run commandConsumerPM2 3"
   },
   "repository": {
