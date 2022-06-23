@@ -13,8 +13,7 @@ export class QueryQueue {
       redis: { port: config.get("REDIS.port"), host: config.get("REDIS.host") },
     });
     this.jobOptions = {
-      // removeOnComplete: true
-      // removeOnFail: true
+      removeOnComplete: {count:10000}
     };
   }
 
@@ -25,7 +24,7 @@ export class QueryQueue {
     
     this.jobOptions.priority = QueueQueryPriority.GetVoter;
 
-    let job = await this.electionQueue.add(queueJob/*,this.jobOptions*/);
+    let job = await this.electionQueue.add(queueJob,this.jobOptions);
     let response: QueueResponse = await job.finished();
     if (!response.result) {
       throw new Error("Voter not found");
