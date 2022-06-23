@@ -6,7 +6,7 @@ export class EndAct extends AbstractAct {
   async getActInformation(election: Election, voterCount: number): Promise<string> {
     let query = new ElectionQueryQueue();
     let electionResult: ElectionResult;
-    //TODO: POSIBLE REFACTOR PARA CALCULAR FUERA LOS DATOS
+
     let parties = await query.getPartiesResult(election.id);
     let candidates = await query.getCandidatesResult(election.id);
 
@@ -42,7 +42,7 @@ export class EndAct extends AbstractAct {
       currentVoters: `${voterCount}`,
       totalVotes: `${totalVotes}`,
       votingMode: `${election.mode}`,
-      electionResult: electionResult,
+      electionResult: JSON.stringify(electionResult),
     }
   
     return JSON.stringify(result);

@@ -1,13 +1,13 @@
-import { VoteIntentEncrypted } from "./Models/VoteIntentEncrypted";
-import { VoteEncryption } from "../Encryption/VoteEncryption";
-import { Vote, ElectionInfo, Voter, VoteProof } from "../../Common/Domain";
-import { VoteCommand } from "../DataAccess/Command/VoteCommand";
-import { Query } from "../DataAccess/Query/Query";
-import { ValidatorManager } from "../Validators/ValidatorManager";
-import { INotificationSender } from "../../Common/NotificationSender";
-import { RequestCountHelper } from "../Helpers/RequestCountHelper";
-import { LoggerFacade } from "../Logger/LoggerFacade";
-import { DuplicateBullIdError } from "./Error/DuplicateBullIdError";
+import { VoteIntentEncrypted } from "../Models/VoteIntentEncrypted";
+import { VoteEncryption } from "../../Encryption/VoteEncryption";
+import { Vote, ElectionInfo, Voter, VoteProof } from "../../../Common/Domain";
+import { VoteCommand } from "../../DataAccess/Command/VoteCommand";
+import { Query } from "../../DataAccess/Query/Query";
+import { ValidatorManager } from "../../Validators/ValidatorManager";
+import { INotificationSender } from "../../../Common/NotificationSender";
+import { RequestCountHelper } from "../../Helpers/RequestCountHelper";
+import { LoggerFacade } from "../../Logger/LoggerFacade";
+import { DuplicateBullIdError } from "../Errors/DuplicateBullIdError";
 
 export class VotingService {
   voteCommand: VoteCommand;

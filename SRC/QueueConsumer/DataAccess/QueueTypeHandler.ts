@@ -13,7 +13,6 @@ export class QueueTypeHandler {
   }
 
   public async voterElectionCircuit(input: any): Promise<boolean> {
-    //TODO ver si validar que no esten vacios
     if (input.voterCI == undefined || input.electionId == undefined || input.circuitId == undefined) {
       console.log("VoterElectionCircuit: ", input);
     }
@@ -21,7 +20,6 @@ export class QueueTypeHandler {
   }
 
   public async getVoter(input: any) {
-    //TODO ver si validar que sea ci
     if (input.ci == undefined) {
       console.log("getVoter: ", input);
     }
@@ -29,7 +27,6 @@ export class QueueTypeHandler {
   }
 
   public async getElectionsInfo(input: any): Promise<ElectionInfo[]> {
-    //TODO ver si validar que no esten vacios
     if (input == undefined) {
       console.log("ElectionsInfo: ", input);
     }
@@ -37,19 +34,16 @@ export class QueueTypeHandler {
   }
 
   public async addElection(input: any): Promise<string> {
-    //TODO ver si validar que no esten vacios
     await this.command.addElection(input);
     return "Added sucessfully";
   }
 
   public async addVoters(input: any): Promise<string> {
-    //TODO ver si validar que no esten vacios
     await this.command.addVoters(input.voters, input.electionId);
     return "Added sucessfully";
   }
 
   public async addVote(input: any): Promise<string> {
-    //TODO ver si validar que no esten vacios
     if (input.vote == undefined || input.mode == undefined) {
       console.log("AddVote: ", input);
     }
@@ -58,7 +52,6 @@ export class QueueTypeHandler {
   }
 
   public async checkUniqueVote(input: any): Promise<boolean> {
-    //TODO ver si validar que no esten vacios
     if (input.voterCI == undefined) {
       console.log("UniqueVote: ", input);
     }
@@ -66,7 +59,6 @@ export class QueueTypeHandler {
   }
 
   public async checkRepeatedVote(input: any): Promise<boolean> {
-    //TODO ver si validar que no esten vacios
     if (input.voterCI == undefined || input.electionId == undefined || input.maxVotesPerVoter == undefined) {
       console.log("RepeatedVote: ", input);
     }

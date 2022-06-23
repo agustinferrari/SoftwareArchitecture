@@ -1,4 +1,4 @@
-import Server from "./VotingAPI/Server";
+import Server from "./VotingAPI/Controllers/Server";
 import { StartupHelper } from "./Helpers/StartupHelper";
 let startupHelper: StartupHelper = new StartupHelper();
 
