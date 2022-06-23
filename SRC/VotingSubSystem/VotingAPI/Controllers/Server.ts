@@ -1,14 +1,14 @@
 import { Application, Request, Response, NextFunction } from "express";
-import { VoteIntentEncrypted } from "./Models/VoteIntentEncrypted";
-import { VotingService } from "./VotingService";
+import { VoteIntentEncrypted } from "../Models/VoteIntentEncrypted";
+import { VotingService } from "../Services/VotingService";
 const express = require("express");
 import config from "config";
-import { TimeoutError } from "./Error/TimeOutError";
-import { checkJWTAndRole } from "./Middlewares/CheckJWTAndRole";
-import { LoggerFacade } from "../Logger/LoggerFacade";
-import { RequestStatus } from "./Models/RequestStatus";
+import { TimeoutError } from "../Errors/TimeOutError";
+import { checkJWTAndRole } from "../Middlewares/CheckJWTAndRole";
+import { LoggerFacade } from "../../Logger/LoggerFacade";
+import { RequestStatus } from "../Models/RequestStatus";
 import { scheduleJob, RecurrenceRule } from "node-schedule";
-import { RequestCountHelper } from "../Helpers/RequestCountHelper";
+import { RequestCountHelper } from "../../Helpers/RequestCountHelper";
 
 class Server {
   public app: Application;

@@ -12,7 +12,7 @@ import {
 import config from "config";
 import { VoteIntent } from "../../VotingAPI/Models/VoteIntent";
 import { RequestCountHelper } from "../../Helpers/RequestCountHelper";
-import { DuplicateBullIdError } from "../../VotingAPI/Error/DuplicateBullIdError";
+import { DuplicateBullIdError } from "../../VotingAPI/Errors/DuplicateBullIdError";
 
 export class VoteCommandQueue {
   electionQueue: any;

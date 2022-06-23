@@ -1,10 +1,10 @@
 import { Query } from "../DataAccess/Query/Query";
 import { QueryQueue } from "../DataAccess/Query/QueryQueue";
-import { VotingService } from "../VotingAPI/VotingService";
+import { VotingService } from "../VotingAPI/Services/VotingService";
 import { VoteCommandQueue } from "../DataAccess/Command/VoteCommandQueue";
 import { VoteCommand } from "../DataAccess/Command/VoteCommand";
 import { QueryCache } from "../../Common/Redis";
-import Server from "../VotingAPI/Server";
+import Server from "../VotingAPI/Controllers/Server";
 import { VoteIntent } from "../VotingAPI/Models/VoteIntent";
 
 import {SMSNotificationSender, INotificationSender} from "../../Common/NotificationSender";

@@ -77,7 +77,6 @@ export class ElectionManager {
       await this.validateElection(election);
       console.log("Election validated: " + election.id);
     } catch (e: any) {
-      //TODO: Enviar log de error
       let message = "Election is not valid, election id: " + election.id + " error: \n" + e.message;
       this.emailSender.sendNotification(message, election.emails);
 

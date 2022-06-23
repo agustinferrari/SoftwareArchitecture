@@ -13,7 +13,7 @@ export class StartAct extends AbstractAct {
     let result = {
       election: `${election.id}: ${election.name}`,
       startDate: `${election.startDate.toString()}`,
-      parties: this.getPartyInformationAsObject(election),
+      parties: JSON.stringify(this.getPartyInformationAsObject(election)),
       currentVoters: `${voterCount}`,
       votingMode: `${election.mode}`,
     }
