@@ -25,7 +25,9 @@ async function autoCannonRequests() {
   let offset = voteOptions.pageOffset;
   let batchSize = voteOptions.batchSize;
   let timeout = voteOptions.timeout;
-  console.log("Starting vote simulator to url: " + url + endpoint + " with options:");
+  console.log(
+    "Starting vote simulator to url: " + url + endpoint + " with options:"
+  );
   console.log(voteOptions);
   console.log("----------------------");
   console.log("");
@@ -33,29 +35,42 @@ async function autoCannonRequests() {
   let voters = await mongoAccess.getVoterInformation(offset, batchSize);
   var i = 0;
 
-  autocannon(
-    {
-      url: url + endpoint,
-      method: "POST",
-      amount: batchSize,
-      connections: batchSize,
-      duration: timeout,
-      setupClient: (client) => {
-        let electionVoter = voters[i];
-        if (electionVoter == undefined) {
-          console.log(i);
-        }
-        i++;
-        let body = voteUtils.setupVote(electionVoter, voteOptions.fakeVoteDate);
-        client.setHeadersAndBody(
-          {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          JSON.stringify(body)
-        );
+  if (voteOptions.saveOneToJson) {
+    let electionVoter = voters[i];
+    if (electionVoter == undefined) {
+      console.log(i);
+    }
+    let body = voteUtils.setupVote(electionVoter, voteOptions.fakeVoteDate);
+    console.log(body);
+    fs.writeFileSync("./testVote.json", JSON.stringify(body));
+  } else {
+    autocannon(
+      {
+        url: url + endpoint,
+        method: "POST",
+        amount: batchSize,
+        connections: batchSize,
+        duration: timeout,
+        setupClient: (client) => {
+          let electionVoter = voters[i];
+          if (electionVoter == undefined) {
+            console.log(i);
+          }
+          i++;
+          let body = voteUtils.setupVote(
+            electionVoter,
+            voteOptions.fakeVoteDate
+          );
+          client.setHeadersAndBody(
+            {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            JSON.stringify(body)
+          );
+        },
       },
-    },
-    console.log
-  );
+      console.log
+    );
+  }
 }
