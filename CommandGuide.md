@@ -69,12 +69,12 @@ Se debe tomar en cuenta que la mayoría de las herramientas y subsistemas contie
 
 ### ElectoralAPI y Simuladores
 
-| Herramienta             | Configuración/Requerimientos                                                                                                                                                                                         | Comandos                                             |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| Autoridad Electoral     | <code> Conexión con Mongo <br> Puerto expuesto</code>                                                                                                                                                                | <code> npm run electoralAPI </code>                  |
-| Autoridad Electoral PM2 | <code> Conexión con Mongo <br> Puerto expuesto</code>                                                                                                                                                                | <code> npm run electoralAPIPM2 -- {cantidad} </code> |
-| Simulador de votos      | <code> Cantidad de votos <br> Offset de votos</code>                                                                                                                                                                 | <code> npm run votingSimulation </code>              |
-| Simulador de queries    | <code>Url y puerto de API <br> Cantidad de requests por endpoint <br> Offset de pagina de votante <br> Timeout de las requests <br> Routes a los que hacer requests <br> Routes Default para usar de ejemplo </code> | <code> npm run votingSimulation </code>              |
+| Herramienta             | Configuración/Requerimientos                                                                                                                                                                                                                     | Comandos                                             |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| Autoridad Electoral     | <code> Conexión con Mongo <br> Puerto expuesto</code>                                                                                                                                                                                            | <code> npm run electoralAPI </code>                  |
+| Autoridad Electoral PM2 | <code> Conexión con Mongo <br> Puerto expuesto</code>                                                                                                                                                                                            | <code> npm run electoralAPIPM2 -- {cantidad} </code> |
+| Simulador de votos      | <code> Cantidad de votos <br> Offset de votos <br> Flag de fecha de envío</code>                                                                                                                                                                 | <code> npm run votingSimulation </code>              |
+| Simulador de queries    | <code>Url y puerto de API <br> Cantidad de requests por endpoint <br> Offset de pagina de votante <br> Timeout de las requests y flag de test por duración <br> Routes a los que hacer requests <br> Routes Default para usar de ejemplo </code> | <code> npm run votingSimulation </code>              |
 
 <br/>
 
@@ -106,6 +106,7 @@ Para correr todos los sistemas en el modo predeterminado en vista de pm2 con 3 i
 ```bash
 npm run pm2:all
 ```
+
 <br/>
 
 | Sistemas                                                 | Configuración/Requerimientos                                                                                                                                  | Comandos                                                |
@@ -185,7 +186,7 @@ pm2 delete generateVoterKeys.js
 npm run mergeVoterKeys
 ```
 
-Los archivos temporales del nombre `private-public-keys[numero].txt` en el directorio ./Utilities/APIAutoridadElectoral/KeyGenerator/Keys pueden ser eliminados, siempre y cuando se deje el archivo private-public-keys.txt en el directorio APIAutoridadElectoral.
+Los archivos temporales del nombre `private-public-keys[numero].txt` en el directorio ./Utilities/APIAutoridadElectoral/KeyGenerator/Keys pueden ser eliminados, siempre y cuando se deje el archivo ``private-public-keys.txt`` en el directorio APIAutoridadElectoral.
 
 ---
 
